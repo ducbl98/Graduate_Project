@@ -19,7 +19,7 @@ class CreateEducationsTable extends Migration
             $table->string('facility');
             $table->string('major');
             $table->string('degree');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->dateTime('time_start');
             $table->dateTime('time_finish');
             $table->foreign('seeker_id')->references('id')->on('seekers')->onDelete('cascade');

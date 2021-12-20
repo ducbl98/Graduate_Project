@@ -18,7 +18,7 @@ class CreateExperiencesTable extends Migration
             $table->unsignedBigInteger('seeker_id')->nullable();
             $table->string('name');
             $table->string('company_name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->dateTime('time_start');
             $table->dateTime('time_finish');
             $table->foreign('seeker_id')->references('id')->on('seekers')->onDelete('cascade');

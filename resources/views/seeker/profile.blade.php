@@ -93,7 +93,8 @@
         <div class="row">
             <div class="col-md-8 col-sm-12 col-12 recuitment-inner">
                 <div class="recuitment-form">
-                    <h3 class="rect-heading" style="font-size: 18px; padding-left: 22px; font-weight: 500;">Hồ sơ</h3>
+                    <h3 class="rect-heading" style="font-size: 28px; padding-left: 22px; font-weight: 500;">Hồ sơ</h3>
+                    <hr class="break-line">
                     {{--                    <a href="#" class="btn-sm btn-primary float-right" style="margin-top: -45px"><i class="fa fa-user mr-2"></i>Cập Nhật Tài Khoản</a>--}}
                     <div class="user--profile-right">
                         <div class="user--profile-group">
@@ -107,7 +108,7 @@
                                             <div id="ImgPreview" class="img">
                                                 <img id="blah"
                                                      src= "{{ $seekerProfile->seeker->avatar_url ? asset('storage/'.$seekerProfile->seeker->avatar_url) : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/OOjs_UI_icon_userAvatar-constructive.svg/1024px-OOjs_UI_icon_userAvatar-constructive.svg.png" }}">
-                                                <input type="file" name="seekerAvatar" id="imgInp"
+                                                <input type="file"  accept="image/*" name="seekerAvatar" id="imgInp"
                                                        class="custom-fileinput">
                                                 <label class="lbcfip">Chọn ảnh ...</label>
                                                 <input type="submit" id="sbAvatar" value="✓" style="display: none;">
@@ -196,7 +197,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-lg-3 col-sm-4 col-xs-12">
                                             <div class="form-group">
@@ -213,15 +213,21 @@
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                                 <div class="col-md-1">
                                     <p style="float: right;">
                                         <a href="javascript:void(0)" data-toggle="modal" data-target="#editInformation">
                                             {{--                                            <i class="fa fa-edit" id="edit-pencil-info">--}}
                                             <i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"
-                                               id="edit-pencil-info"></i>                                            </i>
+                                               id="edit-pencil-info"></i>
                                         </a>
                                     </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <hr class="break-line">
                                 </div>
                             </div>
 
@@ -234,52 +240,68 @@
                                 </a>
                                 <div class="col-md-12">
                                     <div class="user_exp_edu Experience_11642 div-exp-height">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="Position" id="LabelPosition_11642"
-                                                           class="required edu-exp-label">
-                                                        Chức danh công việc
-                                                    </label>
-                                                    <span id="span-Position-11642" class="span-display-education-univer"
-                                                          style="display: block;">
-                                                        Giao vien
-                                                    </span>
+                                        <div class="row rowdiv1">
+                                            @foreach($seekerProfile->seeker->experiences as $experience)
+                                                <div class="col-md-5">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="Position" id="LabelPosition_11642"
+                                                                   class="required edu-exp-label">
+                                                                Chức danh công việc
+                                                            </label>
+                                                            <span id="span-Position-11642" class="span-display-education-univer"
+                                                                  style="display: block;">
+                                                                {{$experience->name}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="CompanyName" id="LabelCompanyName_11642"
-                                                           class="required edu-exp-label">
-                                                        Tên công ty
-                                                    </label>
-                                                    <span id="span-CompanyName-11642" class="span-display-education"
-                                                          style="display: block;">
-                                                        FPT
-                                                    </span>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="CompanyName" id="LabelCompanyName_11642"
+                                                                   class="required edu-exp-label">
+                                                                Tên công ty
+                                                            </label>
+                                                            <span id="span-CompanyName-11642" class="span-display-education"
+                                                                  style="display: block;">
+                                                                {{$experience->company_name}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-8">
-                                                <div class="form-group">
-                                                    <label for="FromDateExp" id="LabelFromDateExp_11642"
-                                                           class="required edu-exp-label" style="display: none;">
-                                                        Từ
-                                                    </label>
-                                                    <label id="LabelWorkingTime_11642" class="required edu-exp-label"
-                                                           style="display: block;">
-                                                        Thời gian làm việc
-                                                    </label>
-                                                    <span id="span-time-Exp-11642" class="span-display-education"
-                                                          style="display: block;">
-                                                        12/02/2021 -22/06/2034
-                                                    </span>
-                                                </div>
-                                            </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="FromDateExp" id="LabelFromDateExp_11642"
+                                                                   class="required edu-exp-label" style="display: none;">
+                                                                Từ
+                                                            </label>
+                                                            <label id="LabelWorkingTime_11642" class="required edu-exp-label"
+                                                                   style="display: block;">
+                                                                Thời gian làm việc
+                                                            </label>
+                                                            <span id="span-time-Exp-11642" class="span-display-education"
+                                                                  style="display: block;">
+                                                                {{Carbon\Carbon::parse($experience->time_start)->format('Y-m-d')}} - {{Carbon\Carbon::parse($experience->time_finish)->format('Y-m-d')}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
 
+                                                </div>
+                                            </div>
+                                                <div class="col-md-1">
+                                                <p style="float: right;">
+                                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#editExperience">
+                                                        <i class="fa fa-pencil-square-o fa-lg" style="margin-right: 20px" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a href="#">
+                                                        <i class="fa fa-trash fa-lg" style="margin: 15px 20px 0 0;color: red" aria-hidden="true"></i>
+                                                    </a>
+                                                </p>
+                                            </div>
+                                            @endforeach
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
@@ -300,7 +322,7 @@
                                 </a>
                                 <div class="col-md-12">
                                     <div class="user_exp_edu Experience_11642 div-exp-height">
-                                        <div class="row">
+                                        <div class="row rowdiv1">
                                             <div class="col-md-6">
                                                 PHP
                                             </div>
@@ -498,48 +520,47 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="#" method="POST">
+                <form action="{{route('seeker.profile.updateProfile')}}" method="POST">
                     @csrf
-                    <input type="hidden" name="id" value="1"/>
+                    <input type="hidden" name="id" value="{{$seekerProfile->id}}"/>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Name</label>
-                                <input name="name" class="form-control iptt" value="Lee"/>
+                                <input name="name" class="form-control iptt" value="{{$seekerProfile->name}}"/>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Email</label>
-                                <input disabled name="email" class="form-control iptt" value="12"/>
+                                <input disabled name="email" class="form-control iptt" value="{{$seekerProfile->email}}"/>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Phone</label>
-                                <input name="phone_number" class="form-control iptt" value="01234"/>
+                                <input name="phone_number" class="form-control iptt" value="{{$seekerProfile->seeker->phone_number}}"/>
                             </div>
                         </div>
                         <div class="col-md-6 pr-0">
                             <div class="form-group">
                                 <label class="control-label">Birthday</label>
-                                <input type="date" name="birthday" class="form-control iptt" value="123"/>
+                                <input type="date" name="birthday" class="form-control iptt" value="{{Carbon\Carbon::parse($seekerProfile->seeker->birthday)->format('Y-m-d')}}"/>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Gender</label>
                                 <select name="gender" class="form-control iptt">
-                                    <option value="">Chọn giới tính</option>
                                     <option value="0">Nam</option>
-                                    <option value="1">Nữ</option>
+                                    <option value="1" {{$seekerProfile->seeker->gender == 1 ? 'selected' : ''}}>Nữ</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Address</label>
-                                <input name="address" class="form-control iptt" value="HN"/>
+                                <input name="address" class="form-control iptt" value="{{$seekerProfile->seeker->address}}"/>
                             </div>
                         </div>
                     </div>
@@ -558,6 +579,55 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addExperience">Thêm kinh nghiệm làm việc</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{route('seeker.experience.add')}}" method="POST">
+                    @csrf
+                    <input type="hidden" name="id" value="1"/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Tên chức vụ</label>
+                                <input name="name" class="form-control iptt"/>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Tên công ty</label>
+                                <input name="company_name" class="form-control iptt"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6 pr-0">
+                            <div class="form-group">
+                                <label class="control-label">Ngày bắt đầu</label>
+                                <input type="date" name="time_start" class="form-control iptt"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Ngày kết thúc</label>
+                                <input type="date" name="time_finish" class="form-control iptt"/>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn-sm btn-primary" type="submit">Thêm mới</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- (end) Modal add experience -->
+
+<!-- Modal edit experience-->
+<div class="modal fade" id="editExperience" tabindex="-1" role="dialog" aria-labelledby="editExperience"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editExperience">Sửa kinh nghiệm làm việc</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -598,7 +668,7 @@
         </div>
     </div>
 </div>
-<!-- (end) Modal add experience -->
+<!-- (end) Modal edit experience -->
 
 <!-- Modal add skill-->
 <div class="modal fade" id="addSkill" tabindex="-1" role="dialog" aria-labelledby="addSkill" aria-hidden="true">

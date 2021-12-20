@@ -18,7 +18,7 @@ class CreateSkillsTable extends Migration
             $table->unsignedBigInteger('seeker_id')->nullable();
             $table->string('name');
             $table->unsignedInteger('level');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->dateTime('time_start');
             $table->dateTime('time_finish');
             $table->foreign('seeker_id')->references('id')->on('seekers')->onDelete('cascade');

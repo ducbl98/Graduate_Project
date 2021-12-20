@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\auth\AuthController;
 use App\Http\Controllers\auth\ForgotPasswordController;
+use App\Http\Controllers\manage\ExperienceController;
 use App\Http\Controllers\manage\SeekerController;
+use App\Models\Experience;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -45,4 +47,6 @@ Route::namespace('Seeker')
     ->group(function () {
         Route::get('/profile',[SeekerController::class,'showProfile'])->name('profile.show');
         Route::post('/profile/update-avatar',[SeekerController::class,'updateAvatar'])->name('profile.updateAvatar');
+        Route::post('/profile/update-profile',[SeekerController::class,'updateProfile'])->name('profile.updateProfile');
+        Route::post('/experience/add',[ExperienceController::class,'addExperience'])->name('experience.add');
     });
