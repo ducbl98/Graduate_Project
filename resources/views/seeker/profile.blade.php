@@ -103,10 +103,10 @@
                                     <div class="row">
                                         <form action="{{ route('seeker.profile.updateAvatar') }}" method="POST" enctype="multipart/form-data">
                                             @csrf
-                                            <input type="hidden" value="1" name="id"/>
+                                            <input type="hidden" value="{{ $seekerProfile->seeker->id }}" name="id"/>
                                             <div id="ImgPreview" class="img">
                                                 <img id="blah"
-                                                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/OOjs_UI_icon_userAvatar-constructive.svg/1024px-OOjs_UI_icon_userAvatar-constructive.svg.png">
+                                                     src= "{{ $seekerProfile->seeker->avatar_url ? asset('storage/'.$seekerProfile->seeker->avatar_url) : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/OOjs_UI_icon_userAvatar-constructive.svg/1024px-OOjs_UI_icon_userAvatar-constructive.svg.png" }}">
                                                 <input type="file" name="seekerAvatar" id="imgInp"
                                                        class="custom-fileinput">
                                                 <label class="lbcfip">Chọn ảnh ...</label>
