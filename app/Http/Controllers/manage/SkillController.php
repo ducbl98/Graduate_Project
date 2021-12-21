@@ -5,26 +5,25 @@ namespace App\Http\Controllers\manage;
 use App\Http\Controllers\Controller;
 use App\Models\Experience;
 use App\Models\Seeker;
+use App\Models\Skill;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ExperienceController extends Controller
+class SkillController extends Controller
 {
-    public function addExperience(Request $request): RedirectResponse
+    public function addSkill(Request $request): RedirectResponse
     {
         $seeker = Seeker::with('user')->find(Auth::id());
-        Experience::create([
+        Skill::create([
             'name' => $request->name,
-            'company_name' => $request->company_name,
-            'time_start' => $request->time_start,
-            'time_finish' => $request->time_finish,
+            'level' => $request->level,
             'seeker_id' => $seeker->id,
         ]);
         return back();
     }
 
-    public function editExperience(Request $request)
+    public function editSkill(Request $request): RedirectResponse
     {
         Experience::where('id',$request->id)->update([
             'name' => $request->name,
@@ -36,7 +35,7 @@ class ExperienceController extends Controller
         return back();
     }
 
-    public function deleteExperience(Request $request)
+    public function deleteSkill(Request $request): RedirectResponse
     {
         Experience::where('id',$request->id)->delete();
         return back();

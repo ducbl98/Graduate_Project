@@ -4,6 +4,7 @@ use App\Http\Controllers\auth\AuthController;
 use App\Http\Controllers\auth\ForgotPasswordController;
 use App\Http\Controllers\manage\ExperienceController;
 use App\Http\Controllers\manage\SeekerController;
+use App\Http\Controllers\manage\SkillController;
 use App\Models\Experience;
 use Illuminate\Support\Facades\Route;
 
@@ -48,5 +49,12 @@ Route::namespace('Seeker')
         Route::get('/profile',[SeekerController::class,'showProfile'])->name('profile.show');
         Route::post('/profile/update-avatar',[SeekerController::class,'updateAvatar'])->name('profile.updateAvatar');
         Route::post('/profile/update-profile',[SeekerController::class,'updateProfile'])->name('profile.updateProfile');
+        //Experience
         Route::post('/experience/add',[ExperienceController::class,'addExperience'])->name('experience.add');
+        Route::post('/experience/edit',[ExperienceController::class,'editExperience'])->name('experience.edit');
+        Route::get('/experience/delete',[ExperienceController::class,'deleteExperience'])->name('experience.delete');
+        //Skill
+        Route::post('/skill/add',[SkillController::class,'addSkill'])->name('skill.add');
+        Route::post('/skill/edit',[SkillController::class,'editSkill'])->name('skill.edit');
+        Route::get('/skill/delete',[SkillController::class,'deleteSkill'])->name('skill.delete');
     });

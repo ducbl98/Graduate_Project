@@ -11,6 +11,14 @@ class Skill extends Model
 {
     use HasFactory;
 
+    protected $table = 'skills';
+
+    protected $fillable = [
+        'name',
+        'level',
+        'seeker_id',
+    ];
+
     public function seeker(): BelongsTo
     {
         return $this->belongsTo(Seeker::class);

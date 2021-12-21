@@ -102,13 +102,14 @@
                             <div class="row rowdiv">
                                 <div class="col-md-3 col-xs-12">
                                     <div class="row">
-                                        <form action="{{ route('seeker.profile.updateAvatar') }}" method="POST" enctype="multipart/form-data">
+                                        <form action="{{ route('seeker.profile.updateAvatar') }}" method="POST"
+                                              enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" value="{{ $seekerProfile->seeker->id }}" name="id"/>
                                             <div id="ImgPreview" class="img">
                                                 <img id="blah"
-                                                     src= "{{ $seekerProfile->seeker->avatar_url ? asset('storage/'.$seekerProfile->seeker->avatar_url) : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/OOjs_UI_icon_userAvatar-constructive.svg/1024px-OOjs_UI_icon_userAvatar-constructive.svg.png" }}">
-                                                <input type="file"  accept="image/*" name="seekerAvatar" id="imgInp"
+                                                     src="{{ $seekerProfile->seeker->avatar_url ? asset('storage/'.$seekerProfile->seeker->avatar_url) : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/OOjs_UI_icon_userAvatar-constructive.svg/1024px-OOjs_UI_icon_userAvatar-constructive.svg.png" }}">
+                                                <input type="file" accept="image/*" name="seekerAvatar" id="imgInp"
                                                        class="custom-fileinput">
                                                 <label class="lbcfip">Chọn ảnh ...</label>
                                                 <input type="submit" id="sbAvatar" value="✓" style="display: none;">
@@ -243,64 +244,77 @@
                                         <div class="row rowdiv1">
                                             @foreach($seekerProfile->seeker->experiences as $experience)
                                                 <div class="col-md-5">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label for="Position" id="LabelPosition_11642"
-                                                                   class="required edu-exp-label">
-                                                                Chức danh công việc
-                                                            </label>
-                                                            <span id="span-Position-11642" class="span-display-education-univer"
-                                                                  style="display: block;">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label for="Position" id="LabelPosition_11642"
+                                                                       class="required edu-exp-label">
+                                                                    Chức danh công việc
+                                                                </label>
+                                                                <span id="span-Position-11642"
+                                                                      class="span-display-education-univer"
+                                                                      style="display: block;">
                                                                 {{$experience->name}}
                                                             </span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label for="CompanyName" id="LabelCompanyName_11642"
-                                                                   class="required edu-exp-label">
-                                                                Tên công ty
-                                                            </label>
-                                                            <span id="span-CompanyName-11642" class="span-display-education"
-                                                                  style="display: block;">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label for="CompanyName" id="LabelCompanyName_11642"
+                                                                       class="required edu-exp-label">
+                                                                    Tên công ty
+                                                                </label>
+                                                                <span id="span-CompanyName-11642"
+                                                                      class="span-display-education"
+                                                                      style="display: block;">
                                                                 {{$experience->company_name}}
                                                             </span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label for="FromDateExp" id="LabelFromDateExp_11642"
-                                                                   class="required edu-exp-label" style="display: none;">
-                                                                Từ
-                                                            </label>
-                                                            <label id="LabelWorkingTime_11642" class="required edu-exp-label"
-                                                                   style="display: block;">
-                                                                Thời gian làm việc
-                                                            </label>
-                                                            <span id="span-time-Exp-11642" class="span-display-education"
-                                                                  style="display: block;">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label for="FromDateExp" id="LabelFromDateExp_11642"
+                                                                       class="required edu-exp-label"
+                                                                       style="display: none;">
+                                                                    Từ
+                                                                </label>
+                                                                <label id="LabelWorkingTime_11642"
+                                                                       class="required edu-exp-label"
+                                                                       style="display: block;">
+                                                                    Thời gian làm việc
+                                                                </label>
+                                                                <span id="span-time-Exp-11642"
+                                                                      class="span-display-education"
+                                                                      style="display: block;">
                                                                 {{Carbon\Carbon::parse($experience->time_start)->format('Y-m-d')}} - {{Carbon\Carbon::parse($experience->time_finish)->format('Y-m-d')}}
                                                             </span>
+                                                            </div>
                                                         </div>
-                                                    </div>
 
+                                                    </div>
                                                 </div>
-                                            </div>
                                                 <div class="col-md-1">
-                                                <p style="float: right;">
-                                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#editExperience">
-                                                        <i class="fa fa-pencil-square-o fa-lg" style="margin-right: 20px" aria-hidden="true"></i>
-                                                    </a>
-                                                    <a href="#">
-                                                        <i class="fa fa-trash fa-lg" style="margin: 15px 20px 0 0;color: red" aria-hidden="true"></i>
-                                                    </a>
-                                                </p>
-                                            </div>
+                                                    <p style="float: right;">
+                                                        <a href="javascript:void(0)" data-toggle="modal"
+                                                           data-target="#editExperience" data-id="{{$experience->id}}"
+                                                           data-name="{{$experience->name}}"
+                                                           data-cname="{{$experience->company_name}}"
+                                                           data-start="{{Carbon\Carbon::parse($experience->time_start)->format('Y-m-d')}}"
+                                                           data-finish="{{Carbon\Carbon::parse($experience->time_finish)->format('Y-m-d')}}">
+                                                            <i class="fa fa-pencil-square-o fa-lg"
+                                                               style="margin-right: 20px" aria-hidden="true"></i>
+                                                        </a>
+                                                        <a href="{{route('seeker.experience.delete',['id'=> $experience->id])}}">
+                                                            <i class="fa fa-trash fa-lg"
+                                                               style="margin: 15px 20px 0 0;color: red"
+                                                               aria-hidden="true"></i>
+                                                        </a>
+                                                    </p>
+                                                </div>
                                             @endforeach
                                         </div>
                                         <div class="row">
@@ -323,18 +337,36 @@
                                 <div class="col-md-12">
                                     <div class="user_exp_edu Experience_11642 div-exp-height">
                                         <div class="row rowdiv1">
-                                            <div class="col-md-6">
-                                                PHP
-                                            </div>
-                                            <div class="col-md-6">
-                                                <span style="color: #ffc107">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                </span>
-                                            </div>
+                                            @foreach($seekerProfile->seeker->skills as $skill)
+                                                <div class="col-md-5">
+                                                    {{ $skill->name }}
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <span style="color: #ffc107">
+                                                        @for($i=0;$i<$skill->level;$i++)
+                                                            <i class="fa fa-star"></i>
+                                                        @endfor
+                                                        @for($i=0;$i<5-$skill->level;$i++)
+                                                            <i class="fa fa-star-o"></i>
+                                                        @endfor
+
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <p style="float: right;">
+                                                        <a href="javascript:void(0)" data-toggle="modal"
+                                                           data-target="#editExperience">
+                                                            <i class="fa fa-pencil-square-o fa-lg"
+                                                               style="margin-right: 20px" aria-hidden="true"></i>
+                                                        </a>
+                                                        <a href="#">
+                                                            <i class="fa fa-trash fa-lg"
+                                                               style="margin: 15px 20px 0 0;color: red"
+                                                               aria-hidden="true"></i>
+                                                        </a>
+                                                    </p>
+                                                </div>
+                                            @endforeach
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
@@ -533,19 +565,22 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Email</label>
-                                <input disabled name="email" class="form-control iptt" value="{{$seekerProfile->email}}"/>
+                                <input disabled name="email" class="form-control iptt"
+                                       value="{{$seekerProfile->email}}"/>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Phone</label>
-                                <input name="phone_number" class="form-control iptt" value="{{$seekerProfile->seeker->phone_number}}"/>
+                                <input name="phone_number" class="form-control iptt"
+                                       value="{{$seekerProfile->seeker->phone_number}}"/>
                             </div>
                         </div>
                         <div class="col-md-6 pr-0">
                             <div class="form-group">
                                 <label class="control-label">Birthday</label>
-                                <input type="date" name="birthday" class="form-control iptt" value="{{Carbon\Carbon::parse($seekerProfile->seeker->birthday)->format('Y-m-d')}}"/>
+                                <input type="date" name="birthday" class="form-control iptt"
+                                       value="{{Carbon\Carbon::parse($seekerProfile->seeker->birthday)->format('Y-m-d')}}"/>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -553,14 +588,16 @@
                                 <label class="control-label">Gender</label>
                                 <select name="gender" class="form-control iptt">
                                     <option value="0">Nam</option>
-                                    <option value="1" {{$seekerProfile->seeker->gender == 1 ? 'selected' : ''}}>Nữ</option>
+                                    <option value="1" {{$seekerProfile->seeker->gender == 1 ? 'selected' : ''}}>Nữ
+                                    </option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Address</label>
-                                <input name="address" class="form-control iptt" value="{{$seekerProfile->seeker->address}}"/>
+                                <input name="address" class="form-control iptt"
+                                       value="{{$seekerProfile->seeker->address}}"/>
                             </div>
                         </div>
                     </div>
@@ -633,36 +670,36 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="#" method="POST">
+                <form action="{{route('seeker.experience.edit')}}" method="POST">
                     @csrf
-                    <input type="hidden" name="id" value="1"/>
+                    <input type="hidden" name="id" id="eExp-id"/>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Tên chức vụ</label>
-                                <input name="Name" class="form-control iptt"/>
+                                <input id="eExp-name" name="name" class="form-control iptt"/>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Tên công ty</label>
-                                <input name="CompanyName" class="form-control iptt"/>
+                                <input id="eExp-com-name" name="company_name" class="form-control iptt"/>
                             </div>
                         </div>
                         <div class="col-md-6 pr-0">
                             <div class="form-group">
                                 <label class="control-label">Ngày bắt đầu</label>
-                                <input type="date" name="DateBegin" class="form-control iptt"/>
+                                <input id="eExp-start" type="date" name="time_start" class="form-control iptt"/>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Ngày kết thúc</label>
-                                <input type="date" name="DateEnd" class="form-control iptt"/>
+                                <input id="eExp-finish" type="date" name="time_finish" class="form-control iptt"/>
                             </div>
                         </div>
                     </div>
-                    <button class="btn-sm btn-primary" type="submit">Thêm mới</button>
+                    <button class="btn-sm btn-primary" type="submit">Cập nhật</button>
                 </form>
             </div>
         </div>
@@ -681,13 +718,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="?c=User&a=AddSkill" method="POST">
+                <form action="{{route('seeker.skill.add')}}" method="POST">
+                    @csrf
                     <input type="hidden" name="id" value="1"/>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">Tên kỹ năng</label>
-                                <input name="Name" class="form-control iptt"/>
+                                <input name="name" class="form-control iptt"/>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -698,7 +736,7 @@
                         <div class="col-md-12">
                             <div class="range-slider">
                                 <input class="range-slider__range" type="range" value="0" min="1" max="5" step="1"
-                                       name="Level">
+                                       name="level">
                                 <span class="range-slider__value">0</span>
                             </div>
                         </div>
@@ -912,6 +950,24 @@
         readURL2(this);
         $("#sbAvatar2").attr('style', 'display: block');
     });
+
+
+    $('#editExperience').on('shown.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var id = button.data('id');
+        var name = button.data('name');
+        var com_name = button.data('cname');
+        var start = button.data('start');
+        var finish = button.data('finish');
+        console.log(id, name, com_name, start, finish);
+        $("#eExp-id").val(id);
+        $("#eExp-name").val(name);
+        $("#eExp-com-name").val(com_name);
+        $("#eExp-start").val(start);
+        $("#eExp-finish").val(finish);
+        // console.log();
+        // alert(recipient);
+    })
 </script>
 
 

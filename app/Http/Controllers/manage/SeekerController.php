@@ -16,7 +16,7 @@ class SeekerController extends Controller
 {
     public function showProfile(){
         $seekerId = Auth::id();
-        $seekerProfile = User::with('seeker.experiences')->find($seekerId);
+        $seekerProfile = User::with('seeker.experiences','seeker.skills')->find($seekerId);
         return view('seeker.profile',compact('seekerProfile'));
     }
 
