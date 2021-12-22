@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\auth\AuthController;
 use App\Http\Controllers\auth\ForgotPasswordController;
+use App\Http\Controllers\manage\CompanyController;
+use App\Http\Controllers\manage\EducationController;
 use App\Http\Controllers\manage\ExperienceController;
 use App\Http\Controllers\manage\SeekerController;
 use App\Http\Controllers\manage\SkillController;
@@ -57,4 +59,19 @@ Route::namespace('Seeker')
         Route::post('/skill/add',[SkillController::class,'addSkill'])->name('skill.add');
         Route::post('/skill/edit',[SkillController::class,'editSkill'])->name('skill.edit');
         Route::get('/skill/delete',[SkillController::class,'deleteSkill'])->name('skill.delete');
+        //Education
+        Route::post('/education/add',[EducationController::class,'addEducation'])->name('education.add');
+        Route::post('/education/edit',[EducationController::class,'editEducation'])->name('education.edit');
+        Route::get('/education/delete',[EducationController::class,'deleteEducation'])->name('education.delete');
+    });
+
+Route::namespace('Company')
+    ->name('company.')
+    ->prefix('company')
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('/profile',[CompanyController::class,'showProfile'])->name('profile.show');
+        Route::post('/profile/update-avatar',[SeekerController::class,'updateAvatar'])->name('profile.updateAvatar');
+        Route::post('/profile/update-profile',[CompanyController::class,'updateProfile'])->name('profile.updateProfile');
+
     });

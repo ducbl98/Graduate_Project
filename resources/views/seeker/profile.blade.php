@@ -109,7 +109,7 @@
                                             <div id="ImgPreview" class="img">
                                                 <img id="blah"
                                                      src="{{ $seekerProfile->seeker->avatar_url ? asset('storage/'.$seekerProfile->seeker->avatar_url) : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/OOjs_UI_icon_userAvatar-constructive.svg/1024px-OOjs_UI_icon_userAvatar-constructive.svg.png" }}">
-                                                <input type="file" accept="image/*" name="seekerAvatar" id="imgInp"
+                                                <input type="file" accept="image/*" name="seeker_avatar" id="imgInp"
                                                        class="custom-fileinput">
                                                 <label class="lbcfip">Chọn ảnh ...</label>
                                                 <input type="submit" id="sbAvatar" value="✓" style="display: none;">
@@ -233,6 +233,112 @@
                             </div>
 
                             <!-- </form> -->
+                            <h2 class="user--profile-title-group" style="margin-bottom: -10px;">Học vấn </h2>
+                            <div class="row">
+                                <a href="javascript:void(0)" data-toggle="modal" data-target="#addEducation"
+                                   style="float: right; display: block; text-align: center; width: 25px; height: 25px; position: relative; right: -91%; background: #3F51B5; border-radius: 50%; line-height: 27px; color: #fff;">
+                                    <span class="fa fa-plus"></span>
+                                </a>
+                                <div class="col-md-12">
+                                    <div class="user_exp_edu Experience_11642 div-exp-height">
+                                        <div class="row rowdiv1">
+                                            @foreach($seekerProfile->seeker->educations as $education)
+                                                <div class="col-md-5">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <span id="span-Position-11642"
+                                                                      class="span-display-education-univer"
+                                                                      style="display: block;color: yellowgreen;font-size: 20px;font-weight: 500;">
+                                                                {{$education->facility}}
+                                                            </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label for="CompanyName" id="LabelCompanyName_11642"
+                                                                       class="required edu-exp-label">
+                                                                    Chuyên nghành
+                                                                </label>
+                                                                <span id="span-CompanyName-11642"
+                                                                      class="span-display-education"
+                                                                      style="display: block;">
+                                                                {{$education->major}}
+                                                            </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label for="CompanyName" id="LabelCompanyName_11642"
+                                                                       class="required edu-exp-label">
+                                                                    Kết quả đào tạo
+                                                                </label>
+                                                                <span id="span-CompanyName-11642"
+                                                                      class="span-display-education"
+                                                                      style="display: block;">
+                                                                {{$education->degree}}
+                                                            </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label for="FromDateExp" id="LabelFromDateExp_11642"
+                                                                       class="required edu-exp-label"
+                                                                       style="display: none;">
+                                                                    Từ
+                                                                </label>
+                                                                <label id="LabelWorkingTime_11642"
+                                                                       class="required edu-exp-label"
+                                                                       style="display: block;">
+                                                                    Thời gian
+                                                                </label>
+                                                                <span id="span-time-Exp-11642"
+                                                                      class="span-display-education"
+                                                                      style="display: block;">
+                                                                {{Carbon\Carbon::parse($education->time_start)->format('Y-m-d')}} - {{$education->state}}
+                                                            </span>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <p style="float: right;">
+                                                        <a href="javascript:void(0)" data-toggle="modal"
+                                                           data-target="#editEducation" data-id="{{$education->id}}"
+                                                           data-facility="{{$education->facility}}"
+                                                           data-major="{{$education->major}}"
+                                                           data-degree="{{$education->degree}}"
+                                                           data-start="{{Carbon\Carbon::parse($education->time_start)->format('Y-m-d')}}"
+                                                           data-state="{{$education->state}}">
+                                                            <i class="fa fa-pencil-square-o fa-lg"
+                                                               style="margin-right: 20px" aria-hidden="true"></i>
+                                                        </a>
+                                                        <a href="{{route('seeker.education.delete',['id'=> $education->id])}}">
+                                                            <i class="fa fa-trash fa-lg"
+                                                               style="margin: 15px 20px 0 0;color: red"
+                                                               aria-hidden="true"></i>
+                                                        </a>
+                                                    </p>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <hr class="break-line">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- </form> -->
                             <h2 class="user--profile-title-group" style="margin-bottom: -10px;">Kinh nghiệm </h2>
                             <div class="row">
                                 <a href="javascript:void(0)" data-toggle="modal" data-target="#addExperience"
@@ -336,7 +442,7 @@
                                 </a>
                                 <div class="col-md-12">
                                     <div class="user_exp_edu Experience_11642 div-exp-height">
-                                        <div class="row rowdiv1">
+                                        <div class="row rowdiv2">
                                             @foreach($seekerProfile->seeker->skills as $skill)
                                                 <div class="col-md-5">
                                                     {{ $skill->name }}
@@ -352,19 +458,25 @@
 
                                                     </span>
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-1">
                                                     <p style="float: right;">
-                                                        <a href="javascript:void(0)" data-toggle="modal"
-                                                           data-target="#editExperience">
-                                                            <i class="fa fa-pencil-square-o fa-lg"
-                                                               style="margin-right: 20px" aria-hidden="true"></i>
+                                                        <a href="javascript:void(0)" data-toggle="modal" data-target="#editSkill" data-id="{{$skill->id}}"
+                                                           data-name="{{$skill->name}}" data-level="{{$skill->level}}">
+                                                            <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
                                                         </a>
-                                                        <a href="#">
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <p style="float: right;">
+                                                        <a href="{{route('seeker.skill.delete',["id"=>$skill->id])}}">
                                                             <i class="fa fa-trash fa-lg"
-                                                               style="margin: 15px 20px 0 0;color: red"
+                                                               style="color: red"
                                                                aria-hidden="true"></i>
                                                         </a>
                                                     </p>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <br>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -609,6 +721,116 @@
 </div>
 <!-- (end) Modal edit info -->
 
+<!-- Modal add education-->
+<div class="modal fade" id="addEducation" tabindex="-1" role="dialog" aria-labelledby="addEducation"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addEducation">Thêm trình độ học vấn</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{route('seeker.education.add')}}" method="POST">
+                    @csrf
+                    <input type="hidden" name="id" value="1"/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Cơ sở giáo dục</label>
+                                <input name="facility" class="form-control iptt"/>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Chuyên ngành</label>
+                                <input name="major" class="form-control iptt"/>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Kết quả học tập</label>
+                                <input name="degree" class="form-control iptt"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6 pr-0">
+                            <div class="form-group">
+                                <label class="control-label">Ngày bắt đầu</label>
+                                <input type="date" name="time_start" class="form-control iptt"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Trạng thái</label>
+                                <input  name="state" class="form-control iptt"/>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn-sm btn-primary" type="submit">Thêm mới</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- (end) Modal add education -->
+
+<!-- Modal edit education-->
+<div class="modal fade" id="editEducation" tabindex="-1" role="dialog" aria-labelledby="editEducation"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editEducation">Sửa trình độ học vấn</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{route('seeker.education.edit')}}" method="POST">
+                    @csrf
+                    <input type="hidden" name="id" id="eEdu-id"/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Cơ sở giáo dục</label>
+                                <input id="eEdu-facility" name="facility" class="form-control iptt"/>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Chuyên ngành</label>
+                                <input id="eEdu-major" name="major" class="form-control iptt"/>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Kết quả học tập</label>
+                                <input id="eEdu-degree" name="degree" class="form-control iptt"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6 pr-0">
+                            <div class="form-group">
+                                <label class="control-label">Ngày bắt đầu</label>
+                                <input type="date" id="eEdu-start" name="time_start" class="form-control iptt"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Trạng thái</label>
+                                <input  id="eEdu-state" name="state" class="form-control iptt"/>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn-sm btn-primary" type="submit">Cập nhật</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- (end) Modal edit education -->
+
 <!-- Modal add experience-->
 <div class="modal fade" id="addExperience" tabindex="-1" role="dialog" aria-labelledby="addExperience"
      aria-hidden="true">
@@ -748,6 +970,48 @@
     </div>
 </div>
 <!-- (end) Modal add skill -->
+
+<!-- Modal edit skill-->
+<div class="modal fade" id="editSkill" tabindex="-1" role="dialog" aria-labelledby="editSkill" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editSkill">Sửa kỹ năng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{route('seeker.skill.edit')}}" method="POST">
+                    @csrf
+                    <input type="hidden" name="id" id="eSk-id"/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Tên kỹ năng</label>
+                                <input id="eSk-name" name="name" class="form-control iptt"/>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Mức độ</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="range-slider">
+                                <input class="range-slider__range" id="eSk-level" type="range"
+                                       min="1" max="5" step="1" name="level">
+                                <span class="range-slider__value">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn-sm btn-primary" type="submit">Thay đổi</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- (end) Modal edit skill -->
 
 <!-- job support -->
 <div class="container-fluid job-support-wrapper">
@@ -951,7 +1215,6 @@
         $("#sbAvatar2").attr('style', 'display: block');
     });
 
-
     $('#editExperience').on('shown.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
         var id = button.data('id');
@@ -965,6 +1228,39 @@
         $("#eExp-com-name").val(com_name);
         $("#eExp-start").val(start);
         $("#eExp-finish").val(finish);
+        // console.log();
+        // alert(recipient);
+    })
+
+    $('#editSkill').on('shown.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var id = button.data('id');
+        var name = button.data('name');
+        var level = button.data('level');
+        console.log(id,name,level);
+        $("#eSk-id").val(id);
+        $("#eSk-name").val(name);
+        $("#eSk-level").val(level);
+        $('.range-slider__value').html(level);
+        // console.log();
+        // alert(recipient);
+    })
+
+    $('#editEducation').on('shown.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var id = button.data('id');
+        var facility = button.data('facility');
+        var major = button.data('major');
+        var degree = button.data('degree');
+        var start = button.data('start');
+        var state = button.data('state');
+        console.log(id,facility,major,degree,start,state);
+        $("#eEdu-id").val(id);
+        $("#eEdu-facility").val(facility);
+        $("#eEdu-major").val(major);
+        $("#eEdu-degree").val(degree);
+        $("#eEdu-start").val(start);
+        $("#eEdu-state").val(state);
         // console.log();
         // alert(recipient);
     })

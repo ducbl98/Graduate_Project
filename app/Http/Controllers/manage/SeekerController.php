@@ -16,21 +16,21 @@ class SeekerController extends Controller
 {
     public function showProfile(){
         $seekerId = Auth::id();
-        $seekerProfile = User::with('seeker.experiences','seeker.skills')->find($seekerId);
+        $seekerProfile = User::with('seeker.experiences','seeker.skills','seeker.educations')->find($seekerId);
         return view('seeker.profile',compact('seekerProfile'));
     }
 
     public function updateAvatar(SeekerImageUpdateRequest $request): RedirectResponse
     {
         $seeker = Seeker::with('user')->find($request->id);
-        $avatar = $request->seekerAvatar;
-        if ($request->hasFile('seekerAvatar')) {
+        $avatar = $request->seeker_avatar;
+        if ($request->hasFile('seeker_avatar')) {
             $avatarCurrent = $seeker->avatar_url;
             if ($avatarCurrent) {
                 Storage::delete($avatarCurrent);
             }
             $newAvatarName = time() . '-' . $seeker->user->name . "." . $avatar->getClientOriginalExtension();
-            $request->file('seekerAvatar')->storeAs('images/seekers', $newAvatarName);
+            $request->file('seeker_avatar')->storeAs('images/seekers', $newAvatarName);
             $seeker->avatar_url = 'images/seekers/'.$newAvatarName;
         }
         $seeker->save();

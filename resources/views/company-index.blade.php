@@ -108,7 +108,7 @@
                                 Profile
                             </a>
                             <div class="dropdown-menu tdropdown" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Trang cá nhân</a>
+                                <a class="dropdown-item" href="{{route('company.profile.show')}}">Trang cá nhân</a>
                                 <a class="dropdown-item" href="{{route('logout')}}">Đăng xuất</a>
                             </div>
                         </li>

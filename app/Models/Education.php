@@ -10,6 +10,18 @@ class Education extends Model
 {
     use HasFactory;
 
+    protected $table = 'educations';
+
+    protected $fillable = [
+        'name',
+        'facility',
+        'seeker_id',
+        'time_start',
+        'major',
+        'degree',
+        'state',
+    ];
+
     public function seeker(): BelongsTo
     {
         return $this->belongsTo(Seeker::class);

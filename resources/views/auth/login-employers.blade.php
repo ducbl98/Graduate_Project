@@ -55,20 +55,21 @@
                     <!-- login main form -->
                     <div class="col-md-6 col-sm-12 col-12 login-main-right">
 
-                        <form class="login-form reg-form">
+                        <form action="{{route('login')}}" method="POST" class="login-form reg-form">
+                            @csrf
                             <div class="login-main-header">
                                 <h3>Đăng Nhập Tài Khoản Nhà Tuyển Dụng</h3>
                             </div>
                             <div class="input-div one">
                                 <div class="div lg-lable">
                                     <h5>Địa Chỉ Email<span class="req">*</span></h5>
-                                    <input type="text" class="input form-control-lgin">
+                                    <input type="text" name="email" class="input form-control-lgin">
                                 </div>
                             </div>
                             <div class="input-div one">
                                 <div class="div lg-lable">
                                     <h5>Mật khẩu<span class="req">*</span></h5>
-                                    <input type="password" class="input form-control-lgin">
+                                    <input type="password" name="password" class="input form-control-lgin">
                                 </div>
                             </div>
                             <div class="form-group d-block frm-text">

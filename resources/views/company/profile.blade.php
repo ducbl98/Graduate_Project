@@ -6,16 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Roboto Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i&display=swap"
+          rel="stylesheet">
 
     <!-- bootstrap css -->
     <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.min.css')}}">
 
 
-
     <!-- Font Awesome -->
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
     <!-- select 2 css -->
     <link rel="stylesheet" href="{{asset('css/select2.min.css')}}">
@@ -33,7 +36,9 @@
             <a href="#" class="nav-logo">
                 <img src="{{asset('img/techjobs_bgw.png')}}" alt="">
             </a>
-            <button class="navbar-toggler tnavbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler tnavbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
                 <!-- <span class="navbar-toggler-icon"></span> -->
                 <i class="fa fa-bars icn-res" aria-hidden="true"></i>
 
@@ -48,7 +53,8 @@
                         <a class="nav-link" href="#">Tin Tức</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Dropdown
                         </a>
                         <div class="dropdown-menu tdropdown" aria-labelledby="navbarDropdown">
@@ -60,25 +66,21 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav mr-auto my-2 my-lg-0 tnav-right tn-nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#"><i class="fa fa-search" aria-hidden="true"></i> <span class="hidden-text">Tìm kiếm</span></a>
-                    </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Đăng Ký</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Đăng Nhập</a>
+                        <img
+                            src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/51158316-fd7e-48ca-b5fe-8542e9dfe357/denpw7t-09ac7bf3-0bd5-4a0c-bfa3-7f5762f6aaa5.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzUxMTU4MzE2LWZkN2UtNDhjYS1iNWZlLTg1NDJlOWRmZTM1N1wvZGVucHc3dC0wOWFjN2JmMy0wYmQ1LTRhMGMtYmZhMy03ZjU3NjJmNmFhYTUucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.D0bPWTJZRiyKO645ADf5TaSlxU-i4CDfxYaOsvKuDeY"
+                            alt=""
+                            style="vertical-align: middle; width: 35px; height: 35px; border-radius: 50%;">
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            VI
+                        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            {{$companyProfile->name}}
                         </a>
                         <div class="dropdown-menu tdropdown" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">English</a>
+                            <a class="dropdown-item" href="{{route('company.profile.show')}}">Trang cá nhân</a>
+                            <a class="dropdown-item" href="{{route('logout')}}">Đăng xuất</a>
                         </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn-employers" href="#" tabindex="-1" aria-disabled="true" style="color: #fff!important">Nhà Tuyển Dụng</a>
                     </li>
                 </ul>
             </div>
@@ -91,7 +93,8 @@
 
 <!-- recuiter Nav -->
 <nav class="navbar navbar-expand-lg navbar-light nav-recuitment">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNava" aria-controls="navbarNava" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNava"
+            aria-controls="navbarNava" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse container" id="navbarNava">
@@ -130,12 +133,15 @@
     <div class="container published-recuitment-content">
         <div class="row">
             <div class="col-md-8 col-sm-12 col-12 recuitment-inner">
-                <form class="employee-form">
+                <form action="{{route('company.profile.updateProfile')}}" method="POST" class="employee-form" enctype="multipart/form-data">
+                    @csrf
                     <div class="accordion" id="accordionExample">
                         <div class="card recuitment-card">
                             <div class="card-header recuitment-card-header" id="headingOne">
                                 <h2 class="mb-0">
-                                    <a class="btn btn-link btn-block text-left recuitment-header" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <a class="btn btn-link btn-block text-left recuitment-header" type="button"
+                                       data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                                       aria-controls="collapseOne">
                                         Thông tin tài khoản
                                         <span id="clickc1_advance2" class="clicksd">
                                             <i class="fa fa fa-angle-up"></i>
@@ -144,49 +150,67 @@
                                 </h2>
                             </div>
 
-                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                 data-parent="#accordionExample">
                                 <div class="card-body recuitment-body row">
                                     <div class="col-md-3">
                                         <div class="avatar-upload">
                                             <div class="avatar-edit">
-                                                <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+                                                <input type='file' name="company_avatar" id="imageUpload"
+                                                       accept=".png, .jpg, .jpeg"/>
                                                 <label for="imageUpload"></label>
                                             </div>
                                             <div class="avatar-preview">
-                                                <div id="imagePreview" style="background-image: url(https://i.pravatar.cc/500?img=7);">
+                                                <div id="imagePreview"
+                                                     style="background-image: url({{$companyProfile->company->avatar_url ? "/storage/".$companyProfile->company->avatar_url :"https://i.pravatar.cc/500?img=7"}});">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-9">
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label text-right label">Người liên hệ<span style="color: red" class="pl-2">*</span></label>
+                                            <label class="col-sm-3 col-form-label text-right label">Người liên hệ<span
+                                                    style="color: red" class="pl-2">*</span></label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" placeholder="Nhập tên người liên hệ">
+                                                <input type="text" class="form-control" name="contact_name"
+                                                       value="{{$companyProfile->company->contact_name}}"
+                                                       placeholder="Nhập tên người liên hệ">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label text-right label">Tên công ty<span style="color: red" class="pl-2">*</span></label>
+                                            <label class="col-sm-3 col-form-label text-right label">Tên công ty<span
+                                                    style="color: red" class="pl-2">*</span></label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" placeholder="Nhập tên công ty">
+                                                <input type="text" class="form-control" name="name"
+                                                       value="{{$companyProfile->name}}"
+                                                       placeholder="Nhập tên công ty">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label text-right label">Email<span style="color: red" class="pl-2">*</span></label>
+                                            <label class="col-sm-3 col-form-label text-right label">Email<span
+                                                    style="color: red" class="pl-2">*</span></label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" placeholder="Địa chỉ email">
+                                                <input disabled type="text" class="form-control"
+                                                       value="{{$companyProfile->email}}"
+                                                       placeholder="Địa chỉ email">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label text-right label">Địa chỉ<span style="color: red" class="pl-2">*</span></label>
+                                            <label class="col-sm-3 col-form-label text-right label">Địa chỉ<span
+                                                    style="color: red" class="pl-2">*</span></label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" placeholder="Nhập địa chỉ">
+                                                <input type="text" class="form-control" name="address"
+                                                       value="{{$companyProfile->company->address}}"
+                                                       placeholder="Nhập địa chỉ">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label text-right label">Số điện thoại</label>
+                                            <label class="col-sm-3 col-form-label text-right label">Số điện
+                                                thoại</label>
                                             <div class="col-sm-9">
-                                                <input type="number" class="form-control">
+                                                <input type="number" name="phone_number"
+                                                       value="{{$companyProfile->company->phone_number}}"
+                                                       class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -197,7 +221,9 @@
                         <div class="card recuitment-card">
                             <div class="card-header recuitment-card-header" id="headingThree">
                                 <h2 class="mb-0">
-                                    <a class="btn btn-link btn-block text-left collapsed recuitment-header" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    <a class="btn btn-link btn-block text-left collapsed recuitment-header"
+                                       type="button" data-toggle="collapse" data-target="#collapseThree"
+                                       aria-expanded="false" aria-controls="collapseThree">
                                         Thông tin chung
                                         <span id="clickc1_advance1" class="clicksd">
                                             <i class="fa fa fa-angle-up"></i>
@@ -205,96 +231,49 @@
                                     </a>
                                 </h2>
                             </div>
-                            <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionExample">
+                            <div id="collapseThree" class="collapse show" aria-labelledby="headingThree"
+                                 data-parent="#accordionExample">
                                 <div class="card-body recuitment-body">
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label text-right label">Quy mô nhân sự<span style="color: red" class="pl-2">*</span></label>
+                                        <label class="col-sm-3 col-form-label text-right label">Quy mô nhân sự<span
+                                                style="color: red" class="pl-2">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="number" class="form-control" placeholder="Nhập số lượng nhân viên"/>
+                                            <input type="number" class="form-control" name="size"
+                                                   value="{{$companyProfile->company->size}}"
+                                                   placeholder="Nhập số lượng nhân viên"/>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label text-right label">Tỉnh/ Thành phô<span style="color: red" class="pl-2">*</span></label>
+                                        <label class="col-sm-3 col-form-label text-right label">Tỉnh/ Thành phô<span
+                                                style="color: red" class="pl-2">*</span></label>
                                         <div class="col-sm-9">
-                                            <select type="text" class="form-control" id="jobProvince2">
-                                                <option value="1">Hồ Chí Minh</option>
-                                                <option value="2">Hà Nội</option>
-                                                <option value="3">An Giang</option>
-                                                <option value="4">Bạc Liêu</option>
-                                                <option value="5">Bà Rịa-Vũng Tàu</option>
-                                                <option value="6">Bắc Cạn</option>
-                                                <option value="7">Bắc Giang</option>
-                                                <option value="8">Bắc Ninh</option>
-                                                <option value="9">Bến Tre</option>
-                                                <option value="10">Bình Dương</option>
-                                                <option value="11">Bình Định</option>
-                                                <option value="12">Bình Phước</option>
-                                                <option value="13">Bình Thuận</option>
-                                                <option value="14">Cao Bằng</option>
-                                                <option value="15">Cà Mau</option>
-                                                <option value="16">Cần Thơ</option>
-                                                <option value="17">Đà Nẵng</option>
-                                                <option value="18">Đắk Lắk</option>
-                                                <option value="19">Đắk Nông</option>
-                                                <option value="20">Điện Biên</option>
-                                                <option value="21">Đồng Nai</option>
-                                                <option value="22">Đồng Tháp</option>
-                                                <option value="23">Gia Lai</option>
-                                                <option value="24">Hà Giang</option>
-                                                <option value="25">Hà Nam</option>
-                                                <option value="27">Hà Tĩnh</option>
-                                                <option value="28">Hải Dương</option>
-                                                <option value="29">Hải Phòng</option>
-                                                <option value="30">Hậu Giang</option>
-                                                <option value="31">Hòa Bình</option>
-                                                <option value="32">Hưng Yên</option>
-                                                <option value="33">Khánh Hòa</option>
-                                                <option value="34">Kiên Giang</option>
-                                                <option value="35">Kon Tum</option>
-                                                <option value="36">Lai Châu</option>
-                                                <option value="37">Lạng Sơn</option>
-                                                <option value="38">Lào Cai</option>
-                                                <option value="39">Lâm Đồng</option>
-                                                <option value="40">Long An</option>
-                                                <option value="41">Nam Định</option>
-                                                <option value="42">Nghệ An</option>
-                                                <option value="43">Ninh Bình</option>
-                                                <option value="44">Ninh Thuận</option>
-                                                <option value="45">Phú Thọ</option>
-                                                <option value="46">Phú Yên</option>
-                                                <option value="47">Quảng Bình</option>
-                                                <option value="48">Quảng Nam</option>
-                                                <option value="49">Quảng Ngãi</option>
-                                                <option value="50">Quảng Ninh</option>
-                                                <option value="51">Quảng Trị</option>
-                                                <option value="52">Sóc Trăng</option>
-                                                <option value="53">Sơn La</option>
-                                                <option value="54">Tây Ninh</option>
-                                                <option value="55">Thái Bình</option>
-                                                <option value="56">Thái Nguyên</option>
-                                                <option value="57">Thanh Hóa</option>
-                                                <option value="58">Thừa Thiên-Huế</option>
-                                                <option value="59">Tiền Giang</option>
-                                                <option value="60">Trà Vinh</option>
-                                                <option value="61">Tuyên Quang</option>
-                                                <option value="62">Vĩnh Long</option>
-                                                <option value="63">Vĩnh Phúc</option>
-                                                <option value="64">Yên Bái</option>
-                                                <option value="65">Toàn quốc</option>
-                                                <option value="66">Nước ngoài</option>
+                                            <select type="text" name=province_id class="form-control" id="jobProvince2">
+                                                @foreach($provinces as $province)
+                                                    <option
+                                                        value="{{$province->id}}"
+                                                        {{$companyProfile->company->province_id == $province->id ? "selected" : ""}}
+                                                    >
+                                                        {{$province->name}}
+                                                    </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label text-right label">Sơ lược về công ty<span style="color: red" class="pl-2">*</span></label>
+                                        <label class="col-sm-3 col-form-label text-right label">Sơ lược về công ty<span
+                                                style="color: red" class="pl-2">*</span></label>
                                         <div class="col-sm-9">
-                                            <textarea type="text" class="form-control" placeholder="Sơ lược về công ty" rows="8"></textarea>
+                                            <textarea type="text" name="description" class="form-control"
+                                                      placeholder="Sơ lược về công ty" rows="10"
+                                                      style="align-content:center; overflow:auto; border:6px outset #000000;"
+                                            >{{$companyProfile->company->description}}</textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label text-right label">Website</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" placeholder="Website"/>
+                                            <input type="text" name="website" class="form-control"
+                                                   value="{{$companyProfile->company->website}}" placeholder="Website"/>
                                         </div>
                                     </div>
                                 </div>
@@ -350,9 +329,6 @@
 <div class="clearfix"></div>
 
 
-
-
-
 <!-- job support -->
 <div class="container-fluid job-support-wrapper">
     <div class="container-fluid job-support-wrap">
@@ -393,7 +369,8 @@
                     <span>About</span>
                 </h2>
                 <p class="footer-content">
-                    Discover the best way to find houses, condominiums, apartments and HDBs for sale and rent in Singapore with JobsOnline, Singapore's Fastest Growing Jobs Portal.
+                    Discover the best way to find houses, condominiums, apartments and HDBs for sale and rent in
+                    Singapore with JobsOnline, Singapore's Fastest Growing Jobs Portal.
                 </p>
                 <ul class="footer-contact">
                     <li>
@@ -496,15 +473,16 @@
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-            reader.onload = function(e) {
-                $('#imagePreview').css('background-image', 'url('+e.target.result +')');
+            reader.onload = function (e) {
+                $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
                 // $('#imagePreview').hide();
                 // $('#imagePreview').fadeIn(650);
             }
             reader.readAsDataURL(input.files[0]);
         }
     }
-    $("#imageUpload").change(function() {
+
+    $("#imageUpload").change(function () {
         readURL(this);
     });
 </script>

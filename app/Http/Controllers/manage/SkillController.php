@@ -25,11 +25,9 @@ class SkillController extends Controller
 
     public function editSkill(Request $request): RedirectResponse
     {
-        Experience::where('id',$request->id)->update([
+        Skill::where('id',$request->id)->update([
             'name' => $request->name,
-            'company_name' => $request->company_name,
-            'time_start' => $request->time_start,
-            'time_finish' => $request->time_finish,
+            'level' => $request->level,
         ]);
 
         return back();
@@ -37,7 +35,7 @@ class SkillController extends Controller
 
     public function deleteSkill(Request $request): RedirectResponse
     {
-        Experience::where('id',$request->id)->delete();
+        Skill::where('id',$request->id)->delete();
         return back();
     }
 }

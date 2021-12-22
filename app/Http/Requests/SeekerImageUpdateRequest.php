@@ -24,7 +24,7 @@ class SeekerImageUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'seekerAvatar' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'seeker_avatar' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ];
     }
 }

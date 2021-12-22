@@ -21,7 +21,7 @@ class CreateEducationsTable extends Migration
             $table->string('degree');
             $table->string('description')->nullable();
             $table->dateTime('time_start');
-            $table->dateTime('time_finish');
+            $table->string('state');
             $table->foreign('seeker_id')->references('id')->on('seekers')->onDelete('cascade');
             $table->timestamps();
         });
