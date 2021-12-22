@@ -163,7 +163,7 @@
     <div class="tv-content-left">
         <div class="tv-profile-left">
             <div class="tv-published-recruitment bg-fc205c color-white text-center ph-20 pv-8">
-                <a href="#" class="color-white" style="color: white !important;">
+                <a href="{{route('company.post.create')}}" class="color-white" style="color: white !important;">
                     <p class="mb-5 fw-500">
                         <img class="icon-flat" src="https://timviec.com.vn/icon-menu/upload-1.png" alt=""> Đăng tin
                         tuyển dụng

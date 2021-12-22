@@ -5,6 +5,7 @@ use App\Http\Controllers\auth\ForgotPasswordController;
 use App\Http\Controllers\manage\CompanyController;
 use App\Http\Controllers\manage\EducationController;
 use App\Http\Controllers\manage\ExperienceController;
+use App\Http\Controllers\manage\PostController;
 use App\Http\Controllers\manage\SeekerController;
 use App\Http\Controllers\manage\SkillController;
 use App\Models\Experience;
@@ -71,7 +72,11 @@ Route::namespace('Company')
     ->middleware('auth')
     ->group(function () {
         Route::get('/profile',[CompanyController::class,'showProfile'])->name('profile.show');
-        Route::post('/profile/update-avatar',[SeekerController::class,'updateAvatar'])->name('profile.updateAvatar');
         Route::post('/profile/update-profile',[CompanyController::class,'updateProfile'])->name('profile.updateProfile');
-
+        //Post
+        Route::get('/post/create',[PostController::class,'createPost'])->name('post.create');
+        Route::get('/post/edit',[PostController::class,'editPost'])->name('post.edit');
+        Route::post('/post/store',[PostController::class,'storePost'])->name('post.store');
+        Route::post('/post/update',[PostController::class,'updatePost'])->name('post.update');
+        Route::get('/post/delete',[PostController::class,'createPost'])->name('post.create');
     });
