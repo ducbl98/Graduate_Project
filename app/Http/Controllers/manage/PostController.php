@@ -37,9 +37,9 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function storePost(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**

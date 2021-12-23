@@ -20,7 +20,10 @@
         $("#jobExperience").select2({
              data:listjob
         });
-        $("#jobSalary").select2({
+        $("#jobSalaryFrom").select2({
+             data:listjob
+        });
+        $("#jobSalaryTo").select2({
              data:listjob
         });
         $("#jobWorkTime").select2({
