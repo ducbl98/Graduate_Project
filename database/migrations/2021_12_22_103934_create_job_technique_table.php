@@ -16,9 +16,9 @@ class CreateJobTechniqueTable extends Migration
         Schema::create('job_technique', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('job_id');
-            $table->unsignedBigInteger('technique_id');
+            $table->unsignedBigInteger('technique_id')->nullable();
             $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
-            $table->foreign('technique_id')->references('id')->on('techniques')->onDelete('cascade');
+            $table->foreign('technique_id')->references('id')->on('techniques');
             $table->timestamps();
         });
     }

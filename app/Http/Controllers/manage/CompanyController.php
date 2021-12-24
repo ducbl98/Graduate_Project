@@ -62,6 +62,6 @@ class CompanyController extends Controller
             'description' => $request->description,
             'address' => $request->address,
         ]);
-        return redirect()->route('company.profile.show');
+        return back();
     }
 }

@@ -16,9 +16,9 @@ class CreateJobCategoryTable extends Migration
         Schema::create('job_category', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('job_id');
-            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
         });
     }
@@ -31,8 +31,6 @@ class CreateJobCategoryTable extends Migration
     public function down()
     {
         Schema::table('job_category', function (Blueprint $table) {
-            $table->unsignedBigInteger('job_id');
-            $table->unsignedBigInteger('category_id');
             $table->dropForeign('job_category_job_id_foreign');
             $table->dropForeign('job_category_category_id_foreign');
         });

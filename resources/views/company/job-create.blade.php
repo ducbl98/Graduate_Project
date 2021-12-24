@@ -26,6 +26,9 @@
 
     <!-- main css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+
+    <-- multiple select -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 <body>
 <!-- main nav -->
@@ -212,6 +215,51 @@
                                         <div class="col-sm-9">
                                             <input type="text" name="experience" class="form-control"
                                                    placeholder="Nhập yêu cầu kinh nghiệm">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label text-right label">Danh mục<span
+                                                style="color: red" class="pl-2">*</span></label>
+                                        <div class="col-sm-9">
+                                            <select class="js-category-multiple" name="categories[]" multiple="multiple">
+                                                @foreach($categories as $category)
+                                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    {{--<div class="form-group row">
+                                        <label class="col-sm-3 col-form-label text-right label">Danh mục (bổ sung)<span
+                                                style="color: red" class="pl-2">*</span></label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="optional" class="form-control"
+                                                   placeholder="Nhập yêu cầu kinh nghiệm">
+                                        </div>
+                                    </div>--}}
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label text-right label">Yêu cầu về công nghệ<span
+                                                style="color: red" class="pl-2">*</span></label>
+                                        <div class="col-sm-7">
+                                            <select class="js-technique-multiple" name="techniques[]" multiple="multiple">
+                                                @foreach($techniqueTypes as $techniqueType)
+                                                    <optgroup label="{{$techniqueType->name}}">
+                                                        @foreach($techniqueType->techniques as $technique)
+                                                            <option value="{{$technique->id}}">{{$technique->name}}</option>
+                                                        @endforeach
+                                                    </optgroup>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button type="submit" class="btn-submit-recuitment" id="add-technique">
+                                                Thêm
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label text-right label">Công nghệ (bổ sung)<span
+                                                style="color: red" class="pl-2">*</span></label>
+                                        <div class="col-sm-9" id="optional-techniques">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -628,7 +676,22 @@
 <!-- Owl Stylesheets Javascript -->
 <script src="{{asset('js/owlcarousel/owl.carousel.js')}}"></script>
 <!-- Read More Plugin -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.js-category-multiple').select2({
+            placeholder: "Chọn các danh mục"
+        });
+        $('.js-technique-multiple').select2({
+            placeholder: "Chọn các công nghệ"
+        })
 
-
+        $('#add-technique').on('click',function (e) {
+            e.preventDefault();
+            var html = '<input type="text" name="optional-technique[]" class="form-control"><br>';
+            $('#optional-techniques').append(html);
+        })
+    });
+</script>
 </body>
 </html>

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\manage;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Technique;
+use App\Models\TechniqueType;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -28,7 +31,9 @@ class PostController extends Controller
      */
     public function createPost()
     {
-        return view('company.job-create');
+        $categories = Category::all();
+        $techniqueTypes = TechniqueType::with('techniques')->get();
+        return view('company.job-create',compact('categories','techniqueTypes'));
     }
 
     /**
