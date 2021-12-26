@@ -26,15 +26,22 @@ class CreatePostRequest extends FormRequest
         return [
             'title' => 'required|string',
             'application_email' => 'required|string|email|max:100',
-            'amount' => 'required|number',
-            'work_time' => 'required|number',
+            'amount' => 'required|numeric',
+            'work_time' => 'required|numeric',
             'experience' => 'required|string|between:2,50',
-            'salary_min' => 'required_with:salary_max|number|min:0|not_in:0',
-            'salary_max' => 'required_with:salary_min|number|greater_than_field:salary_min',
+            'optional_category' => 'required_without:categories|array',
+            'optional_category.*' => 'string|distinct|min:3',
+            'technique_type_option' => 'required_with:optional_technique|array',
+            'technique_type_option.*' => 'required_with:optional_technique.*|numeric',
+            'optional_technique' => 'required_without:techniques|array',
+            'optional_technique.*' => 'string|distinct|min:3',
+            'salary_min' => 'required_with:salary_max|numeric|min:0|not_in:0',
+            'salary_max' => 'required_with:salary_min|numeric|greater_than_field:salary_min',
             'salary_unit' => 'required|string|between:1,7',
             'address'=> 'required|string|between:2,30',
+            'province_id' => 'required',
             'expire'=> 'required|date|after:tomorrow',
-            'detail'=> 'required|string'
+            'details'=> 'required|string'
         ];
     }
 }

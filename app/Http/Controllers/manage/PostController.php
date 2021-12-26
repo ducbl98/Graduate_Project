@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\manage;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreatePostRequest;
 use App\Models\Category;
-use App\Models\Technique;
+use App\Models\Province;
 use App\Models\TechniqueType;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -32,25 +33,29 @@ class PostController extends Controller
     public function createPost()
     {
         $categories = Category::all();
+        $provinces = Province::all();
         $techniqueTypes = TechniqueType::with('techniques')->get();
-        return view('company.job-create',compact('categories','techniqueTypes'));
+        return view('company.job-create', compact('categories', 'techniqueTypes','provinces'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return Response
      */
-    public function storePost(Request $request)
+    public function storePost(CreatePostRequest $request)
     {
         dd($request);
+//        $techniques = array_combine($request->technique_type_option, $request->optional_technique);
+        $techniques = array_map(null,$request->technique_type_option, $request->optional_technique);
+        dd($techniques);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function show($id)
@@ -61,7 +66,7 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function edit($id)
@@ -72,8 +77,8 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return Response
      */
     public function update(Request $request, $id)
@@ -84,11 +89,12 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function destroy($id)
     {
         //
     }
+
 }

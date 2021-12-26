@@ -27,7 +27,7 @@
     <!-- main css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
 
-    <-- multiple select -->
+    <!-- multiple select -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 <body>
@@ -182,50 +182,83 @@
                                         <label class="col-sm-3 col-form-label text-right label">Tiêu đề<span
                                                 style="color: red" class="pl-2">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="title" class="form-control"
+                                            <input type="text" name="title"  value="{{old('title')}}" class="form-control @error('title') is-invalid @enderror"
                                                    placeholder="Nhập tiêu đề">
+                                            @error('title')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label text-right label">Email nhận hồ sơ<span
                                                 style="color: red" class="pl-2">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="application_email" class="form-control"
+                                            <input type="text" name="application_email" value="{{old('application_email')}}" class="form-control @error('application_email') is-invalid @enderror"
                                                    placeholder="Nhập tiêu đề">
+                                            @error('application_email')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label text-right label">Số lượng cần
                                             tuyển</label>
                                         <div class="col-sm-9">
-                                            <input type="number" name="amount" class="form-control" placeholder="1">
+                                            <input type="number" name="amount" value="{{old('amount')}}" class="form-control @error('amount') is-invalid @enderror"
+                                                   placeholder="1">
+                                            @error('amount')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label text-right label">Thời gian làm
                                             việc</label>
                                         <div class="col-sm-9">
-                                            <input type="number" step=0.01 name="work_time" class="form-control"
+                                            <input type="number" step=0.01 name="work_time"  value="{{old('work_time')}}" class="form-control @error('work_time') is-invalid @enderror"
                                                    placeholder="1.00">
+                                            @error('work_time')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label text-right label">Yêu cầu kinh nghiệm<span
                                                 style="color: red" class="pl-2">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="experience" class="form-control"
+                                            <input type="text" name="experience" value="{{old('experience')}}" class="form-control @error('experience') is-invalid @enderror"
                                                    placeholder="Nhập yêu cầu kinh nghiệm">
+                                            @error('experience')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label text-right label">Danh mục<span
                                                 style="color: red" class="pl-2">*</span></label>
-                                        <div class="col-sm-9">
-                                            <select class="js-category-multiple" name="categories[]" multiple="multiple">
+                                        <div class="col-sm-7">
+                                            <select class="js-category-multiple @error('categories') is-invalid @enderror" name="categories[]" multiple="multiple">
                                                 @foreach($categories as $category)
-                                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                                    <option value="{{$category->id}}" {{collect(old('categories'))->contains($category->id) ? 'selected' : ''}}>{{$category->name}}</option>
                                                 @endforeach
                                             </select>
+                                            @error('categories')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button type="submit" class="btn-submit-recuitment" id="add-category">
+                                                Thêm
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label text-right label">Danh mục (bổ sung)<span
+                                                style="color: red" class="pl-2">*</span></label>
+                                        <div class="col-sm-9" id="optional-categories">
+                                            @error('optional_category')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     {{--<div class="form-group row">
@@ -244,7 +277,7 @@
                                                 @foreach($techniqueTypes as $techniqueType)
                                                     <optgroup label="{{$techniqueType->name}}">
                                                         @foreach($techniqueType->techniques as $technique)
-                                                            <option value="{{$technique->id}}">{{$technique->name}}</option>
+                                                            <option value="{{$technique->id}}" {{collect(old('techniques'))->contains($technique->id) ? 'selected' : ''}}>{{$technique->name}}</option>
                                                         @endforeach
                                                     </optgroup>
                                                 @endforeach
@@ -259,123 +292,86 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label text-right label">Công nghệ (bổ sung)<span
                                                 style="color: red" class="pl-2">*</span></label>
-                                        <div class="col-sm-9" id="optional-techniques">
+                                        <div class="col-sm-9" id="optional_techniques">
+                                            @error('optional_technique')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label text-right label">Mức lương<span
                                                 style="color: red" class="pl-2">*</span></label>
                                         <div class="col-sm-3">
-                                            <input type="number" name="salary_min" class="form-control"
+                                            <input type="number" name="salary_min" value="{{old('salary_min')}}" class="form-control @error('salary_min') is-invalid @enderror"
                                                    id="jobSalaryFrom">
+                                            @error('salary_min')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                         <div class="col-sm-1">
                                             <i class="fa fa-minus" aria-hidden="true"
                                                style="margin-top: 10px;margin-left: 10px;"></i>
                                         </div>
                                         <div class="col-sm-3">
-                                            <input type="number" name="salary_max" class="form-control"
+                                            <input type="number" name="salary_max" value="{{old('salary_max')}}" class="form-control @error('salary_max') is-invalid @enderror"
                                                    id="jobSalaryTo">
+                                            @error('salary_max')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                         <div class="col-sm-2">
-                                            <input type="text" name="salary_unit" class="form-control"
+                                            <input type="text" name="salary_unit" value="{{old('salary_unit')}}" class="form-control @error('salary_unit') is-invalid @enderror"
                                                    placeholder="Unit">
+                                            @error('salary_unit')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label text-right label">Nơi làm việc</label>
                                         <div class="col-sm-9">
-                                            <select type="text" name="province_id" class="form-control"
+                                            <select type="text" name="province_id" class="form-control @error('province_id') is-invalid @enderror"
                                                     id="jobProvince">
-                                                <option value="1">Hồ Chí Minh</option>
-                                                <option value="2">Hà Nội</option>
-                                                <option value="3">An Giang</option>
-                                                <option value="4">Bạc Liêu</option>
-                                                <option value="5">Bà Rịa-Vũng Tàu</option>
-                                                <option value="6">Bắc Cạn</option>
-                                                <option value="7">Bắc Giang</option>
-                                                <option value="8">Bắc Ninh</option>
-                                                <option value="9">Bến Tre</option>
-                                                <option value="10">Bình Dương</option>
-                                                <option value="11">Bình Định</option>
-                                                <option value="12">Bình Phước</option>
-                                                <option value="13">Bình Thuận</option>
-                                                <option value="14">Cao Bằng</option>
-                                                <option value="15">Cà Mau</option>
-                                                <option value="16">Cần Thơ</option>
-                                                <option value="17">Đà Nẵng</option>
-                                                <option value="18">Đắk Lắk</option>
-                                                <option value="19">Đắk Nông</option>
-                                                <option value="20">Điện Biên</option>
-                                                <option value="21">Đồng Nai</option>
-                                                <option value="22">Đồng Tháp</option>
-                                                <option value="23">Gia Lai</option>
-                                                <option value="24">Hà Giang</option>
-                                                <option value="25">Hà Nam</option>
-                                                <option value="27">Hà Tĩnh</option>
-                                                <option value="28">Hải Dương</option>
-                                                <option value="29">Hải Phòng</option>
-                                                <option value="30">Hậu Giang</option>
-                                                <option value="31">Hòa Bình</option>
-                                                <option value="32">Hưng Yên</option>
-                                                <option value="33">Khánh Hòa</option>
-                                                <option value="34">Kiên Giang</option>
-                                                <option value="35">Kon Tum</option>
-                                                <option value="36">Lai Châu</option>
-                                                <option value="37">Lạng Sơn</option>
-                                                <option value="38">Lào Cai</option>
-                                                <option value="39">Lâm Đồng</option>
-                                                <option value="40">Long An</option>
-                                                <option value="41">Nam Định</option>
-                                                <option value="42">Nghệ An</option>
-                                                <option value="43">Ninh Bình</option>
-                                                <option value="44">Ninh Thuận</option>
-                                                <option value="45">Phú Thọ</option>
-                                                <option value="46">Phú Yên</option>
-                                                <option value="47">Quảng Bình</option>
-                                                <option value="48">Quảng Nam</option>
-                                                <option value="49">Quảng Ngãi</option>
-                                                <option value="50">Quảng Ninh</option>
-                                                <option value="51">Quảng Trị</option>
-                                                <option value="52">Sóc Trăng</option>
-                                                <option value="53">Sơn La</option>
-                                                <option value="54">Tây Ninh</option>
-                                                <option value="55">Thái Bình</option>
-                                                <option value="56">Thái Nguyên</option>
-                                                <option value="57">Thanh Hóa</option>
-                                                <option value="58">Thừa Thiên-Huế</option>
-                                                <option value="59">Tiền Giang</option>
-                                                <option value="60">Trà Vinh</option>
-                                                <option value="61">Tuyên Quang</option>
-                                                <option value="62">Vĩnh Long</option>
-                                                <option value="63">Vĩnh Phúc</option>
-                                                <option value="64">Yên Bái</option>
-                                                <option value="65">Toàn quốc</option>
-                                                <option value="66">Nước ngoài</option>
+                                                <option value="" disabled selected>Chọn nơi làm việc</option>
+                                                @foreach($provinces as $province)
+                                                    <option value="{{$province->id}}" {{old('province_id') == $province->id ? 'selected' : ''}}>{{$province->name}}</option>
+                                                @endforeach
                                             </select>
+                                            @error('province_id')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label text-right label">Địa chỉ cụ thể<span
                                                 style="color: red" class="pl-2">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="address" class="form-control"
+                                            <input type="text" name="address"  value="{{old('address')}}" class="form-control @error('address') is-invalid @enderror"
                                                    placeholder="Nhập địa chỉ">
+                                            @error('address')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label text-right label">Hạn nộp hồ sơ<span
                                                 style="color: red" class="pl-2">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="date" name="expire" class="form-control">
+                                            <input type="date" name="expire" value="{{old('expire')}}" class="form-control @error('expire') is-invalid @enderror">
+                                            @error('expire')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label text-right label">Mô tả công việc<span
                                                 style="color: red" class="pl-2">*</span></label>
                                         <div class="col-sm-9">
-                                            <textarea type="text" name="details" class="form-control"
-                                                      placeholder="Nhập mô tả công việc" rows="8"></textarea>
+                                            <textarea type="text" name="details" class="form-control @error('details') is-invalid @enderror"
+                                                      placeholder="Nhập mô tả công việc" rows="8">{{old('details')}}</textarea>
+                                            @error('details')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -383,7 +379,7 @@
                         </div>
                     </div>
                     <div class="rec-submit">
-                        <button type="submit" class="btn-submit-recuitment" name="">
+                        <button type="submit" class="btn-submit-recuitment" id="submit-post-create">
                             <i class="fa fa-floppy-o pr-2"></i>Lưu Tin
                         </button>
                     </div>
@@ -678,6 +674,21 @@
 <!-- Read More Plugin -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
+    var error = {!! json_encode($errors->toArray()) !!};
+    var oldCategories = {!! json_encode(old('optional_category')) !!};
+    var oldTechniques = {!! json_encode(old('optional_technique')) !!};
+    var oldTechniqueTypes = {!! json_encode(old('technique_type_option')) !!};
+    console.log(error);
+    console.log(oldCategories,oldTechniques,oldTechniqueTypes);
+    var a = Object.keys(error).filter(function (key) {
+            return /(optional_category|optional_technique).\d|technique_type_option/.test(key);
+        });
+    console.log(a)
+    if(!Object.keys(error).length){
+        localStorage.removeItem('i')
+        localStorage.removeItem('j')
+    }
+
     $(document).ready(function() {
         $('.js-category-multiple').select2({
             placeholder: "Chọn các danh mục"
@@ -685,11 +696,118 @@
         $('.js-technique-multiple').select2({
             placeholder: "Chọn các công nghệ"
         })
+        var categories = {!! json_encode($categories->toArray()) !!};
+        var categories_option = categories.map((category,index) =>`<option value="${category.id}">${category.name}</option>`).join('');
+        console.log(categories_option);
+        var i= localStorage.getItem('i')||0
+        var j= localStorage.getItem('j')||0
+
+        for (let k = 1; k <= i; k++) {
+            var ttoe = `technique_type_option`
+            var ote  = `optional_technique.${k-1}`
+            var html1 = error[ttoe] ? 'is-invalid': ''
+            var html2 = error[ttoe] ? '<div class="alert alert-danger">'+error[ttoe][0]+'</div>': ''
+            var html3 = error[ote] ? 'is-invalid': ''
+            var html4 = error[ote] ? '<div class="alert alert-danger">'+error[ote][0]+'</div>': ''
+            var html5 = '<div class="row" id="rw'+k+'">' +
+                            '<div class="col-sm-5">' +
+                                '<select type="text" name="technique_type_option[]" class="form-control '+html1+'" id="technique_type_option">' +
+                                    '<option value="" disabled selected>Nhập technique type</option>' +
+                                    categories.map(category =>`<option value="${category.id}" ${oldTechniqueTypes[k-1] === category.id ? 'selected' : ''}>${category.name}</option>`).join('') +
+                                '</select>' +
+                                html2 +
+                            '</div>' +
+                            '<div class="col-sm-5">' +
+                                '<input type="text" name="optional_technique[]" value="'+oldTechniques[k-1]+'" class="form-control '+html3+'">' +
+                                html4 +
+                            '</div>' +
+                            '<div class="col-sm-2">' +
+                                '<button type="button" name="remove" id="'+k+'" class="btn btn-danger btn_remove">' +
+                                    'X' +
+                                '</button>' +
+                            '</div>' +
+                            '<br>' +
+                        '</div>';
+            $('#optional_techniques').append(html5);
+        }
+
+        for (let m = 1; m <= j; m++) {
+            var oce = `optional_category.${m-1}`
+            var html6 = error[oce] ? 'is-invalid': ''
+            var html7 = error[oce] ? '<div class="alert alert-danger">'+error[oce][0]+'</div>': ''
+            var html8 = '<div class="row" id="rj'+m+'">' +
+                            '<div class="col-sm-10">' +
+                                '<input type="text" name="optional_category[]" value="'+oldCategories[m-1]+'" class="form-control '+html6+'">' +
+                                html7 +
+                            '</div>' +
+                            '<div class="col-sm-2">' +
+                                '<button type="button" name="remove" id="'+m+'" class="btn btn-danger btn_remove1">' +
+                                    'X' +
+                                '</button>' +
+                            '</div>' +
+                            '<br>' +
+                        '</div>';
+            $('#optional-categories').append(html8);
+        }
 
         $('#add-technique').on('click',function (e) {
+            i++;
             e.preventDefault();
-            var html = '<input type="text" name="optional-technique[]" class="form-control"><br>';
-            $('#optional-techniques').append(html);
+            var html = '<div class="row" id="rw'+i+'">' +
+                            '<div class="col-sm-5">' +
+                                '<select type="text" name="technique_type_option[]" class="form-control" id="technique_type_option">' +
+                                    '<option value="" disabled selected>Nhập technique type</option>' +
+                                    categories_option +
+                                '</select>' +
+                            '</div>' +
+                            '<div class="col-sm-5">' +
+                                '<input type="text" name="optional_technique[]" class="form-control">' +
+                            '</div>' +
+                            '<div class="col-sm-2">' +
+                                '<button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">' +
+                                    'X' +
+                                '</button>' +
+                            '</div>' +
+                            '<br>' +
+                        '</div>';
+            $('#optional_techniques').append(html);
+        })
+
+        $('#add-category').on('click',function (e) {
+            j++;
+            e.preventDefault();
+            var html = '<div class="row" id="rj'+j+'">' +
+                            '<div class="col-sm-10">' +
+                                '<input type="text" name="optional_category[]" class="form-control">' +
+                            '</div>' +
+                            '<div class="col-sm-2">' +
+                                '<button type="button" name="remove" id="'+j+'" class="btn btn-danger btn_remove1">' +
+                                    'X' +
+                                '</button>' +
+                            '</div>' +
+                            '<br>' +
+                        '</div>';
+            $('#optional-categories').append(html);
+        })
+
+        console.log(i)
+        console.log(j)
+
+        $(document).on('click', '.btn_remove', function(e) {
+            e.preventDefault()
+            var button_id = $(this).attr("id");
+            $('#rw' + button_id + '').remove();
+        });
+
+        $(document).on('click', '.btn_remove1', function(e) {
+            e.preventDefault()
+            var button_id = $(this).attr("id");
+            $('#rj' + button_id + '').remove();
+        });
+
+        $(document).on('click', '#submit-post-create', function (){
+            localStorage.setItem('i', i);
+            localStorage.setItem('j', j);
         })
     });
 </script>
