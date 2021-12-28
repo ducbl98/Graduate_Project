@@ -74,9 +74,10 @@ Route::namespace('Company')
         Route::get('/profile',[CompanyController::class,'showProfile'])->name('profile.show');
         Route::post('/profile/update-profile',[CompanyController::class,'updateProfile'])->name('profile.updateProfile');
         //Post
+        Route::get('/post/list',[PostController::class,'listPost'])->name('post.list');
         Route::get('/post/create',[PostController::class,'createPost'])->name('post.create');
-        Route::get('/post/edit',[PostController::class,'editPost'])->name('post.edit');
+        Route::get('/post/{id}/edit',[PostController::class,'editPost'])->name('post.edit');
         Route::post('/post/store',[PostController::class,'storePost'])->name('post.store');
-        Route::post('/post/update',[PostController::class,'updatePost'])->name('post.update');
-        Route::get('/post/delete',[PostController::class,'createPost'])->name('post.create');
+        Route::post('/post/{id}/update',[PostController::class,'updatePost'])->name('post.update');
+        Route::get('/post/{id}/delete',[PostController::class,'deletePost'])->name('post.delete');
     });

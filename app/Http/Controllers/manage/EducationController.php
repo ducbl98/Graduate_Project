@@ -13,7 +13,7 @@ class EducationController extends Controller
 {
     public function addEducation(Request $request): RedirectResponse
     {
-        $seeker = Seeker::with('user')->find(Auth::id());
+        $seeker = Seeker::with('user')->where('user_id',Auth::id())->first();
         Education::create([
             'facility' => $request->facility,
             'major' => $request->major,

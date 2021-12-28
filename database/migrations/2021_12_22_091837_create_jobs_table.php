@@ -27,7 +27,7 @@ class CreateJobsTable extends Migration
             $table->string('address');
             $table->string('expire');
             $table->text('details');
-            $table->unsignedbigInteger('view');
+            $table->unsignedbigInteger('view')->default(0);
             $table->unsignedBigInteger('province_id');
             $table->unsignedBigInteger('created_by');
             $table->boolean('is_active')->default(1);

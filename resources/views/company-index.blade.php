@@ -131,7 +131,7 @@
     <div class="collapse navbar-collapse container" id="navbarNava">
         <ul class="navbar-nav nav-recuitment-li">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Quản lý đăng tuyển</a>
+                <a class="nav-link" href="{{route('company.post.list')}}">Quản lý đăng tuyển</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Quản lý ứng viên</a>

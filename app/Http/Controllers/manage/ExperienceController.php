@@ -13,7 +13,7 @@ class ExperienceController extends Controller
 {
     public function addExperience(Request $request): RedirectResponse
     {
-        $seeker = Seeker::with('user')->find(Auth::id());
+        $seeker = Seeker::with('user')->where('user_id',Auth::id())->first();
         Experience::create([
             'name' => $request->name,
             'company_name' => $request->company_name,

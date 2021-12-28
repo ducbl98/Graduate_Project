@@ -14,7 +14,7 @@ class SkillController extends Controller
 {
     public function addSkill(Request $request): RedirectResponse
     {
-        $seeker = Seeker::with('user')->find(Auth::id());
+        $seeker = Seeker::with('user')->where('user_id',Auth::id())->first();
         Skill::create([
             'name' => $request->name,
             'level' => $request->level,

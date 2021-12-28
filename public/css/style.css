@@ -1143,6 +1143,10 @@ span.salary-min::after {
 .wrap-btn-appl {
     position: absolute;
     right: 5%;
+    display: flex;
+    width: 105px;
+    margin-right: 30px;
+    justify-content: space-between;
 }
 
 a.btn-appl {

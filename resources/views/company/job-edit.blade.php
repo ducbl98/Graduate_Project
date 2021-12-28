@@ -158,7 +158,7 @@
     <div class="container published-recuitment-content">
         <div class="row">
             <div class="col-md-8 col-sm-12 col-12 recuitment-inner">
-                <form action="{{route('company.post.store')}}" method="POST" class="recuitment-form">
+                <form action="{{route('company.post.update',['id'=>$job->id])}}" method="POST" class="recuitment-form">
                     @csrf
                     <div class="accordion" id="accordionExample">
                         <div class="card recuitment-card">
@@ -167,7 +167,7 @@
                                     <a class="btn btn-link btn-block text-left recuitment-header" type="button"
                                        data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
                                        aria-controls="collapseOne">
-                                        Đăng tin tuyển dụng
+                                        Chỉnh sửa tin tuyển dụng
                                         <span id="clickc1_advance2" class="clicksd">
                                             <i class="fa fa fa-angle-up"></i>
                                         </span>
@@ -182,10 +182,10 @@
                                         <label class="col-sm-3 col-form-label text-right label">Tiêu đề<span
                                                 style="color: red" class="pl-2">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="title"  value="{{old('title')}}" class="form-control @error('title') is-invalid @enderror"
+                                            <input type="text" name="title"  value="{{old('title') ? old('title') :$job->title}}" class="form-control @error('title') is-invalid @enderror"
                                                    placeholder="Nhập tiêu đề">
                                             @error('title')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
@@ -193,10 +193,10 @@
                                         <label class="col-sm-3 col-form-label text-right label">Email nhận hồ sơ<span
                                                 style="color: red" class="pl-2">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="application_email" value="{{old('application_email')}}" class="form-control @error('application_email') is-invalid @enderror"
+                                            <input type="text" name="application_email" value="{{old('application_email') ? old('application_email') :$job->application_email}}" class="form-control @error('application_email') is-invalid @enderror"
                                                    placeholder="Nhập tiêu đề">
                                             @error('application_email')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
@@ -207,7 +207,7 @@
                                             <input type="number" name="amount" value="{{old('amount')}}" class="form-control @error('amount') is-invalid @enderror"
                                                    placeholder="1">
                                             @error('amount')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
@@ -218,7 +218,7 @@
                                             <input type="number" step=0.01 name="work_time"  value="{{old('work_time')}}" class="form-control @error('work_time') is-invalid @enderror"
                                                    placeholder="1.00">
                                             @error('work_time')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
@@ -229,7 +229,7 @@
                                             <input type="text" name="experience" value="{{old('experience')}}" class="form-control @error('experience') is-invalid @enderror"
                                                    placeholder="Nhập yêu cầu kinh nghiệm">
                                             @error('experience')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
@@ -239,11 +239,15 @@
                                         <div class="col-sm-7">
                                             <select class="js-category-multiple @error('categories') is-invalid @enderror" name="categories[]" multiple="multiple">
                                                 @foreach($categories as $category)
-                                                    <option value="{{$category->id}}" {{collect(old('categories'))->contains($category->id) ? 'selected' : ''}}>{{$category->name}}</option>
+                                                    @if(in_array($category->id, $jobCategoryIds))
+                                                        <option selected value="{{$category->id}}">{{$category->name}}</option>
+                                                    @else
+                                                        <option value="{{$category->id}}" >{{$category->name}}</option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                             @error('categories')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                         <div class="col-sm-2">
@@ -257,7 +261,7 @@
                                                 style="color: red" class="pl-2">*</span></label>
                                         <div class="col-sm-9" id="optional-categories">
                                             @error('optional_category')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
@@ -277,7 +281,12 @@
                                                 @foreach($techniqueTypes as $techniqueType)
                                                     <optgroup label="{{$techniqueType->name}}">
                                                         @foreach($techniqueType->techniques as $technique)
-                                                            <option value="{{$technique->id}}" {{collect(old('techniques'))->contains($technique->id) ? 'selected' : ''}}>{{$technique->name}}</option>
+{{--                                                            <option value="{{$technique->id}}" {{collect(old('techniques'))->contains($technique->id) ? 'selected' : ''}}>{{$technique->name}}</option>--}}
+                                                            @if(in_array($technique->id, $jobTechniqueIds))
+                                                                <option selected value="{{$technique->id}}">{{$technique->name}}</option>
+                                                            @else
+                                                                <option value="{{$technique->id}}">{{$technique->name}}</option>
+                                                            @endif
                                                         @endforeach
                                                     </optgroup>
                                                 @endforeach
@@ -294,7 +303,7 @@
                                                 style="color: red" class="pl-2">*</span></label>
                                         <div class="col-sm-9" id="optional_techniques">
                                             @error('optional_technique')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
@@ -305,7 +314,7 @@
                                             <input type="number" name="salary_min" value="{{old('salary_min')}}" class="form-control @error('salary_min') is-invalid @enderror"
                                                    id="jobSalaryFrom">
                                             @error('salary_min')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                         <div class="col-sm-1">
@@ -316,14 +325,14 @@
                                             <input type="number" name="salary_max" value="{{old('salary_max')}}" class="form-control @error('salary_max') is-invalid @enderror"
                                                    id="jobSalaryTo">
                                             @error('salary_max')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                         <div class="col-sm-2">
                                             <input type="text" name="salary_unit" value="{{old('salary_unit')}}" class="form-control @error('salary_unit') is-invalid @enderror"
                                                    placeholder="Unit">
                                             @error('salary_unit')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
@@ -338,7 +347,7 @@
                                                 @endforeach
                                             </select>
                                             @error('province_id')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
@@ -349,7 +358,7 @@
                                             <input type="text" name="address"  value="{{old('address')}}" class="form-control @error('address') is-invalid @enderror"
                                                    placeholder="Nhập địa chỉ">
                                             @error('address')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
@@ -359,7 +368,7 @@
                                         <div class="col-sm-9">
                                             <input type="date" name="expire" value="{{old('expire')}}" class="form-control @error('expire') is-invalid @enderror">
                                             @error('expire')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
@@ -370,7 +379,7 @@
                                             <textarea type="text" name="details" class="form-control @error('details') is-invalid @enderror"
                                                       placeholder="Nhập mô tả công việc" rows="8">{{old('details')}}</textarea>
                                             @error('details')
-                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
@@ -681,8 +690,8 @@
     console.log(error);
     console.log(oldCategories,oldTechniques,oldTechniqueTypes);
     var a = Object.keys(error).filter(function (key) {
-            return /(optional_category|optional_technique).\d|technique_type_option/.test(key);
-        });
+        return /(optional_category|optional_technique).\d|technique_type_option/.test(key);
+    });
     console.log(a)
     if(!Object.keys(error).length){
         localStorage.removeItem('i')
@@ -710,24 +719,24 @@
             var html3 = error[ote] ? 'is-invalid': ''
             var html4 = error[ote] ? '<div class="alert alert-danger">'+error[ote][0]+'</div>': ''
             var html5 = '<div class="row" id="rw'+k+'">' +
-                            '<div class="col-sm-5">' +
-                                '<select type="text" name="technique_type_option[]" class="form-control '+html1+'" id="technique_type_option">' +
-                                    '<option value="0" disabled selected>Nhập technique type</option>' +
-                                    categories.map(category =>`<option value="${category.id}" ${oldTechniqueTypes[k-1] == category.id ? 'selected' : ''}>${category.name}</option>`).join('') +
-                                '</select>' +
-                                html2 +
-                            '</div>' +
-                            '<div class="col-sm-5">' +
-                                '<input type="text" name="optional_technique[]" value="'+oldTechniques[k-1]+'" class="form-control '+html3+'">' +
-                                html4 +
-                            '</div>' +
-                            '<div class="col-sm-2">' +
-                                '<button type="button" name="remove" id="'+k+'" class="btn btn-danger btn_remove">' +
-                                    'X' +
-                                '</button>' +
-                            '</div>' +
-                            '<br>' +
-                        '</div>';
+                '<div class="col-sm-5">' +
+                '<select type="text" name="technique_type_option[]" class="form-control '+html1+'" id="technique_type_option">' +
+                '<option value="0" disabled selected>Nhập technique type</option>' +
+                categories.map(category =>`<option value="${category.id}" ${oldTechniqueTypes[k-1] == category.id ? 'selected' : ''}>${category.name}</option>`).join('') +
+                '</select>' +
+                html2 +
+                '</div>' +
+                '<div class="col-sm-5">' +
+                '<input type="text" name="optional_technique[]" value="'+oldTechniques[k-1]+'" class="form-control '+html3+'">' +
+                html4 +
+                '</div>' +
+                '<div class="col-sm-2">' +
+                '<button type="button" name="remove" id="'+k+'" class="btn btn-danger btn_remove">' +
+                'X' +
+                '</button>' +
+                '</div>' +
+                '<br>' +
+                '</div>';
             $('#optional_techniques').append(html5);
         }
 
@@ -736,17 +745,17 @@
             var html6 = error[oce] ? 'is-invalid': ''
             var html7 = error[oce] ? '<div class="alert alert-danger">'+error[oce][0]+'</div>': ''
             var html8 = '<div class="row" id="rj'+m+'">' +
-                            '<div class="col-sm-10">' +
-                                '<input type="text" name="optional_category[]" value="'+oldCategories[m-1]+'" class="form-control '+html6+'">' +
-                                html7 +
-                            '</div>' +
-                            '<div class="col-sm-2">' +
-                                '<button type="button" name="remove" id="'+m+'" class="btn btn-danger btn_remove1">' +
-                                    'X' +
-                                '</button>' +
-                            '</div>' +
-                            '<br>' +
-                        '</div>';
+                '<div class="col-sm-10">' +
+                '<input type="text" name="optional_category[]" value="'+oldCategories[m-1]+'" class="form-control '+html6+'">' +
+                html7 +
+                '</div>' +
+                '<div class="col-sm-2">' +
+                '<button type="button" name="remove" id="'+m+'" class="btn btn-danger btn_remove1">' +
+                'X' +
+                '</button>' +
+                '</div>' +
+                '<br>' +
+                '</div>';
             $('#optional-categories').append(html8);
         }
 
@@ -754,22 +763,22 @@
             i++;
             e.preventDefault();
             var html = '<div class="row" id="rw'+i+'">' +
-                            '<div class="col-sm-5">' +
-                                '<select type="text" name="technique_type_option[]" class="form-control" id="technique_type_option">' +
-                                    '<option value="" disabled selected>Nhập technique type</option>' +
-                                    categories_option +
-                                '</select>' +
-                            '</div>' +
-                            '<div class="col-sm-5">' +
-                                '<input type="text" name="optional_technique[]" class="form-control">' +
-                            '</div>' +
-                            '<div class="col-sm-2">' +
-                                '<button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">' +
-                                    'X' +
-                                '</button>' +
-                            '</div>' +
-                            '<br>' +
-                        '</div>';
+                '<div class="col-sm-5">' +
+                '<select type="text" name="technique_type_option[]" class="form-control" id="technique_type_option">' +
+                '<option value="" disabled selected>Nhập technique type</option>' +
+                categories_option +
+                '</select>' +
+                '</div>' +
+                '<div class="col-sm-5">' +
+                '<input type="text" name="optional_technique[]" class="form-control">' +
+                '</div>' +
+                '<div class="col-sm-2">' +
+                '<button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">' +
+                'X' +
+                '</button>' +
+                '</div>' +
+                '<br>' +
+                '</div>';
             $('#optional_techniques').append(html);
         })
 
@@ -777,16 +786,16 @@
             j++;
             e.preventDefault();
             var html = '<div class="row" id="rj'+j+'">' +
-                            '<div class="col-sm-10">' +
-                                '<input type="text" name="optional_category[]" class="form-control">' +
-                            '</div>' +
-                            '<div class="col-sm-2">' +
-                                '<button type="button" name="remove" id="'+j+'" class="btn btn-danger btn_remove1">' +
-                                    'X' +
-                                '</button>' +
-                            '</div>' +
-                            '<br>' +
-                        '</div>';
+                '<div class="col-sm-10">' +
+                '<input type="text" name="optional_category[]" class="form-control">' +
+                '</div>' +
+                '<div class="col-sm-2">' +
+                '<button type="button" name="remove" id="'+j+'" class="btn btn-danger btn_remove1">' +
+                'X' +
+                '</button>' +
+                '</div>' +
+                '<br>' +
+                '</div>';
             $('#optional-categories').append(html);
         })
 

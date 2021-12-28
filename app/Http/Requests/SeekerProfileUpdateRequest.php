@@ -25,7 +25,7 @@ class SeekerProfileUpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|string|between:2,30',
-            'phone_number'=> 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|unique:seekers',
+            'phone_number'=> 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|unique:seekers,phone_number,'.$this->user()->seeker->id,
             'address'=> 'required|string'
         ];
     }
