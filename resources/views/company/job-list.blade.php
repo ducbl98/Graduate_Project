@@ -26,13 +26,16 @@
     <link rel="stylesheet" href="{{asset('css/owlcarousel/owl.theme.default.min.css')}}">
     <!-- main css -->
     <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}"></head>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+
 <body>
 <!-- main nav -->
 <div class="container-fluid fluid-nav another-page">
     <div class="container cnt-tnar">
         <nav class="navbar navbar-expand-lg navbar-light bg-light tjnav-bar">
             <!-- <a class="navbar-brand" href="#">Navbar</a> -->
-            <a href="#" class="nav-logo">
+            <a href="{{route('companyPage')}}" class="nav-logo">
                 <img src="{{ asset('img/techjobs_bgw.png') }}">
             </a>
             <button class="navbar-toggler tnavbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -141,12 +144,13 @@
             </ul>
             <div class="tab-content search-tab-content" id="myTabContent">
                 <!-- content tab 2 -->
-                <div class="tab-pane stab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    <form class="bn-search-form">
+                <div class="tab-pane stab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab" style="margin-bottom: 15px">
+                    <form action="{{route('company.post.search')}}" method="POST" class="bn-search-form">
+                        @csrf
                         <div class="row">
                             <div class="col-md-10 col-sm-12">
                                 <div class="input-group s-input-group w-100">
-                                    <input type="text" class="form-control sinput" placeholder="Nhập kỹ năng, công việc,...">
+                                    <input type="text" id="job-search" name="keyword" class="form-control sinput" placeholder="Nhập tiêu đề cần tìm ">
                                     <span><i class="fa fa-search"></i></span>
                                 </div>
                             </div>
@@ -170,7 +174,7 @@
     <div class="container search-wrapper">
         <div class="row">
             <div class="col-md-9 col-sm-12 col-12">
-                <h4 class="search-find">Tìm thấy 4 việc làm</h4>
+                <h4 class="search-find">{{$isSearch ? 'Tìm thấy '.count($jobs).' việc làm' : 'Tổng cộng có '.count($jobs).' việc làm'}}</h4>
                 <div class="job-board-wrap">
                     <div class="job-group">
                         <div class="job pagi">
@@ -645,6 +649,8 @@
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.2.27/jquery.autocomplete.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 <script type="text/javascript" src="{{asset('js/readmore.js')}}"></script>
 <script type="text/javascript">
     $('.catelog-list').readmore({
@@ -656,6 +662,17 @@
     $(document).ready(function () {
         $('ul.pagination').css('display','flex');
     })
+
+    {{--$( function() {--}}
+    {{--    var availableTags = {!! json_encode($job_titles->toArray()) !!};--}}
+    {{--    console.log(availableTags);--}}
+    {{--    $( "#job-search" ).autocomplete({--}}
+    {{--        lookup: availableTags,--}}
+    {{--        onSelect: function (suggestion) {--}}
+    {{--            $('#selected_option').html(suggestion.value);--}}
+    {{--        }--}}
+    {{--    });--}}
+    {{--} );--}}
 </script>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

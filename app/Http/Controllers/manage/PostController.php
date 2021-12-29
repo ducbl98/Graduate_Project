@@ -30,10 +30,14 @@ class PostController extends Controller
      */
     public function listPost()
     {
+        $job_titles = Job::query()->distinct()->pluck('title');
+//        dd($job_titles);
+        $company = Company::with('user')->where('user_id',Auth::id())->first();
         $jobs = Job::with('province','techniques.techniqueType','categories','company.user','company.province')
-                ->where('is_active',1)->paginate(5);
+                ->where('created_by',$company->id)->where('is_active',1)->paginate(5);
+        $isSearch = false;
 //        dd($jobs);
-        return view('company.job-list',compact('jobs'));
+        return view('company.job-list',compact('jobs','isSearch','job_titles'));
     }
 
     /**
@@ -113,7 +117,7 @@ class PostController extends Controller
             dd($e);
         }
 
-        return redirect()->route('company.post.create');
+        return redirect()->route('company.post.list');
     }
 
     /**
@@ -234,6 +238,30 @@ class PostController extends Controller
         $job->save();
 
         return redirect()->route('company.post.list');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Application|Factory|View
+     */
+    public function companySearchPost(Request $request)
+    {
+        $company = Company::with('user')->where('user_id',Auth::id())->first();
+        $jobs = Job::with('province','techniques.techniqueType','categories','company.user','company.province')
+            ->where([
+                ['created_by', '=', $company->id],
+                ['is_active', '=', 1],
+                ['title', 'LIKE', '%' . $request->keyword . '%']
+            ])
+            ->paginate(5);
+        $isSearch = true;
+//        dd($jobs);
+        return view('company.job-list',compact('jobs','isSearch'));
+    }
+
+    public function searchPost(Request $request){
+        dd($request);
     }
 
 }

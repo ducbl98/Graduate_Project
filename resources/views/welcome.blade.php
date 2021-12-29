@@ -155,40 +155,36 @@
             <div class="tab-content search-tab-content" id="myTabContent">
                 <!-- content tab 1 -->
                 <div class="tab-pane stab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <form class="bn-search-form">
+                    <form action="{{route('job.search')}}" method="POST" class="bn-search-form">
+                        @csrf
                         <div class="row">
                             <div class="col-md-10 col-sm-12">
                                 <div class="row">
                                     <div class="col-md-5">
                                         <div class="input-group s-input-group">
-                                            <input type="text" class="form-control sinput" placeholder="Nhập kỹ năng, công việc,...">
+                                            <input name="keyword" type="text" class="form-control sinput" placeholder="Nhập kỹ năng, công việc,...">
                                             <span><i class="fa fa-search"></i></span>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <select id="computer-languages">
-                                            <option value="" selected hidden >Tất cả ngôn ngữ</option>
-                                            <option>Java</option>
-                                            <option>.NET</option>
-                                            <option>Javascript</option>
-                                            <option>Php</option>
-                                            <option>Python</option>
-                                            <option>QC QC</option>
-                                            <option>Business Analyst</option>
-                                            <option>Tester</option>
-                                            <option>Ruby</option>
+                                        <select name="technique" id="computer-languages">
+                                            <option value="" selected hidden >Tất cả ngôn ngữ ,công nghệ </option>
+                                            @foreach($techniqueTypes as $techniqueType)
+                                                <optgroup label="{{$techniqueType->name}}">
+                                                    @foreach($techniqueType->techniques as $technique)
+                                                        <option value="{{$technique->id}}" {{collect(old('techniques'))->contains($technique->id) ? 'selected' : ''}}>{{$technique->name}}</option>
+                                                    @endforeach
+                                                </optgroup>
+                                            @endforeach
                                         </select>
                                         <i class="fa fa-code sfa" aria-hidden="true"></i>
                                     </div>
                                     <div class="col-md-3">
-                                        <select id="s-provinces">
+                                        <select name="province" id="s-provinces">
                                             <option value="" selected hidden >Tất cả địa điểm</option>
-                                            <option>Đà Nẵng</option>
-                                            <option>Hà Nội</option>
-                                            <option>Hồ Chí Minh</option>
-                                            <option>Buôn Ma Thuột</option>
-                                            <option>Quy Nhơn</option>
-                                            <option>Nha Trang</option>
+                                            @foreach($provinces as $province)
+                                                <option value="{{$province->id}}" {{old('province_id') == $province->id ? 'selected' : ''}}>{{$province->name}}</option>
+                                            @endforeach
                                         </select>
                                         <i class="fa fa-map-marker sfa" aria-hidden="true"></i>
                                     </div>
@@ -207,7 +203,7 @@
                         <div class="row">
                             <div class="col-md-10 col-sm-12">
                                 <div class="input-group s-input-group w-100">
-                                    <input type="text" class="form-control sinput" placeholder="Nhập kỹ năng, công việc,...">
+                                    <input name="company_name" type="text" class="form-control sinput" placeholder="Nhập tên công ty">
                                     <span><i class="fa fa-search"></i></span>
                                 </div>
                             </div>
@@ -273,34 +269,55 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="job pagi">
+                        @foreach($jobs as $job)
+                            <div class="job pagi">
                             <div class="job-content">
                                 <div class="job-logo">
                                     <a href="#">
-                                        <img src="{{asset('img/alipay-logo.png')}}" class="job-logo-ima" alt="job-logo">
+                                        <img src="{{$job->image ? asset('storage/'.$job->image) : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/OOjs_UI_icon_userAvatar-constructive.svg/1024px-OOjs_UI_icon_userAvatar-constructive.svg.png"}}" class="job-logo-ima" alt="job-logo">
                                     </a>
                                 </div>
 
                                 <div class="job-desc">
                                     <div class="job-title">
-                                        <a href="#">Fullstack .NET Developer (Angular/React)</a>
+                                        <a href="#">{{$job->title}}</a>
                                     </div>
                                     <div class="job-company">
-                                        <a href="#">Orient Software</a> | <a href="#" class="job-address"><i class="fa fa-map-marker" aria-hidden="true"></i>
-                                            Hà Nội</a>
+                                        <a href="#">{{$job->company->user->name}}</a> |
+                                        <a href="#" class="job-address"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                                            {{$job->company->province->name}}
+                                        </a>
                                     </div>
 
                                     <div class="job-inf">
                                         <div class="job-main-skill">
-                                            <i class="fa fa-code" aria-hidden="true"></i>  <a href="#"> .NET</a>
+                                            <i class="fa fa-code" aria-hidden="true"></i>
+                                            <a href="#">
+                                                @foreach($job->techniques as $job_technique)
+                                                    @if($job_technique->techniqueType->name == 'Language' )
+                                                        {{$job_technique->name}}
+                                                        @break
+                                                    @endif
+                                                @endforeach
+                                            </a>
                                         </div>
-                                        <div class="job-salary">
-                                            <i class="fa fa-money" aria-hidden="true"></i>
-                                            <span class="salary-min">15<em class="salary-unit">triệu</em></span>
-                                            <span class="salary-max">35 <em class="salary-unit">triệu</em></span>
-                                        </div>
+                                        @if($isSeeker)
+                                            <div class="job-salary">
+                                                <i class="fa fa-money" aria-hidden="true"></i>
+                                                <span class="salary-min">{{$job->salary_min}}<em class="salary-unit">{{$job->salary_unit}}</em></span>
+                                                <span class="salary-max">{{$job->salary_max}}<em class="salary-unit">{{$job->salary_unit}}</em></span>
+                                            </div>
+                                        @else
+                                            <div class="job-salary">
+                                                <a href="#" style="color: orange">
+                                                    <i class="fa fa-money" aria-hidden="true"></i>
+                                                    Đăng nhập để xem mức lương
+                                                    <i class="fa fa-sign-in" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                        @endif
                                         <div class="job-deadline">
-                                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>  Hạn nộp: <strong>31/02/2020</strong></span>
+                                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>  Hạn nộp: <strong>{{$job->expire}}</strong></span>
                                         </div>
                                     </div>
                                 </div>
@@ -309,150 +326,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="job pagi">
-                            <div class="job-content">
-                                <div class="job-logo">
-                                    <a href="#">
-                                        <img src="{{asset('img/nvg-logo.png')}}" class="job-logo-ima" alt="job-logo">
-                                    </a>
-                                </div>
-
-                                <div class="job-desc">
-                                    <div class="job-title">
-                                        <a href="#">Frontend Developer (JavaScript, ReactJS)</a>
-                                    </div>
-                                    <div class="job-company">
-                                        <a href="#">mgm technology</a> | <a href="#" class="job-address"><i class="fa fa-map-marker" aria-hidden="true"></i>
-                                            Đà Nẵng</a>
-                                    </div>
-
-                                    <div class="job-inf">
-                                        <div class="job-main-skill">
-                                            <i class="fa fa-code" aria-hidden="true"></i>  <a href="#"> JavaScript, ReactJS</a>
-                                        </div>
-                                        <div class="job-salary">
-                                            <i class="fa fa-money" aria-hidden="true"></i>
-                                            <span class="salary-min">15<em class="salary-unit">triệu</em></span>
-                                            <span class="salary-max">35 <em class="salary-unit">triệu</em></span>
-                                        </div>
-                                        <div class="job-deadline">
-                                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>  Hạn nộp: <strong>31/12/2019</strong></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="wrap-btn-appl">
-                                    <a href="#" class="btn btn-appl">Apply Now</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="job pagi">
-                            <div class="job-content">
-                                <div class="job-logo">
-                                    <a href="#">
-                                        <img src="{{asset('img/luxoft-vietnam-logo.png')}}" class="job-logo-ima" alt="job-logo">
-                                    </a>
-                                </div>
-
-                                <div class="job-desc">
-                                    <div class="job-title">
-                                        <a href="#">IVI System Test Engineer</a>
-                                    </div>
-                                    <div class="job-company">
-                                        <a href="#">NVG TECHNOLOGY</a> | <a href="#" class="job-address"><i class="fa fa-map-marker" aria-hidden="true"></i>
-                                            Đà Nẵng</a>
-                                    </div>
-
-                                    <div class="job-inf">
-                                        <div class="job-main-skill">
-                                            <i class="fa fa-code" aria-hidden="true"></i>  <a href="#"> Javascript</a>
-                                        </div>
-                                        <div class="job-salary">
-                                            <i class="fa fa-money" aria-hidden="true"></i>
-                                            <span class="salary-min">15<em class="salary-unit">triệu</em></span>
-                                            <span class="salary-max">35 <em class="salary-unit">triệu</em></span>
-                                        </div>
-                                        <div class="job-deadline">
-                                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>  Hạn nộp: <strong>31/12/2019</strong></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="wrap-btn-appl">
-                                    <a href="#" class="btn btn-appl">Apply Now</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="job pagi">
-                            <div class="job-content">
-                                <div class="job-logo">
-                                    <a href="#">
-                                        <img src="{{asset('img/fpt-logo.png')}}" class="job-logo-ima" alt="job-logo">
-                                    </a>
-                                </div>
-
-                                <div class="job-desc">
-                                    <div class="job-title">
-                                        <a href="#">[HCM] 02 Solution Architects–Up to $2000</a>
-                                    </div>
-                                    <div class="job-company">
-                                        <a href="#">Fpt Software</a> | <a href="#" class="job-address"><i class="fa fa-map-marker" aria-hidden="true"></i>
-                                            Đà Nẵng</a>
-                                    </div>
-
-                                    <div class="job-inf">
-                                        <div class="job-main-skill">
-                                            <i class="fa fa-code" aria-hidden="true"></i>  <a href="#"> Java</a>
-                                        </div>
-                                        <div class="job-salary">
-                                            <i class="fa fa-money" aria-hidden="true"></i>
-                                            <span class="salary-min">15<em class="salary-unit">triệu</em></span>
-                                            <span class="salary-max">35 <em class="salary-unit">triệu</em></span>
-                                        </div>
-                                        <div class="job-deadline">
-                                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>  Hạn nộp: <strong>31/12/2019</strong></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="wrap-btn-appl">
-                                    <a href="#" class="btn btn-appl">Apply Now</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="job pagi">
-                            <div class="job-content">
-                                <div class="job-logo">
-                                    <a href="#">
-                                        <img src="{{asset('img/fpt-logo.png')}}" class="job-logo-ima" alt="job-logo">
-                                    </a>
-                                </div>
-
-                                <div class="job-desc">
-                                    <div class="job-title">
-                                        <a href="#">[HCM] 02 Solution Architects–Up to $2000</a>
-                                    </div>
-                                    <div class="job-company">
-                                        <a href="#">Fpt Software</a> | <a href="#" class="job-address"><i class="fa fa-map-marker" aria-hidden="true"></i>
-                                            Đà Nẵng</a>
-                                    </div>
-
-                                    <div class="job-inf">
-                                        <div class="job-main-skill">
-                                            <i class="fa fa-code" aria-hidden="true"></i>  <a href="#"> Java</a>
-                                        </div>
-                                        <div class="job-salary">
-                                            <i class="fa fa-money" aria-hidden="true"></i>
-                                            <span class="salary-min">15<em class="salary-unit">triệu</em></span>
-                                            <span class="salary-max">35 <em class="salary-unit">triệu</em></span>
-                                        </div>
-                                        <div class="job-deadline">
-                                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>  Hạn nộp: <strong>31/12/2019</strong></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="wrap-btn-appl">
-                                    <a href="#" class="btn btn-appl">Apply Now</a>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                         <div class="readmorestyle-wrap">
                             <a href="#" class="readallstyle reads1">Xem tất cả</a>
                         </div>
@@ -470,113 +344,23 @@
                     </h2>
                     <div class="catelog-list">
                         <ul>
-                            <li>
+                            @foreach($categories as $category)
+                                <li>
                                 <a href="#">
-                <span class="cate-img">
-                  <em>Lập trình viên</em>
-                </span>
-                                    <span class="cate-count">(1100)</span>
+                                    <span class="cate-img">
+                                        <em>{{$category->name}}</em>
+                                    </span>
+                                    <span class="cate-count">({{$category->jobs_count}})</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="#">
-                  <span class="cate-img">
-                  <em>Nhân viên kiểm thử</em>
-                </span>
-                                    <span class="cate-count">(230)</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                  <span class="cate-img">
-                  <em>Kỹ sư cầu nối</em>
-                </span>
-                                    <span class="cate-count">(110)</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                  <span class="cate-img">
-                  <em>Designer</em>
-                </span>
-                                    <span class="cate-count">(2300)</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                  <span class="cate-img">
-                  <em>Product Manager</em>
-                </span>
-                                    <span class="cate-count">(99)</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                  <span class="cate-img">
-                  <em>HR</em>
-                </span>
-                                    <span class="cate-count">(300)</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                  <span class="cate-img">
-                  <em>HR</em>
-                </span>
-                                    <span class="cate-count">(300)</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                  <span class="cate-img">
-                  <em>HR</em>
-                </span>
-                                    <span class="cate-count">(300)</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                  <span class="cate-img">
-                  <em>HR</em>
-                </span>
-                                    <span class="cate-count">(300)</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                  <span class="cate-img">
-                  <em>HR</em>
-                </span>
-                                    <span class="cate-count">(300)</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                  <span class="cate-img">
-                  <em>HR</em>
-                </span>
-                                    <span class="cate-count">(300)</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                  <span class="cate-img">
-                  <em>HR</em>
-                </span>
-                                    <span class="cate-count">(300)</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="readallstyle reads1">Xem tất cả</a>
-                            </li>
-
+                            @endforeach
                         </ul>
                     </div>
                 </div>
 
                 <div class="job-sidebar">
                     <div class="sb-banner">
-                        <img src="{{asset('img/ads1.jpg')}}" class="advertisement">
+                        <img src="{{asset('img/1_8-sImQWc4k5VV8jMZmbdhA.png')}}">
                     </div>
                 </div>
             </div>

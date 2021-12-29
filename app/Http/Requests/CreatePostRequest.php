@@ -24,7 +24,7 @@ class CreatePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|unique:jobs,title',
+            'title' => 'required|string',
             'application_email' => 'required|string|email|max:100',
             'amount' => 'required|numeric',
             'work_time' => 'required|numeric',

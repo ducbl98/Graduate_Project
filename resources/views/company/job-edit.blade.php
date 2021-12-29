@@ -204,7 +204,7 @@
                                         <label class="col-sm-3 col-form-label text-right label">Số lượng cần
                                             tuyển</label>
                                         <div class="col-sm-9">
-                                            <input type="number" name="amount" value="{{old('amount')}}" class="form-control @error('amount') is-invalid @enderror"
+                                            <input type="number" name="amount" value="{{old('amount') ? old('amount') : $job->amount}}" class="form-control @error('amount') is-invalid @enderror"
                                                    placeholder="1">
                                             @error('amount')
                                             <div class="alert alert-danger">{{ $message }}</div>
@@ -215,7 +215,7 @@
                                         <label class="col-sm-3 col-form-label text-right label">Thời gian làm
                                             việc</label>
                                         <div class="col-sm-9">
-                                            <input type="number" step=0.01 name="work_time"  value="{{old('work_time')}}" class="form-control @error('work_time') is-invalid @enderror"
+                                            <input type="number" step=0.01 name="work_time"  value="{{old('work_time') ? old('work_time') : $job->work_time}}" class="form-control @error('work_time') is-invalid @enderror"
                                                    placeholder="1.00">
                                             @error('work_time')
                                             <div class="alert alert-danger">{{ $message }}</div>
@@ -226,7 +226,7 @@
                                         <label class="col-sm-3 col-form-label text-right label">Yêu cầu kinh nghiệm<span
                                                 style="color: red" class="pl-2">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="experience" value="{{old('experience')}}" class="form-control @error('experience') is-invalid @enderror"
+                                            <input type="text" name="experience" value="{{old('experience') ? old('experience') : $job->experience }}" class="form-control @error('experience') is-invalid @enderror"
                                                    placeholder="Nhập yêu cầu kinh nghiệm">
                                             @error('experience')
                                             <div class="alert alert-danger">{{ $message }}</div>
@@ -311,7 +311,7 @@
                                         <label class="col-sm-3 col-form-label text-right label">Mức lương<span
                                                 style="color: red" class="pl-2">*</span></label>
                                         <div class="col-sm-3">
-                                            <input type="number" name="salary_min" value="{{old('salary_min')}}" class="form-control @error('salary_min') is-invalid @enderror"
+                                            <input type="number" name="salary_min" value="{{old('salary_min') ? old('salary_min') : $job->salary_min}}" class="form-control @error('salary_min') is-invalid @enderror"
                                                    id="jobSalaryFrom">
                                             @error('salary_min')
                                             <div class="alert alert-danger">{{ $message }}</div>
@@ -322,14 +322,14 @@
                                                style="margin-top: 10px;margin-left: 10px;"></i>
                                         </div>
                                         <div class="col-sm-3">
-                                            <input type="number" name="salary_max" value="{{old('salary_max')}}" class="form-control @error('salary_max') is-invalid @enderror"
+                                            <input type="number" name="salary_max" value="{{old('salary_max') ? old('salary_max') : $job->salary_max}}" class="form-control @error('salary_max') is-invalid @enderror"
                                                    id="jobSalaryTo">
                                             @error('salary_max')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                         <div class="col-sm-2">
-                                            <input type="text" name="salary_unit" value="{{old('salary_unit')}}" class="form-control @error('salary_unit') is-invalid @enderror"
+                                            <input type="text" name="salary_unit" value="{{old('salary_unit') ? old('salary_unit') : $job->salary_unit}}" class="form-control @error('salary_unit') is-invalid @enderror"
                                                    placeholder="Unit">
                                             @error('salary_unit')
                                             <div class="alert alert-danger">{{ $message }}</div>
@@ -343,7 +343,9 @@
                                                     id="jobProvince">
                                                 <option value="" disabled selected>Chọn nơi làm việc</option>
                                                 @foreach($provinces as $province)
-                                                    <option value="{{$province->id}}" {{old('province_id') == $province->id ? 'selected' : ''}}>{{$province->name}}</option>
+                                                    <option value="{{$province->id}}" {{ old('province_id') ? (old('province_id') == $province->id ? 'selected' : '') : ($job->province_id === $province->id ? 'selected':'')}}>
+                                                        {{$province->name}}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                             @error('province_id')
@@ -355,7 +357,7 @@
                                         <label class="col-sm-3 col-form-label text-right label">Địa chỉ cụ thể<span
                                                 style="color: red" class="pl-2">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="address"  value="{{old('address')}}" class="form-control @error('address') is-invalid @enderror"
+                                            <input type="text" name="address"  value="{{old('address') ? old('address') : $job->address }}" class="form-control @error('address') is-invalid @enderror"
                                                    placeholder="Nhập địa chỉ">
                                             @error('address')
                                             <div class="alert alert-danger">{{ $message }}</div>
@@ -366,7 +368,7 @@
                                         <label class="col-sm-3 col-form-label text-right label">Hạn nộp hồ sơ<span
                                                 style="color: red" class="pl-2">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="date" name="expire" value="{{old('expire')}}" class="form-control @error('expire') is-invalid @enderror">
+                                            <input type="date" name="expire" value="{{old('expire') ? old('expire') : $job->expire}}" class="form-control @error('expire') is-invalid @enderror">
                                             @error('expire')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
@@ -377,7 +379,7 @@
                                                 style="color: red" class="pl-2">*</span></label>
                                         <div class="col-sm-9">
                                             <textarea type="text" name="details" class="form-control @error('details') is-invalid @enderror"
-                                                      placeholder="Nhập mô tả công việc" rows="8">{{old('details')}}</textarea>
+                                                      placeholder="Nhập mô tả công việc" rows="8">{{old('details') ? old('details') : $job->details}}</textarea>
                                             @error('details')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror

@@ -44,6 +44,8 @@ Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPass
 
 Route::get('account/verify/{token}', [AuthController::class, 'verifyAccount'])->name('user.verify');
 
+Route::post('job/search',[PostController::class,'searchPost'])->name('job.search');
+
 Route::namespace('Seeker')
     ->name('seeker.')
     ->prefix('seeker')
@@ -80,4 +82,5 @@ Route::namespace('Company')
         Route::post('/post/store',[PostController::class,'storePost'])->name('post.store');
         Route::post('/post/{id}/update',[PostController::class,'updatePost'])->name('post.update');
         Route::get('/post/{id}/delete',[PostController::class,'deletePost'])->name('post.delete');
+        Route::post('/post/search',[PostController::class, 'companySearchPost'])->name('post.search');
     });

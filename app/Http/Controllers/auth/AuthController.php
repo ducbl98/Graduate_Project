@@ -6,8 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CompanyRegisterRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SeekerRegisterRequest;
+use App\Models\Category;
 use App\Models\Company;
+use App\Models\Job;
+use App\Models\Province;
 use App\Models\Seeker;
+use App\Models\TechniqueType;
 use App\Models\User;
 use App\Models\UserVerify;
 use Illuminate\Http\RedirectResponse;
@@ -24,7 +28,13 @@ class AuthController extends Controller
     {
         $user = Auth::user();
         $isSeeker = $user && $user->role == 1;
-        return view('welcome', compact('isSeeker'));
+        $jobs = Job::with('province','techniques.techniqueType','categories','company.user','company.province')
+            ->where('is_active',1)->orderBy('created_at','desc')->get();
+        $techniqueTypes = TechniqueType::with('techniques')->get();
+        $provinces = Province::all();
+        $categories = Category::withCount('jobs')->orderBy('jobs_count','desc')->get();
+//        dd($categories);
+        return view('welcome', compact('isSeeker','jobs','techniqueTypes','provinces','categories'));
     }
     public function indexCompany()
     {
