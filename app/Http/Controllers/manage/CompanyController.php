@@ -4,6 +4,7 @@ namespace App\Http\Controllers\manage;
 
 use App\Http\Controllers\Controller;
 use App\Models\Company;
+use App\Models\Job;
 use App\Models\Province;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -49,6 +50,9 @@ class CompanyController extends Controller
             $newAvatarName = time() . '-' . $company->user->name . "." . $avatar->getClientOriginalExtension();
             $request->file('company_avatar')->storeAs('images/companies', $newAvatarName);
             $company->avatar_url = 'images/companies/'.$newAvatarName;
+            Job::where('created_by',$company->id)->update([
+                'image' => 'images/companies/'.$newAvatarName,
+            ]);
         }
         $company->save();
 

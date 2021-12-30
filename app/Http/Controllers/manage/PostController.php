@@ -36,7 +36,6 @@ class PostController extends Controller
         $jobs = Job::with('province','techniques.techniqueType','categories','company.user','company.province')
                 ->where('created_by',$company->id)->where('is_active',1)->paginate(5);
         $isSearch = false;
-//        dd($jobs);
         return view('company.job-list',compact('jobs','isSearch','job_titles'));
     }
 
@@ -67,8 +66,8 @@ class PostController extends Controller
         $company = Company::with('user')->where('user_id',Auth::id())->first();
 //        dd($company);
 //        dd($request);
-        $post_categories = array_map('intval', $request->categories);
-        $post_techniques = array_map('intval', $request->techniques);
+        $post_categories = $request->categories ? array_map('intval', $request->categories) : [];
+        $post_techniques = $request->techniques ? array_map('intval', $request->techniques) : [];
 //        dd($post_techniques);
 //        dd($post_categories);
         if($request->optional_category){
@@ -96,7 +95,7 @@ class PostController extends Controller
             $job = Job::create([
                 'title' => $request->title,
                 'application_email' => $request->application_email,
-                'image' => $company->avatar_url,
+                'image' => $company->avatar_url ?? 'img/job-default.png',
                 'amount' => $request->amount,
                 'work_time' => $request->work_time,
                 'experience'=> $request->experience,

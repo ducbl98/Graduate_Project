@@ -218,7 +218,7 @@
                             <div class="job-content">
                                 <div class="job-logo">
                                     <a href="#">
-                                        <img src="{{$job->image ? asset('storage/'.$job->image) : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/OOjs_UI_icon_userAvatar-constructive.svg/1024px-OOjs_UI_icon_userAvatar-constructive.svg.png"}}" class="job-logo-ima" alt="job-logo"></a>
+                                        <img src="{{$job->image ? ( str_contains($job->image,'img') ? asset($job->image) :asset('storage/'.$job->image)) : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/OOjs_UI_icon_userAvatar-constructive.svg/1024px-OOjs_UI_icon_userAvatar-constructive.svg.png"}}" class="job-logo-ima" alt="job-logo"></a>
                                 </div>
 
                                 <div class="job-desc">
@@ -231,7 +231,7 @@
                                         </a> |
                                         <a href="#" class="job-address">
                                             <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                            {{$job->company->province->name}}
+                                            {{$job->province->name}}
                                         </a>
                                     </div>
 
