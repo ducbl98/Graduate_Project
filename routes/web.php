@@ -44,7 +44,12 @@ Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPass
 
 Route::get('account/verify/{token}', [AuthController::class, 'verifyAccount'])->name('user.verify');
 
+Route::get('job/list-all-job-and-search/{categoryId?}/{type?}',[PostController::class,'listAllJobAndSearch'])->name('job.listAllJobAndSearch');
 Route::post('job/search',[PostController::class,'searchPost'])->name('job.search');
+Route::post('job/search-by-company',[PostController::class,'searchPostByCompany'])->name('job.searchByCompany');
+Route::post('job/search-by-salary',[PostController::class,'searchPostBySalary'])->name('job.searchBySalary');
+Route::get('job/search-by-category/{categoryId}',[PostController::class,'searchPostByCategory'])->name('job.searchByCategory');
+Route::get('job/detail/{jobId}',[PostController::class,'showPost'])->name('job.showPost');
 
 Route::namespace('Seeker')
     ->name('seeker.')
@@ -66,6 +71,11 @@ Route::namespace('Seeker')
         Route::post('/education/add',[EducationController::class,'addEducation'])->name('education.add');
         Route::post('/education/edit',[EducationController::class,'editEducation'])->name('education.edit');
         Route::get('/education/delete',[EducationController::class,'deleteEducation'])->name('education.delete');
+        //Apply Job
+        Route::post('/job/apply',[SeekerController::class,'applyJob'])->name('job.apply');
+        Route::get('/job-applied/list',[SeekerController::class,'listAppliedJob'])->name('job.apply.list');
+        Route::get('/job-applied/detail/{id}',[SeekerController::class,'detailAppliedJob'])->name('job.apply.detail');
+        Route::get('/job-applied/delete/{id}',[SeekerController::class,'deleteAppliedJob'])->name('job.apply.delete');
     });
 
 Route::namespace('Company')

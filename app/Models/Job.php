@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Job extends Model
 {
@@ -41,13 +42,18 @@ class Job extends Model
         return $this->belongsToMany(Technique::class,'job_technique','job_id','technique_id');
     }
 
-    public function company(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Company::class,'created_by','id');
+        return $this->belongsTo(User::class,'created_by','id');
     }
 
     public function province(): BelongsTo
     {
         return $this->belongsTo(Province::class);
+    }
+
+    public function application(): HasMany
+    {
+        return $this->hasMany(SeekerApplication::class);
     }
 }

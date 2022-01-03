@@ -1779,6 +1779,23 @@ a.readallstyle.reads2:hover {
     border-color: #4CAF50;
     margin-bottom: 7px;
 }
+
+.btn-login-warning {
+    padding: -0.4rem 2.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    background-color: #cbc312;
+    border-color: #cbc312;
+    margin-bottom: 7px;
+}
+.btn-login-disabled {
+    padding: -0.4rem 2.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    background-color: lightslategray;
+    border-color: lightslategray;
+    margin-bottom: 7px;
+}
 .jd-center {
 
 }
@@ -2142,6 +2159,14 @@ a.filter-action {
     float: left;
 }
 
+a.filter-action-selection {
+    color: darkred !important;
+    font-size: 15px;
+    display: inline-block;
+    float: left;
+    pointer-events: none;
+}
+
 span.filter-count {
     color: #747474!important;
     font-size: 12px;
@@ -2220,6 +2245,17 @@ button.sb-fprice {
     border-radius: 3px;
     margin-left: 5px;
     font-size: 17px;
+    font-weight: 700;
+}
+
+button.sb-fprice-1 {
+    width: 70px;
+    padding: 5px 11px;
+    background: #f0f0f0;
+    border: 1px solid #cccccc21;
+    border-radius: 3px;
+    margin-left: 5px;
+    font-size: 14px;
     font-weight: 700;
 }
 .filter-form-item .collapse {

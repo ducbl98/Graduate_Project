@@ -5,18 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Company extends Model
+class SeekerApplication extends Model implements HasMedia
 {
     use HasFactory;
+    use InteractsWithMedia;
 
-    protected $table = 'companies';
+    protected $table = 'seeker_applications';
 
     protected $fillable = [
-        'contact_name',
+        'seeker_name',
+        'email',
         'phone_number',
-        'address',
+        'introduction',
+        'resume',
+        'job_id',
         'user_id',
     ];
 
@@ -25,8 +30,8 @@ class Company extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function province(): BelongsTo
+    public function job(): BelongsTo
     {
-        return $this->belongsTo(Province::class);
+        return $this->belongsTo(Job::class);
     }
 }

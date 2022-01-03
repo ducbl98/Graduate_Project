@@ -28,14 +28,18 @@ class AuthController extends Controller
     {
         $user = Auth::user();
         $isSeeker = $user && $user->role == 1;
-        $jobs = Job::with('province','techniques.techniqueType','categories','company.user','company.province')
-            ->where('is_active',1)->orderBy('created_at','desc')->get();
+        $jobs = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
+            ->where('is_active', 1)->orderBy('created_at', 'desc')->get();
         $techniqueTypes = TechniqueType::with('techniques')->get();
         $provinces = Province::all();
-        $categories = Category::withCount('jobs')->orderBy('jobs_count','desc')->get();
+        $categories = Category::withCount('jobs')
+            ->whereRelation('jobs', 'jobs.is_active', '=', 1)
+            ->orderBy('jobs_count', 'desc')
+            ->get();
 //        dd($categories);
-        return view('welcome', compact('isSeeker','jobs','techniqueTypes','provinces','categories'));
+        return view('welcome', compact('isSeeker', 'jobs', 'techniqueTypes', 'provinces', 'categories'));
     }
+
     public function indexCompany()
     {
         $user = Auth::user();
@@ -120,6 +124,9 @@ class AuthController extends Controller
 
     public function seekerLogin()
     {
+        if (!session()->has('url.intended')) {
+            session(['url.intended' => url()->previous()]);
+        }
         return view('auth.login-employees');
     }
 
@@ -135,10 +142,11 @@ class AuthController extends Controller
             $userRole = Auth::user()->role;
             switch ($userRole) {
                 case 1 :
-                    return redirect()->route('homePage');
+                    toastr()->success('Bạn đã đăng nhập thành công !');
+                    return redirect()->intended();
                 case 2 :
                     return redirect()->route('companyPage');
-             }
+            }
         }
         toastr()->error('Invalid credentials');
         return back();

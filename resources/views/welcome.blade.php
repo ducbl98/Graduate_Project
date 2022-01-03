@@ -26,6 +26,10 @@
     <link rel="stylesheet" href="{{ asset('css/owlcarousel/owl.theme.default.min.css') }}">
     <!-- main css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+
+    <!-- Toastr -->
+{{--    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.css">--}}
+    @toastr_css
 </head>
 <body>
 <!-- main nav -->
@@ -98,6 +102,7 @@
                         </a>
                         <div class="dropdown-menu tdropdown" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{route('seeker.profile.show')}}">Trang cá nhân</a>
+                            <a class="dropdown-item" href="{{route('seeker.job.apply.list')}}">Công việc đã ứng tuyển</a>
                             <a class="dropdown-item" href="{{route('logout')}}">Đăng xuất</a>
                         </div>
                     </li>
@@ -199,7 +204,8 @@
                 <!-- (end) content tab 1 -->
                 <!-- content tab 2 -->
                 <div class="tab-pane stab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    <form class="bn-search-form">
+                    <form action="{{route('job.searchByCompany')}}" method="POST" class="bn-search-form">
+                        @csrf
                         <div class="row">
                             <div class="col-md-10 col-sm-12">
                                 <div class="input-group s-input-group w-100">
@@ -274,7 +280,7 @@
                             <div class="job-content">
                                 <div class="job-logo">
                                     <a href="#">
-                                        <img src="{{$job->image ? asset('storage/'.$job->image) : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/OOjs_UI_icon_userAvatar-constructive.svg/1024px-OOjs_UI_icon_userAvatar-constructive.svg.png"}}" class="job-logo-ima" alt="job-logo">
+                                        <img src="{{$job->image ? ( str_contains($job->image,'img') ? asset($job->image) :asset('storage/'.$job->image)) : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/OOjs_UI_icon_userAvatar-constructive.svg/1024px-OOjs_UI_icon_userAvatar-constructive.svg.png"}}" class="job-logo-ima" alt="job-logo"></a>
                                     </a>
                                 </div>
 
@@ -283,9 +289,9 @@
                                         <a href="#">{{$job->title}}</a>
                                     </div>
                                     <div class="job-company">
-                                        <a href="#">{{$job->company->user->name}}</a> |
+                                        <a href="#">{{$job->user->name}}</a> |
                                         <a href="#" class="job-address"><i class="fa fa-map-marker" aria-hidden="true"></i>
-                                            {{$job->company->province->name}}
+                                            {{$job->province->name}}
                                         </a>
                                     </div>
 
@@ -346,7 +352,7 @@
                         <ul>
                             @foreach($categories as $category)
                                 <li>
-                                <a href="#">
+                                <a href="{{route('job.searchByCategory',['categoryId' => $category->id])}}">
                                     <span class="cate-img">
                                         <em>{{$category->name}}</em>
                                     </span>
@@ -1658,6 +1664,7 @@
         moreLink: '<a href="#">Xem thêm<i class="fa fa-angle-down pl-2"></i></a>',
         lessLink: '<a href="#">Rút gọn<i class="fa fa-angle-up pl-2"></i></a>'
     });
+    localStorage.removeItem('salary')
 </script>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -1672,7 +1679,9 @@
 <script src="{{asset('js/owlcarousel/owl.carousel.js')}}"></script>
 <!-- Read More Plugin -->
 
-
+{{--@jquery--}}
+@toastr_js
+@toastr_render
 
 </body>
 </html>
