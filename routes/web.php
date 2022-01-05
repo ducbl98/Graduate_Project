@@ -93,4 +93,8 @@ Route::namespace('Company')
         Route::post('/post/{id}/update',[PostController::class,'updatePost'])->name('post.update');
         Route::get('/post/{id}/delete',[PostController::class,'deletePost'])->name('post.delete');
         Route::post('/post/search',[PostController::class, 'companySearchPost'])->name('post.search');
+        //Candidate
+        Route::get('/candidate/list',[CompanyController::class,'listCandidates'])->name('candidate.list');
+        Route::get('/candidate/detail/{id}',[CompanyController::class,'detailCandidate'])->name('candidate.detail');
+        Route::post('/candidate/reply',[CompanyController::class,'replyCandidate'])->name('candidate.reply');
     });

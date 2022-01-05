@@ -134,7 +134,7 @@
                 <a class="nav-link" href="{{route('company.post.list')}}">Quản lý đăng tuyển</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Quản lý ứng viên</a>
+                <a class="nav-link" href="{{route('company.candidate.list')}}">Quản lý ứng viên</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Quản lý đăng tin</a>

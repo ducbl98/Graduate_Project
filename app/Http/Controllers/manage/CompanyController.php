@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\Job;
 use App\Models\Province;
+use App\Models\SeekerApplication;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,11 +15,12 @@ use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
 {
-    public function showProfile(){
+    public function showProfile()
+    {
         $companyId = Auth::id();
         $companyProfile = User::with('company')->find($companyId);
         $provinces = Province::all();
-        return view('company.profile',compact('companyProfile','provinces'));
+        return view('company.profile', compact('companyProfile', 'provinces'));
     }
 
 //    public function updateAvatar(SeekerImageUpdateRequest $request): RedirectResponse
@@ -40,7 +42,7 @@ class CompanyController extends Controller
 
     public function updateProfile(Request $request): RedirectResponse
     {
-        $company = Company::with('user')->where('user_id',Auth::id())->first();
+        $company = Company::with('user')->where('user_id', Auth::id())->first();
         $avatar = $request->company_avatar;
         if ($request->hasFile('company_avatar')) {
             $avatarCurrent = $company->avatar_url;
@@ -49,15 +51,15 @@ class CompanyController extends Controller
             }
             $newAvatarName = time() . '-' . $company->user->name . "." . $avatar->getClientOriginalExtension();
             $request->file('company_avatar')->storeAs('images/companies', $newAvatarName);
-            $company->avatar_url = 'images/companies/'.$newAvatarName;
-            Job::where('created_by',$company->id)->update([
-                'image' => 'images/companies/'.$newAvatarName,
+            $company->avatar_url = 'images/companies/' . $newAvatarName;
+            Job::where('created_by', $company->id)->update([
+                'image' => 'images/companies/' . $newAvatarName,
             ]);
         }
         $company->save();
 
-        User::where('id',Auth::id())->update(['name' => $request->name]);
-        Company::where('user_id',Auth::id())->update([
+        User::where('id', Auth::id())->update(['name' => $request->name]);
+        Company::where('user_id', Auth::id())->update([
             'contact_name' => $request->contact_name,
             'phone_number' => $request->phone_number,
             'province_id' => $request->province_id,
@@ -67,5 +69,31 @@ class CompanyController extends Controller
             'address' => $request->address,
         ]);
         return back();
+    }
+
+    public function listCandidates()
+    {
+        $candidates = SeekerApplication::with('user.seeker', 'job')
+            ->whereRelation('job', 'jobs.created_by', '=', Auth::id())
+            ->where('is_active', 1)
+            ->orderBy('updated_at', 'desc')
+            ->get();
+        return view('company.candidate-list', compact('candidates'));
+    }
+
+    public function detailCandidate($id)
+    {
+        $candidateAppliedJob = SeekerApplication::with('user.seeker.experiences', 'user.seeker.educations', 'user.seeker.skills', 'job')
+            ->where([
+                ['id', '=', $id],
+                ['is_active', '=', 1]
+            ])->first();
+        return view('company.candidate-detail', compact('candidateAppliedJob'));
+    }
+
+    public function replyCandidate(Request $request)
+    {
+        dd($request);
+        return view('company.candidate-detail', compact('candidateAppliedJob'));
     }
 }

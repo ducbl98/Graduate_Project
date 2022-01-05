@@ -78,17 +78,18 @@ class PostController extends Controller
         $post_techniques = $request->techniques ? array_map('intval', $request->techniques) : [];
 //        dd($post_techniques);
 //        dd($post_categories);
-        if ($request->optional_category) {
-            foreach ($request->optional_category as $optional_category) {
-                $category = Category::updateOrCreate([
-                    'name' => $optional_category
-                ]);
-                $post_categories[] = $category->id;
-            }
-        }
+//        if ($request->optional_category) {
+//            foreach ($request->optional_category as $optional_category) {
+//                $category = Category::updateOrCreate([
+//                    'name' => $optional_category
+//                ]);
+//                $post_categories[] = $category->id;
+//            }
+//        }
 //        dd($post_categories);
         if ($request->optional_technique) {
             $techniqueArrays = array_map(null, $request->technique_type_option, $request->optional_technique);
+//            dd($techniqueArrays);
             foreach ($techniqueArrays as $techniqueArray) {
                 $technique = Technique::updateOrCreate([
                     'name' => $techniqueArray[1],
@@ -137,7 +138,7 @@ class PostController extends Controller
     {
         $user = Auth::user();
         $isSeeker = $user && $user->role == 1;
-        $seeker =Seeker::with('user')->find(Auth::id());
+        $seeker =Seeker::with('user')->where('user_id',Auth::id())->first();
         $isApplied = false;
         $job = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
             ->find($id);
