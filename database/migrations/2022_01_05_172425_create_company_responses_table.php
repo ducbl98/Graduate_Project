@@ -15,14 +15,12 @@ class CreateCompanyResponsesTable extends Migration
     {
         Schema::create('company_responses', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('company_id')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('seeker_application_id')->nullable();
             $table->string('header');
             $table->string('content');
             $table->string('attachment');
             $table->boolean('is_seen')->default(0);
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->foreign('seeker_application_id')->references('id')->on('seeker_applications')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -35,8 +33,7 @@ class CreateCompanyResponsesTable extends Migration
     public function down()
     {
         Schema::table('company_responses', function (Blueprint $table) {
-            $table->dropForeign('company_responses_user_id_foreign');
-            $table->dropForeign('company_responses_company_id_foreign');
+            $table->dropForeign('company_responses_seeker_application_id_foreign');
         });
         Schema::dropIfExists('company_responses');
     }

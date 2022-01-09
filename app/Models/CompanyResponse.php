@@ -19,17 +19,12 @@ class CompanyResponse extends Model implements HasMedia
         'header',
         'content',
         'attachment',
-        'company_id',
-        'user_id',
+        'seeker_application_id',
     ];
 
-    public function user(): BelongsTo
+    public function seeker_application(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(SeekerApplication::class);
     }
 
-    public function company(): BelongsTo
-    {
-        return $this->belongsTo(Company::class);
-    }
 }

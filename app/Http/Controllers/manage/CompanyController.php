@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\manage;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CompanyRegisterRequest;
+use App\Http\Requests\CompanyResponseRequest;
 use App\Models\Company;
+use App\Models\CompanyResponse;
 use App\Models\Job;
 use App\Models\Province;
 use App\Models\SeekerApplication;
@@ -83,17 +86,31 @@ class CompanyController extends Controller
 
     public function detailCandidate($id)
     {
-        $candidateAppliedJob = SeekerApplication::with('user.seeker.experiences', 'user.seeker.educations', 'user.seeker.skills', 'job')
+        $candidateAppliedJob = SeekerApplication::with('user.seeker.experiences', 'user.seeker.educations', 'user.seeker.skills', 'job','response')
             ->where([
                 ['id', '=', $id],
                 ['is_active', '=', 1]
             ])->first();
-        return view('company.candidate-detail', compact('candidateAppliedJob'));
+//        dd($candidateAppliedJob);
+        $isRespond =$candidateAppliedJob->response;
+        return view('company.candidate-detail', compact('candidateAppliedJob','isRespond'));
     }
 
-    public function replyCandidate(Request $request)
+    public function replyCandidate(CompanyResponseRequest $request)
     {
-        dd($request);
-        return view('company.candidate-detail', compact('candidateAppliedJob'));
+//        dd($request);
+        $responseFile = $request->attachment;
+//        dd($responseFile);
+        $company_response = CompanyResponse::create([
+            'header' => $request->header,
+            'content' => $request->get('content'),
+            'attachment' => $responseFile ? $responseFile->getClientOriginalName() : null,
+            'seeker_application_id' => $request->seeker_application_id
+        ]);
+        if ($responseFile){
+            $company_response->addMediaFromRequest('attachment')->toMediaCollection();
+        }
+        toastr()->success('Phản hồi ứng viên thành công !');
+        return redirect()->route('company.candidate.detail',['id'=>$request->seeker_application_id]);
     }
 }

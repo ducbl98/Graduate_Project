@@ -122,6 +122,28 @@ class AuthController extends Controller
 
     }
 
+    public function adminLogin()
+    {
+        return view('auth.login-admin');
+    }
+
+    public function adminLoginProcess(Request $request): RedirectResponse
+    {
+        $credentials = $request->only('email', 'password');
+        if (Auth::attempt($credentials)) {
+            $userRole = Auth::user()->role;
+            if ($userRole == 3) {
+                toastr()->success('Bạn đã đăng nhập thành công !');
+                return redirect()->route('admin.homepage');
+            }else {
+                toastr()->error('Sai thông tin đăng nhập !');
+                return back();
+            }
+        }
+        toastr()->error('Sai thông tin đăng nhập !');
+        return back();
+    }
+
     public function seekerLogin()
     {
         if (!session()->has('url.intended')) {
@@ -140,15 +162,24 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             $userRole = Auth::user()->role;
+            $isActive = Auth::user()->is_active;
+            if (!$isActive){
+                toastr()->error('Tài khoản đã bị vô hiệu hóa !');
+                return back();
+            }
             switch ($userRole) {
                 case 1 :
                     toastr()->success('Bạn đã đăng nhập thành công !');
                     return redirect()->intended();
                 case 2 :
+                    toastr()->success('Bạn đã đăng nhập thành công !');
                     return redirect()->route('companyPage');
+                case 3:
+                    toastr()->error('Sai thông tin đăng nhập !');
+                    return back();
             }
         }
-        toastr()->error('Invalid credentials');
+        toastr()->error('Sai thông tin đăng nhập !');
         return back();
     }
 

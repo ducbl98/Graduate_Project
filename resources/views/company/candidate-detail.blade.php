@@ -258,13 +258,19 @@
                         </div>
                     </div>
                     <div class="rec-submit">
-                        <a href="#" class="btn-submit-recuitment float-left mr-3" style="background: #1c7430;"
-                           data-toggle="modal" data-target="#feedbackEmp">
-                            <i class="fa fa-floppy-o pr-2"></i>Phản hồi
-                        </a>
-                        <a href="#" class="btn-submit-recuitment float-left">
-                            <i class="fa fa-times pr-2"></i>Bỏ Qua
-                        </a>
+                        @if($isRespond)
+                            <a href="#" class="btn-submit-recuitment float-left mr-3"  style="background: yellowgreen;pointer-events: none;cursor: default">
+                                <i class="fa fa-check pr-2"></i> Đã phản hồi
+                            </a>
+                        @else
+                            <a href="#" class="btn-submit-recuitment float-left mr-3" style="background: #1c7430;"
+                               data-toggle="modal" data-target="#feedbackEmp">
+                                <i class="fa fa-floppy-o pr-2"></i>Phản hồi
+                            </a>
+                            <a href="#" class="btn-submit-recuitment float-left">
+                                <i class="fa fa-times pr-2"></i>Bỏ Qua
+                            </a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -428,9 +434,7 @@
             </div>
             <form action="{{route('company.candidate.reply')}}" enctype="multipart/form-data" method="POST">
                 @csrf
-                <input type="hidden" name="user_id" value="">
-                <input type="hidden" name="company_id" value="">
-                <input type="hidden" name="post_id" value="">
+                <input type="hidden" name="seeker_application_id" value="{{$candidateAppliedJob->id}}">
                 <div class="modal-body">
                     <div class="identify-contact">
                         <h5 class="fs-16 fw-700">Nhập nội dung phản hồi</h5>
@@ -441,6 +445,9 @@
                                     <label for="mf_phone">Tiêu đề:</label>
                                     <br>
                                     <input type="text" class="w-full" name="header" placeholder="Nhập tiêu đề">
+                                    @error('header')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-12 pr-10">
@@ -450,6 +457,9 @@
                                     <div class="cover-letterx clw mt-3">
                                         <textarea class="w-100 letterx" rows="10"
                                                   name="content" placeholder="Hãy nhập nội dung"></textarea>
+                                        @error('content')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -458,6 +468,9 @@
                                     <label for="mf_phone">File đính kèm:</label>
                                     <br>
                                     <input type="file" class="w-full" name="attachment">
+                                    @error('attachment')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -612,5 +625,10 @@
 <!-- Owl Stylesheets Javascript -->
 <script src="{{asset('js/owlcarousel/owl.carousel.js')}}"></script>
 <!-- Read More Plugin -->
+<script type="text/javascript">
+    @if (count($errors) > 0)
+    $('#feedbackEmp').modal('show');
+    @endif
+</script>
 </body>
 </html>

@@ -2,12 +2,17 @@
 
 use App\Http\Controllers\auth\AuthController;
 use App\Http\Controllers\auth\ForgotPasswordController;
+use App\Http\Controllers\manage\AdminController;
+use App\Http\Controllers\manage\CategoryController;
+use App\Http\Controllers\manage\CityController;
 use App\Http\Controllers\manage\CompanyController;
 use App\Http\Controllers\manage\EducationController;
 use App\Http\Controllers\manage\ExperienceController;
 use App\Http\Controllers\manage\PostController;
 use App\Http\Controllers\manage\SeekerController;
 use App\Http\Controllers\manage\SkillController;
+use App\Http\Controllers\manage\TechniqueController;
+use App\Http\Controllers\manage\TechniqueTypeController;
 use App\Models\Experience;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +32,10 @@ Route::get('/', function () {
 });
 Route::get('dashboard', [AuthController::class, 'index'])->name('homePage');
 Route::get('company-dashboard', [AuthController::class, 'indexCompany'])->name('companyPage');
+
+Route::get('admin-login', [AuthController::class, 'adminLogin'])->name('adminLogin');
+Route::post('admin-login', [AuthController::class, 'adminLoginProcess'])->name('adminLoginProcess');
+
 
 Route::get('seeker-login', [AuthController::class, 'seekerLogin'])->name('seekerLogin');
 Route::get('company-login', [AuthController::class, 'companyLogin'])->name('companyLogin');
@@ -76,6 +85,9 @@ Route::namespace('Seeker')
         Route::get('/job-applied/list',[SeekerController::class,'listAppliedJob'])->name('job.apply.list');
         Route::get('/job-applied/detail/{id}',[SeekerController::class,'detailAppliedJob'])->name('job.apply.detail');
         Route::get('/job-applied/delete/{id}',[SeekerController::class,'deleteAppliedJob'])->name('job.apply.delete');
+        //Company Response
+        Route::get('/company-response/list',[SeekerController::class,'listCompanyResponses'])->name('company.response.list');
+        Route::get('/company-response/detail/{id}',[SeekerController::class,'detailCompanyResponse'])->name('company.response.detail');
     });
 
 Route::namespace('Company')
@@ -97,4 +109,43 @@ Route::namespace('Company')
         Route::get('/candidate/list',[CompanyController::class,'listCandidates'])->name('candidate.list');
         Route::get('/candidate/detail/{id}',[CompanyController::class,'detailCandidate'])->name('candidate.detail');
         Route::post('/candidate/reply',[CompanyController::class,'replyCandidate'])->name('candidate.reply');
+    });
+//Route::get('/admin', function () {
+//    return view('admin-index-2');
+//});
+
+Route::namespace('Admin')
+    ->name('admin.')
+    ->prefix('admin')
+    ->middleware('authAdmin')
+    ->group(function () {
+        Route::get('/',[AdminController::class,'homepage'])->name('homepage');
+        //Category
+        Route::get('/category/index',[CategoryController::class,'index'])->name('category.index');
+        Route::get('/category/create',[CategoryController::class,'create'])->name('category.create');
+        Route::post('/category/store',[CategoryController::class,'store'])->name('category.store');
+        Route::get('/category/edit/{id}',[CategoryController::class,'edit'])->name('category.edit');
+        Route::post('/category/update',[CategoryController::class,'update'])->name('category.update');
+        //City
+        Route::get('/city/index',[CityController::class,'index'])->name('city.index');
+        Route::get('/city/create',[CityController::class,'create'])->name('city.create');
+        Route::post('/city/store',[CityController::class,'store'])->name('city.store');
+        Route::get('/city/edit/{id}',[CityController::class,'edit'])->name('city.edit');
+        Route::post('/city/update',[CityController::class,'update'])->name('city.update');
+        //Technique
+        Route::get('/technique/index',[TechniqueController::class,'index'])->name('technique.index');
+        Route::get('/technique/create',[TechniqueController::class,'create'])->name('technique.create');
+        Route::post('/technique/store',[TechniqueController::class,'store'])->name('technique.store');
+        Route::get('/technique/edit/{id}',[TechniqueController::class,'edit'])->name('technique.edit');
+        Route::post('/technique/update',[TechniqueController::class,'update'])->name('technique.update');
+        //TechniqueType
+        Route::get('/technique-type/index',[TechniqueTypeController::class,'index'])->name('technique-type.index');
+        Route::get('/technique-type/create',[TechniqueTypeController::class,'create'])->name('technique-type.create');
+        Route::post('/technique-type/store',[TechniqueTypeController::class,'store'])->name('technique-type.store');
+        Route::get('/technique-type/edit/{id}',[TechniqueTypeController::class,'edit'])->name('technique-type.edit');
+        Route::post('/technique-type/update',[TechniqueTypeController::class,'update'])->name('technique-type.update');
+        //User
+        Route::get('/user/index',[AdminController::class,'index'])->name('user.index');
+        Route::get('/user/{id}/enable',[AdminController::class,'enable'])->name('user.enable');
+        Route::get('/user/{id}/disable',[AdminController::class,'disable'])->name('user.disable');
     });

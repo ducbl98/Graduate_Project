@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -33,5 +34,10 @@ class SeekerApplication extends Model implements HasMedia
     public function job(): BelongsTo
     {
         return $this->belongsTo(Job::class);
+    }
+
+    public function response(): HasOne
+    {
+        return $this->hasOne(CompanyResponse::class);
     }
 }

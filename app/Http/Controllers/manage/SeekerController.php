@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\JobApplyRequest;
 use App\Http\Requests\SeekerImageUpdateRequest;
 use App\Http\Requests\SeekerProfileUpdateRequest;
+use App\Models\CompanyResponse;
 use App\Models\Seeker;
 use App\Models\SeekerApplication;
 use App\Models\User;
@@ -13,6 +14,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 
 class SeekerController extends Controller
 {
@@ -101,6 +103,24 @@ class SeekerController extends Controller
         $appliedJob->is_active = 0;
         $appliedJob->save();
         return redirect()->back();
+    }
+
+    public function listCompanyResponses(){
+        $companyResponses = CompanyResponse::with('seeker_application.job.user.company')
+            ->whereRelation('seeker_application','seeker_applications.user_id','=',Auth::id())
+            ->whereRelation('seeker_application','seeker_applications.is_respond','=',1)
+            ->get();
+//        dd($companyResponses);
+        return view('seeker.company-response-list',compact('companyResponses'));
+    }
+
+    public function detailCompanyResponse($id){
+        $companyResponse = CompanyResponse::with('seeker_application.job.user.company')
+            ->whereRelation('seeker_application','seeker_applications.user_id','=',Auth::id())
+            ->whereRelation('seeker_application','seeker_applications.is_respond','=',1)
+            ->where('id',$id)->first();
+//        dd($companyResponse);
+        return view('seeker.company-response-detail',compact('companyResponse'));
     }
 
 

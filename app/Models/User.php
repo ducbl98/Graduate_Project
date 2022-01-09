@@ -68,8 +68,4 @@ class User extends Authenticatable
         return $this->hasMany(SeekerApplication::class);
     }
 
-    public function responses(): HasMany
-    {
-        return $this->hasMany(CompanyResponse::class);
-    }
 }

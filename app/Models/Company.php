@@ -30,8 +30,4 @@ class Company extends Model
         return $this->belongsTo(Province::class);
     }
 
-    public function responses(): HasMany
-    {
-        return $this->hasMany(CompanyResponse::class);
-    }
 }
