@@ -108,7 +108,7 @@
                             <h5 class="m-b-10">Danh mục</h5>
                         </div>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#"><i class="feather icon-home"></i></a></li>
                             <li class="breadcrumb-item"><a href="#">Danh mục</a></li>
                         </ul>
                     </div>
@@ -125,13 +125,17 @@
                         <h5>Chỉnh sửa ngành nghề</h5>
                     </div>
                     <div class="card-body">
-                        <form action="?c=Career&a=RequestUpdate" method="POST">
-                            <input type="hidden" name="id" value="1">
+                        <form action="{{route('admin.category.update')}}" method="POST">
+                            @csrf
+                            <input type="hidden" name="id" value={{$category->id}}>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Tên danh mục</label>
                                         <input name="category" value="{{$category->name}}" class="form-control" placeholder="Danh Mục" />
+                                        @error('category')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>

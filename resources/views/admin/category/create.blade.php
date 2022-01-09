@@ -125,17 +125,21 @@
                         <h5>Thêm mới danh mục</h5>
                     </div>
                     <div class="card-body">
-                        <form action="#" method="POST">
+                        <form action="{{route('admin.category.store')}}" method="POST">
+                            @csrf
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Tên danh mục</label>
                                         <input name="category" class="form-control" placeholder="Danh Mục" />
+                                        @error('category')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input type="submit" value="Thêm mới" class="btn btn-primary" />
+                                <button class="btn btn-primary">Thêm mới</button>
                             </div>
                         </form>
                     </div>
