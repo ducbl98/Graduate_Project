@@ -137,8 +137,7 @@
                         <h5>Danh sách công nghệ</h5>
                         <a href="{{route('admin.technique.create')}}" class="btn-sm btn-primary float-right"><i class="feather icon-plus"></i> Thêm
                             Mới</a>
-                        <a href="{{route('admin.technique-type.create')}}" class="btn-sm btn-primary float-right" style="margin-right: 15px"><i
-                                class="feather icon-plus"></i> Thêm Mới Danh Mục</a>
+                        <a href="{{route('admin.technique-type.index')}}" class="btn-sm btn-info float-right" style="margin-right: 15px">Danh Sách Danh Mục</a>
                     </div>
                     <div class="card-body">
                         <table class="display table table-striped table-hover">

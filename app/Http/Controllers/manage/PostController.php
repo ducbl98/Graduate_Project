@@ -18,6 +18,7 @@ use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -294,18 +295,22 @@ class PostController extends Controller
         $existProvince = $request->province;
 //        dd($existTitle,$existTechnique,$existProvince);
         $jobs = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
+            ->whereRelation('user','users.is_active','=',1)
             ->where('is_active', 1)
             ->get();
         $jobSearchTitle = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
+            ->whereRelation('user','users.is_active','=',1)
             ->where([
                 ['is_active', '=', 1],
                 ['title', 'LIKE', $title]
             ])->get();
         $jobSearchTechnique = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
+            ->whereRelation('user','users.is_active','=',1)
             ->whereRelation('techniques', 'techniques.id', '=', $request->technique)
             ->where('is_active', 1)
             ->get();
         $jobSearchProvince = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
+            ->whereRelation('user','users.is_active','=',1)
             ->whereRelation('province', 'provinces.id', '=', $request->province)
             ->where('is_active', 1)
             ->get();
@@ -367,6 +372,7 @@ class PostController extends Controller
 
 //        dd($salary_range,$salary_unit);
         $jobs = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
+            ->whereRelation('user','users.is_active','=',1)
             ->where([
                 ['is_active', '=', 1],
                 ['salary_unit', '=', $salary_unit],
@@ -387,6 +393,7 @@ class PostController extends Controller
     {
 //        dd($categoryId);
         $jobs = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
+            ->whereRelation('user','users.is_active','=',1)
             ->whereRelation('categories', 'categories.id', '=', $categoryId)
             ->where('is_active', 1)
             ->get();
@@ -407,6 +414,8 @@ class PostController extends Controller
     {
 //        dd($categoryId);
 //        dd($request->route('categoryId'));
+        $user = Auth::user();
+        $isSeeker = $user && $user->role == 1;
         $categoryId = $request->route('categoryId');
         $type = $request->route('type');
         $jobs = session()->get('jobs');
@@ -427,15 +436,27 @@ class PostController extends Controller
 //        dd($existTitle,$existTechnique,$existProvince);
         $techniqueTypes = TechniqueType::with('techniques')->get();
         $provinces = Province::all();
-        $totalJobs = Job::where('is_active', 1)->count();
-        $categories = Category::withCount('jobs')->orderBy('jobs_count', 'desc')->get();
+        $totalJobs = Job::where('is_active', 1)
+            ->whereRelation('user','users.is_active','=',1)
+            ->count();
+//        $categories = Category::withCount('jobs')->orderBy('jobs_count', 'desc')->get();
+        $categories = Category::with('jobs.user')
+            ->withCount(['jobs' => function (Builder $query) {
+                $query->join('users', 'jobs.created_by', '=', 'users.id');
+                $query->where('users.is_active', '=', 1);
+            }])
+            ->whereRelation('jobs.user', 'users.is_active', '=', 1)
+            ->whereRelation('jobs', 'jobs.is_active', '=', 1)
+            ->orderBy('jobs_count', 'desc')
+            ->get();
         return view('guest-seeker.job-search-and-list', compact('jobs', 'techniqueTypes', 'provinces', 'categories',
-            'totalJobs', 'categoryId', 'totalSearchJobs','type','existTitle','existTechnique','existProvince'));
+            'totalJobs', 'categoryId', 'totalSearchJobs','type','existTitle','existTechnique','existProvince','isSeeker'));
 
     }
 
     public function searchPostByCompany(Request $request){
         $jobs = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
+            ->whereRelation('user','users.is_active','=',1)
             ->whereRelation('user', 'name', 'LIKE', '%'.$request->company_name.'%')
             ->where('is_active', 1)
             ->get();

@@ -131,7 +131,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Tên danh mục</label>
-                                        <input name="category" class="form-control" placeholder="Danh Mục" />
+                                        <input name="category" value="{{old('category')}}" class="form-control" placeholder="Danh Mục" />
                                         @error('category')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror

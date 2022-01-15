@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\manage;
 
 use App\Http\Controllers\Controller;
+use App\Models\TechniqueType;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -14,11 +16,12 @@ class TechniqueTypeController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return Application|Factory|View
      */
     public function index()
     {
-        //
+        $techniqueTypes = TechniqueType::orderBy('id','desc')->paginate(10);
+        return view('admin.technique-type.index',compact('techniqueTypes'));
     }
 
     /**
@@ -34,12 +37,22 @@ class TechniqueTypeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return Response
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $validated = $request->validate([
+            'techniqueType'=>'required|string|unique:technique_types,name'
+        ],[
+            'required' => 'Không được để trống trường này',
+            'string' => 'Yêu cầu kiểu chuỗi',
+            'unique' => 'Giá trị này đã tồn tại',
+        ]);
+        TechniqueType::updateOrCreate([
+            'name' => $request->techniqueType,
+        ]);
+        return redirect()->route('admin.technique-type.index');
     }
 
     /**
@@ -61,19 +74,30 @@ class TechniqueTypeController extends Controller
      */
     public function edit(int $id)
     {
-        return view('admin.technique-type.edit');
+        $techniqueType = TechniqueType::find($id);
+        return view('admin.technique-type.edit',compact('techniqueType'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return Response
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request): RedirectResponse
     {
-        //
+        $validated = $request->validate([
+            'techniqueType'=>'required|string|unique:technique_types,name,'.$request->id,
+        ],[
+            'required' => 'Không được để trống trường này',
+            'string' => 'Yêu cầu kiểu chuỗi',
+            'unique' => 'Giá trị này đã tồn tại'
+        ]);
+//        dd($request->id);
+        $techniqueType = TechniqueType::find($request->id);
+        $techniqueType->name = $request->techniqueType;
+        $techniqueType->save();
+        return redirect()->route('admin.technique-type.index');
     }
 
     /**

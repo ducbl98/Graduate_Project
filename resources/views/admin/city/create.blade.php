@@ -125,12 +125,16 @@
                         <h5>Thêm mới địa điểm</h5>
                     </div>
                     <div class="card-body">
-                        <form action="#" method="POST">
+                        <form action="{{route('admin.city.store')}}" method="POST">
+                            @csrf
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Tên địa điểm</label>
-                                        <input name="Name" class="form-control" placeholder="Địa điểm" />
+                                        <input name="province" value="{{old('province')}}" class="form-control" placeholder="Địa điểm" />
+                                        @error('province')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>

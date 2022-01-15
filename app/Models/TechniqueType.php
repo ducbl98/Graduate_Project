@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class TechniqueType extends Model
 {
     protected $table = 'technique_types';
+    protected $fillable=[
+        'name'
+    ];
 
     use HasFactory;
 

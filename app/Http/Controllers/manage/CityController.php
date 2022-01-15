@@ -7,6 +7,7 @@ use App\Models\Province;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -36,12 +37,22 @@ class CityController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return Response
+     * @param Request $request
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'province'=>'required|string|unique:provinces,name'
+        ],[
+            'required' => 'Không được để trống trường này',
+            'string' => 'Yêu cầu kiểu chuỗi',
+            'unique' => 'Giá trị này đã tồn tại',
+        ]);
+        Province::updateOrCreate([
+            'name' => $request->province,
+        ]);
+        return redirect()->route('admin.city.index');
     }
 
     /**
@@ -70,13 +81,23 @@ class CityController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return Response
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request): RedirectResponse
     {
-        //
+        $validated = $request->validate([
+            'province'=>'required|string|unique:provinces,name,'.$request->id,
+        ],[
+            'required' => 'Không được để trống trường này',
+            'string' => 'Yêu cầu kiểu chuỗi',
+            'unique' => 'Giá trị này đã tồn tại'
+        ]);
+//        dd($request->id);
+        $province = Province::find($request->id);
+        $province->name = $request->province;
+        $province->save();
+        return redirect()->route('admin.city.index');
     }
 
     /**

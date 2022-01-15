@@ -125,12 +125,16 @@
                         <h5>Thêm mới danh mục công nghệ</h5>
                     </div>
                     <div class="card-body">
-                        <form action="#" method="POST">
+                        <form action="{{route('admin.technique-type.store')}}" method="POST">
+                            @csrf
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Tên danh mục công nghệ</label>
-                                        <input name="Name" class="form-control" placeholder="Danh mục công nghệ" />
+                                        <input name="techniqueType" value="{{old('techniqueType')}}" class="form-control" placeholder="Danh mục công nghệ" />
+                                        @error('techniqueType')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>

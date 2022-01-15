@@ -125,29 +125,36 @@
                         <h5>Chỉnh sửa ngành nghề</h5>
                     </div>
                     <div class="card-body">
-                        <form action="?c=Career&a=RequestUpdate" method="POST">
-                            <input type="hidden" name="id" value="1">
+                        <form action="{{route('admin.technique.update')}}" method="POST">
+                            @csrf
+                            <input type="hidden" name="id" value="{{$technique->id}}">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Tên công nghệ</label>
-                                        <input name="technique" value="{{$technique->name}}" class="form-control" placeholder="Công nghệ" />
+                                        <input name="technique" value="{{old('technique') ?? $technique->name}}" class="form-control" placeholder="Công nghệ" />
+                                        @error('technique')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <select name="Name" class="form-control">
-                                            <option value="" disabled selected>Danh mục công nghệ</option>
+                                        <select name="techniqueType" class="form-control">
+                                            <option value=null disabled selected>Danh mục công nghệ</option>
                                             @foreach($techniqueTypes as $techniqueType)
                                                 <option value="{{$techniqueType->id}}"
-                                                        {{$technique->type_id == $techniqueType->id ? 'selected':''}}
+                                                        {{old('techniqueType') ? (old('techniqueType') == $techniqueType->id ? 'selected':'') :($technique->type_id == $techniqueType->id ? 'selected':'')}}
                                                 >
                                                     {{$techniqueType->name}}
                                                 </option>
                                             @endforeach
                                         </select>
+                                        @error('techniqueType')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>

@@ -43,10 +43,11 @@ class CategoryController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'category'=>'required|string'
+            'category'=>'required|string|unique:categories,name'
         ],[
             'required' => 'Không được để trống trường này',
-            'string' => 'Yêu cầu kiểu chuỗi'
+            'string' => 'Yêu cầu kiểu chuỗi',
+            'unique' => 'Giá trị này đã tồn tại',
         ]);
         Category::updateOrCreate([
             'name' => $request->category,
@@ -86,11 +87,13 @@ class CategoryController extends Controller
     public function update(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'category'=>'required|string'
+            'category'=>'required|string|unique:categories,name,'.$request->id,
         ],[
             'required' => 'Không được để trống trường này',
-            'string' => 'Yêu cầu kiểu chuỗi'
+            'string' => 'Yêu cầu kiểu chuỗi',
+            'unique' => 'Giá trị này đã tồn tại'
         ]);
+//        dd($request->id);
         $category = Category::find($request->id);
         $category->name = $request->category;
         $category->save();

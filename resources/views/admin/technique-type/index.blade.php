@@ -117,11 +117,11 @@
                 <div class="row align-items-center">
                     <div class="col-md-12">
                         <div class="page-header-title">
-                            <h5 class="m-b-10">Công nghệ</h5>
+                            <h5 class="m-b-10">Danh mục công nghệ</h5>
                         </div>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#"><i class="feather icon-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="#">Công nghệ</a></li>
+                            <li class="breadcrumb-item"><a href="#">Danh mục công nghệ</a></li>
                         </ul>
                     </div>
                 </div>
@@ -134,11 +134,9 @@
                 <div class="card">
 
                     <div class="card-header">
-                        <h5>Danh sách công nghệ</h5>
-                        <a href="{{route('admin.technique.create')}}" class="btn-sm btn-primary float-right"><i class="feather icon-plus"></i> Thêm
+                        <h5>Danh sách danh sách công nghệ</h5>
+                        <a href="{{route('admin.technique-type.create')}}" class="btn-sm btn-primary float-right"><i class="feather icon-plus"></i> Thêm
                             Mới</a>
-                        <a href="{{route('admin.technique-type.create')}}" class="btn-sm btn-primary float-right" style="margin-right: 15px"><i
-                                class="feather icon-plus"></i> Thêm Mới Danh Mục</a>
                     </div>
                     <div class="card-body">
                         <table class="display table table-striped table-hover">
@@ -150,13 +148,13 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($techniques as $index => $technique)
+                            @foreach($techniqueTypes as $index => $techniqueType)
                                 <tr>
                                     <td>{{$index + 1}}</td>
-                                    <td>{{$technique->techniqueType->name}}</td>
+                                    <td>{{$techniqueType->name}}</td>
                                     <td>
                                         <a class="btn-sm btn-icon btn-primary"
-                                           href="{{route('admin.technique.edit',['id'=>$technique->id])}}"
+                                           href="{{route('admin.technique-type.edit',['id'=>$techniqueType->id])}}"
                                            data-toggle="tooltip"
                                            data-placement="top" title="" data-original-title="Edit">
                                             <i class="feather icon-edit-2"></i>
@@ -172,7 +170,7 @@
                         </table>
                     </div>
                     <div id="pagination-link">
-                        {{$techniques->links()}}
+                        {{$techniqueTypes->links()}}
                     </div>
                 </div>
             </div>

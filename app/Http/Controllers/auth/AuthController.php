@@ -14,6 +14,7 @@ use App\Models\Seeker;
 use App\Models\TechniqueType;
 use App\Models\User;
 use App\Models\UserVerify;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -29,10 +30,21 @@ class AuthController extends Controller
         $user = Auth::user();
         $isSeeker = $user && $user->role == 1;
         $jobs = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
+            ->whereRelation('user', 'users.is_active', '=', 1)
             ->where('is_active', 1)->orderBy('created_at', 'desc')->get();
         $techniqueTypes = TechniqueType::with('techniques')->get();
         $provinces = Province::all();
-        $categories = Category::withCount('jobs')
+//        $categories = Category::with('jobs.user')->withCount('jobs')
+//            ->whereRelation('jobs.user','users.is_active','=',1)
+//            ->whereRelation('jobs', 'jobs.is_active', '=', 1)
+//            ->orderBy('jobs_count', 'desc')
+//            ->get();
+        $categories = Category::with('jobs.user')
+            ->withCount(['jobs' => function (Builder $query) {
+                $query->join('users', 'jobs.created_by', '=', 'users.id');
+                $query->where('users.is_active', '=', 1);
+            }])
+            ->whereRelation('jobs.user', 'users.is_active', '=', 1)
             ->whereRelation('jobs', 'jobs.is_active', '=', 1)
             ->orderBy('jobs_count', 'desc')
             ->get();
@@ -135,7 +147,7 @@ class AuthController extends Controller
             if ($userRole == 3) {
                 toastr()->success('Bạn đã đăng nhập thành công !');
                 return redirect()->route('admin.homepage');
-            }else {
+            } else {
                 toastr()->error('Sai thông tin đăng nhập !');
                 return back();
             }
@@ -163,7 +175,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $userRole = Auth::user()->role;
             $isActive = Auth::user()->is_active;
-            if (!$isActive){
+            if (!$isActive) {
                 toastr()->error('Tài khoản đã bị vô hiệu hóa !');
                 return back();
             }

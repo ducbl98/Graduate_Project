@@ -125,13 +125,17 @@
                         <h5>Chỉnh sửa địa điểm</h5>
                     </div>
                     <div class="card-body">
-                        <form action="#" method="POST">
-                            <input type="hidden" name="id" value="1">
+                        <form action="{{route('admin.city.update')}}" method="POST">
+                            @csrf
+                            <input type="hidden" name="id" value="{{$city->id}}">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Tên địa điểm</label>
-                                        <input name="province" value="{{$city->name}}" class="form-control" placeholder="Địa điểm" />
+                                        <input name="province" value="{{old('province') ? old('province') :$city->name}}" class="form-control" placeholder="Địa điểm" />
+                                        @error('province')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>

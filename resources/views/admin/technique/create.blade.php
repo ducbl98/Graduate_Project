@@ -120,26 +120,33 @@
                         <h5>Thêm mới công nghệ</h5>
                     </div>
                     <div class="card-body">
-                        <form action="#" method="POST">
+                        <form action="{{route('admin.technique.store')}}" method="POST">
+                            @csrf
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Tên công nghệ</label>
-                                        <input name="technique" class="form-control" placeholder="Công nghệ" />
+                                        <input name="technique" value="{{old('technique')}}" class="form-control" placeholder="Công nghệ" />
+                                        @error('technique')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <select name="Name" class="form-control">
-                                            <option value="" disabled selected>Danh mục công nghệ</option>
+                                        <select name="techniqueType" class="form-control">
+                                            <option value=null disabled selected>Danh mục công nghệ</option>
                                             @foreach($techniqueTypes as $techniqueType)
-                                                <option value="{{$techniqueType->id}}">
+                                                <option value="{{$techniqueType->id}}" {{old('techniqueType') == $techniqueType->id ? 'selected':''}}>
                                                     {{$techniqueType->name}}
                                                 </option>
                                             @endforeach
                                         </select>
+                                        @error('techniqueType')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>

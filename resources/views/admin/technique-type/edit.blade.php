@@ -12,16 +12,15 @@
     <!-- Meta -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="description" content=""/>
     <meta name="keywords" content="">
-    <meta name="author" content="Phoenixcoded" />
+    <meta name="author" content="Phoenixcoded"/>
     <!-- Favicon icon -->
     <link rel="icon" href="{{asset('img/favicon.ico')}}" type="image/x-icon">
 
     <!-- vendor css -->
     <link rel="stylesheet" href="{{asset('css/admin/style.css')}}">
-
 
 
 </head>
@@ -36,7 +35,7 @@
 <!-- [ navigation menu ] start -->
 <nav class="pcoded-navbar menu-light ">
     <div class="navbar-wrapper  ">
-        <div class="navbar-content scroll-div " >
+        <div class="navbar-content scroll-div ">
 
             <div class="">
                 <div class="main-menu-header">
@@ -47,8 +46,10 @@
                 </div>
                 <div class="collapse" id="nav-user-link">
                     <ul class="list-unstyled">
-                        <li class="list-group-item"><a href="#"><i class="feather icon-user m-r-5"></i>View Profile</a></li>
-                        <li class="list-group-item"><a href="#"><i class="feather icon-log-out m-r-5"></i>Logout</a></li>
+                        <li class="list-group-item"><a href="#"><i class="feather icon-user m-r-5"></i>View Profile</a>
+                        </li>
+                        <li class="list-group-item"><a href="#"><i class="feather icon-log-out m-r-5"></i>Logout</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -58,19 +59,25 @@
                     <label>Điều hướng </label>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('admin.homepage')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Trang chủ</span></a>
+                    <a href="{{route('admin.homepage')}}" class="nav-link "><span class="pcoded-micon"><i
+                                class="feather icon-home"></i></span><span class="pcoded-mtext">Trang chủ</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('admin.category.index')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Danh mục</span></a>
+                    <a href="{{route('admin.category.index')}}" class="nav-link"><span class="pcoded-micon"><i
+                                class="feather icon-layout"></i></span><span class="pcoded-mtext">Danh mục</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('admin.city.index')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Địa điểm</span></a>
+                    <a href="{{route('admin.city.index')}}" class="nav-link"><span class="pcoded-micon"><i
+                                class="feather icon-layout"></i></span><span class="pcoded-mtext">Địa điểm</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('admin.technique.index')}}" class="nav-link" style="background: #4680ff;color: #fff;"><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Công nghệ</span></a>
+                    <a href="{{route('admin.technique.index')}}" class="nav-link"
+                       style="background: #4680ff;color: #fff;"><span class="pcoded-micon"><i
+                                class="feather icon-layout"></i></span><span class="pcoded-mtext">Công nghệ</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('admin.user.index')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Người dùng</span></a>
+                    <a href="{{route('admin.user.index')}}" class="nav-link"><span class="pcoded-micon"><i
+                                class="feather icon-layout"></i></span><span class="pcoded-mtext">Người dùng</span></a>
                 </li>
             </ul>
         </div>
@@ -93,7 +100,6 @@
     </div>
 </header>
 <!-- [ Header ] end -->
-
 
 
 <!-- [ Main Content ] start -->
@@ -125,17 +131,24 @@
                         <h5>Chỉnh sửa danh mục công nghệ</h5>
                     </div>
                     <div class="card-body">
-                        <form action="#" method="POST">
+                        <form action="{{route('admin.technique-type.update')}}" method="POST">
+                            @csrf
+                            <input type="hidden" name="id" value="{{$techniqueType->id}}">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Tên danh mục công nghệ</label>
-                                        <input name="Name" class="form-control" placeholder="Danh mục công nghệ" />
+                                        <input name="techniqueType"
+                                               value="{{old('techniqueType') ? old('techniqueType') : $techniqueType->name}}"
+                                               class="form-control" placeholder="Danh mục công nghệ"/>
+                                        @error('techniqueType')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input type="submit" value="Chỉnh sửa" class="btn btn-primary" />
+                                <input type="submit" value="Chỉnh sửa" class="btn btn-primary"/>
                             </div>
                         </form>
                     </div>

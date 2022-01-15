@@ -76,7 +76,7 @@ class SeekerController extends Controller
 
     public function listAppliedJob()
     {
-        $appliedJobs = SeekerApplication::with('user', 'job')->where([
+        $appliedJobs = SeekerApplication::with('user', 'job.user')->where([
             ['user_id', '=', Auth::id()],
             ['is_active', '=', 1]
         ])->get();
