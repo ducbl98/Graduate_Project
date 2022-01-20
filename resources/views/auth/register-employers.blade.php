@@ -25,15 +25,15 @@
                 <div class="login-logo">
                     <h3>
                         <!-- <a href="#">Tech<span class="txb-logo">Jobs.</span></a> -->
-                        <a href="#">
-                            <img src="{{ asset('img/techjobs_bgb.png') }}">
+                        <a href="{{route('homePage')}}">
+                            <img src="{{ asset('img/techjobs_bgw.png') }}">
                         </a>
                     </h3>
-                    <span class="login-breadcrumb"><em>/</em> Register as Employer</span>
+                    <span class="login-breadcrumb"><em>/</em> Đăng nhập nhà tuyển dụng</span>
                 </div>
                 <div class="login-right">
-                    <a href="{{route('companyLogin')}}" class="btn btn-return">Company Login</a>
-                    <a href="{{route('homePage')}}" class="btn btn-return">Return Home</a>
+                    <a href="{{route('companyLogin')}}" class="btn btn-return">Đăng nhập</a>
+                    <a href="{{route('homePage')}}" class="btn btn-return">Về trang chủ</a>
                 </div>
             </div>
         </div>

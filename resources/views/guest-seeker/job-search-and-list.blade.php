@@ -52,44 +52,13 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto tnav-left tn-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Việc Làm IT</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Tin Tức</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <div class="dropdown-menu tdropdown" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </li>
-                </ul>
                 @if(!$isSeeker)
                     <ul class="navbar-nav mr-auto my-2 my-lg-0 tnav-right tn-nav">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#"><i class="fa fa-search" aria-hidden="true"></i> <span class="hidden-text">Tìm kiếm</span></a>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('showSeekerRegister') }}">Đăng Ký</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('seekerLogin') }}">Đăng Nhập</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                VI
-                            </a>
-                            <div class="dropdown-menu tdropdown" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">English</a>
-                            </div>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link btn-employers" href="{{route('showCompanyRegister')}}" tabindex="-1" aria-disabled="true">Nhà Tuyển Dụng</a>
@@ -270,30 +239,6 @@
                                     </p>
                                     <div class="collapse show" id="filter-price">
                                         <div class="card o-card card-body">
-                                            <div class="filter-panel">
-                                                <div class="panel-content">
-                                                    <div class="filter-topic filter-input-price">
-                                                        <form class="al-price-filter">
-                                                            <span class="_fpblock">
-                                                                <input type="number" class="if-price" id=""
-                                                                       placeholder="50,000">
-                                                            </span>
-                                                            <span class="_fpblock _line">
-                                                                <p>-</p>
-                                                            </span>
-                                                            <span class="_fpblock">
-                                                                <input type="number" class="if-price" id=""
-                                                                       placeholder="1,000,000">
-                                                            </span>
-                                                            <span class="_fpblock">
-                                                                 <button type="submit" class="sb-fprice"><i
-                                                                         class="fa fa-angle-right"
-                                                                         aria-hidden="true"></i></button>
-                                                             </span>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <form action="{{route('job.searchBySalary')}}" method="POST"
                                                   class="al-price-filter">
                                                 @csrf

@@ -29,10 +29,10 @@
                             <img src="{{ asset('img/techjobs_bgb.png') }}">
                         </a>
                     </h3>
-                    <span class="login-breadcrumb"><em>/</em> Register</span>
+                    <span class="login-breadcrumb"><em>/</em> Đăng ký</span>
                 </div>
                 <div class="login-right">
-                    <a href="{{route('homePage')}}" class="btn btn-return">Return Home</a>
+                    <a href="{{route('homePage')}}" class="btn btn-return">Về trang chủ</a>
                 </div>
             </div>
         </div>
