@@ -71,12 +71,6 @@
                             <a class="dropdown-item" href="{{route('logout')}}">Đăng xuất</a>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <a style="background-color: #0f6674 !important;" class="nav-link btn-employers"
-                           href="{{route('showCompanyRegister')}}" tabindex="-1" aria-disabled="true">
-                            Nhà Tuyển Dụng
-                        </a>
-                    </li>
                 </ul>
             </div>
         </nav>
