@@ -45,12 +45,18 @@
                             <div class="form-group mb-3">
                                 <label class="floating-label" for="Email">Địa chỉ Email</label>
                                 <input type="text" class="form-control" name="email" id="Email" placeholder="">
+                                @error('email')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group mb-4">
                                 <label class="floating-label" for="Password">Mật khẩu</label>
                                 <input type="password" class="form-control" name="password" id="Password" placeholder="">
+                                @error('password')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
-                            <button class="btn btn-block btn-primary mb-4">Signin</button>
+                            <button class="btn btn-block btn-primary mb-4">Đăng nhập</button>
                         </form>
                     </div>
                 </div>

@@ -13,6 +13,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 
@@ -23,6 +24,31 @@ class SeekerController extends Controller
         $seekerId = Auth::id();
         $seekerProfile = User::with('seeker.experiences', 'seeker.skills', 'seeker.educations')->find($seekerId);
         return view('seeker.profile', compact('seekerProfile'));
+    }
+
+    public function showChangePassword(){
+        return view('seeker.change-password');
+    }
+    public function changePassword(Request $request){
+        $this->validate($request,[
+            'oldPassword'=>'required|string|min:6',
+            'newPassword'=>'required|string|min:6|confirmed',
+        ],[
+            'required' => "Trường này là bắt buộc",
+            'string' => "Yêu cầu kiểu chuỗi",
+            'min' => "Yêu cầu độ dài tối thiểu :min ký tự",
+            'confirmed' => "Mật khẩu nhập lại không khớp"
+        ]);
+        if (!(Hash::check($request->get('oldPassword'), Auth::user()->password))) {
+            toastr()->error('Mật khẩu cũ không đúng !');
+            return redirect()->back();
+        }
+        $user = Auth::user();
+        $user->password = Hash::make($request->get('newPassword'));
+        $user->save();
+        toastr()->success('Thay đổi mật khẩu thành công !');
+        return redirect()->back();
+
     }
 
     public function updateAvatar(SeekerImageUpdateRequest $request): RedirectResponse

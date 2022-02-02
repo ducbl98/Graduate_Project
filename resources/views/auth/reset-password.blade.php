@@ -27,11 +27,11 @@
                 <div class="login-logo">
                     <h3>
                         <!-- <a href="#">Tech<span class="txb-logo">Jobs.</span></a> -->
-                        <a href="#">
-                            <img src="{{ asset('img/techjobs_bgb.png') }}">
+                        <a href="{{route('homePage')}}">
+                            <img src="{{ asset('img/techjobs_bgw.png') }}">
                         </a>
                     </h3>
-                    <span class="login-breadcrumb"><em>/</em> Reset Password</span>
+                    <span class="login-breadcrumb"><em>/</em> Đặt lại mật khẩu</span>
                 </div>
             </div>
         </div>
@@ -66,20 +66,29 @@
                                     <h5>Địa Chỉ Email<span class="req">*</span></h5>
                                     <input type="text" name="email" class="input form-control-lgin">
                                 </div>
+                                @error('email')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="input-div one">
                                 <div class="div lg-lable">
                                     <h5>Mật khẩu<span class="req">*</span></h5>
                                     <input type="password" name="password" class="input form-control-lgin">
                                 </div>
+                                @error('password')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="input-div one">
                                 <div class="div lg-lable">
                                     <h5>Nhập Lại Mật khẩu<span class="req">*</span></h5>
                                     <input type="password" name="password_confirmation" class="input form-control-lgin">
                                 </div>
+                                @error('password')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
-                            <button type="submit" class="btn btn-primary float-right btn-login d-block w-100">Reset Password</button>
+                            <button type="submit" class="btn btn-primary float-right btn-login d-block w-100">Đặt lại mật khẩu</button>
                         </form>
                     </div>
                 </div>

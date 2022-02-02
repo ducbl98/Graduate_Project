@@ -667,6 +667,9 @@
                                 <label class="control-label">Name</label>
                                 <input name="name" class="form-control iptt" value="{{$seekerProfile->name}}"/>
                             </div>
+                            @error('name')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
@@ -674,6 +677,9 @@
                                 <input disabled name="email" class="form-control iptt"
                                        value="{{$seekerProfile->email}}"/>
                             </div>
+                            @error('email')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
@@ -681,6 +687,9 @@
                                 <input name="phone_number" class="form-control iptt"
                                        value="{{$seekerProfile->seeker->phone_number}}"/>
                             </div>
+                            @error('phone_number')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="col-md-6 pr-0">
                             <div class="form-group">
@@ -688,6 +697,9 @@
                                 <input type="date" name="birthday" class="form-control iptt"
                                        value="{{Carbon\Carbon::parse($seekerProfile->seeker->birthday)->format('Y-m-d')}}"/>
                             </div>
+                            @error('date')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -705,6 +717,9 @@
                                 <input name="address" class="form-control iptt"
                                        value="{{$seekerProfile->seeker->address}}"/>
                             </div>
+                            @error('address')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <button class="btn btn-primary" type="submit">Cập Nhật Tài Khoản</button>
@@ -1259,7 +1274,11 @@
         // alert(recipient);
     })
 </script>
-
+<script type="text/javascript">
+    @if (count($errors) > 0)
+    $('#editInformation').modal('show');
+    @endif
+</script>
 
 </body>
 </html>

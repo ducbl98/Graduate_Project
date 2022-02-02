@@ -27,4 +27,13 @@ class ForgetPasswordRequest extends FormRequest
             'email' => 'required|email|exists:users',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'required' => "Trường này là bắt buộc",
+            'email' => "Yêu cầu đúng định dạng email",
+            'exists'=> "Tài khoản không tồn tại",
+        ];
+    }
 }

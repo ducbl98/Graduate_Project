@@ -6,8 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Roboto Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i&display=swap"
+          rel="stylesheet">
 
     <!-- bootstrap css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
@@ -67,18 +70,27 @@
                                     <h5>Địa Chỉ Email<span class="req">*</span></h5>
                                     <input type="text" name="email" class="input form-control-lgin">
                                 </div>
+                                @error('email')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="input-div one">
                                 <div class="div lg-lable">
                                     <h5>Mật khẩu<span class="req">*</span></h5>
                                     <input type="password" name="password" class="input form-control-lgin">
                                 </div>
+                                @error('password')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="input-div one">
                                 <div class="div lg-lable">
                                     <h5>Nhập Lại Mật khẩu<span class="req">*</span></h5>
                                     <input type="password" name="password_confirmation" class="input form-control-lgin">
                                 </div>
+                                @error('password')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="reg-info">
                                 <h3>Công ty</h3>
@@ -88,29 +100,44 @@
                                     <h5>Tên người liên hệ<span class="req">*</span></h5>
                                     <input type="text" name="contact_name" class="input form-control-lgin">
                                 </div>
+                                @error('contact_name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="input-div one">
                                 <div class="div lg-lable">
                                     <h5>Số điện thoại liên hệ<span class="req">*</span></h5>
                                     <input type="text" name="phone_number" class="input form-control-lgin">
                                 </div>
+                                @error('phone_number')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="input-div one">
                                 <div class="div lg-lable">
                                     <h5>Tên công ty<span class="req">*</span></h5>
                                     <input type="text" name="name" class="input form-control-lgin">
                                 </div>
+                                @error('name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="input-div one">
                                 <div class="div lg-lable">
                                     <h5>Địa Chỉ Công Ty<span class="req">*</span></h5>
                                     <input type="text" name="address" class="input form-control-lgin">
                                 </div>
+                                @error('address')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group d-block frm-text">
-                                <a href="{{route('companyLogin')}}" class="fg-login d-inline-block">Bạn đã có tài khoản? Đăng Nhập</a>
+                                <a href="{{route('companyLogin')}}" class="fg-login d-inline-block">Bạn đã có tài khoản?
+                                    Đăng Nhập</a>
                             </div>
-                            <button type="submit" class="btn btn-primary float-right btn-login d-block w-100">Đăng Ký Nhà Tuyển Dụng</button>
+                            <button type="submit" class="btn btn-primary float-right btn-login d-block w-100">Đăng Ký
+                                Nhà Tuyển Dụng
+                            </button>
                             <div class="form-group d-block w-100 mt-5">
                                 <div class="text-or text-center">
                                     <span>Hoặc</span>

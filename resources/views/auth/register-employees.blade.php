@@ -25,8 +25,8 @@
                 <div class="login-logo">
                     <h3>
                         <!-- <a href="#">Tech<span class="txb-logo">Jobs.</span></a> -->
-                        <a href="#">
-                            <img src="{{ asset('img/techjobs_bgb.png') }}">
+                        <a href="{{route('homePage')}}">
+                            <img src="{{ asset('img/techjobs_bgw.png') }}">
                         </a>
                     </h3>
                     <span class="login-breadcrumb"><em>/</em> Đăng ký</span>
@@ -63,30 +63,45 @@
                                     <h5>Họ Và Tên<span class="req">*</span></h5>
                                     <input type="text" name="name" class="input form-control-lgin">
                                 </div>
+                                @error('name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="input-div one">
                                 <div class="div lg-lable">
                                     <h5>Địa Chỉ Email<span class="req">*</span></h5>
                                     <input type="text" name="email" class="input form-control-lgin">
                                 </div>
+                                @error('email')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="input-div one">
                                 <div class="div lg-lable">
                                     <h5>Số điện thoại<span class="req">*</span></h5>
                                     <input type="text" name="phone_number" class="input form-control-lgin">
                                 </div>
+                                @error('phone_number')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="input-div one">
                                 <div class="div lg-lable">
                                     <h5>Mật khẩu<span class="req">*</span></h5>
                                     <input type="password" name="password" class="input form-control-lgin">
                                 </div>
+                                @error('password')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="input-div one">
                                 <div class="div lg-lable">
                                     <h5>Nhập Lại Mật khẩu<span class="req">*</span></h5>
                                     <input type="password" name="password_confirmation"class="input form-control-lgin">
                                 </div>
+                                @error('password')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group d-block frm-text">
                                 <a href="#" class="fg-login d-inline-block"></a>

@@ -140,7 +140,7 @@ class AuthController extends Controller
         return view('auth.login-admin');
     }
 
-    public function adminLoginProcess(Request $request): RedirectResponse
+    public function adminLoginProcess(LoginRequest $request): RedirectResponse
     {
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {

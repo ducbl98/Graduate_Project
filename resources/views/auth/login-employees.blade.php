@@ -69,12 +69,18 @@
                                     <h5>Tài khoản email</h5>
                                     <input type="text" name="email" class="input form-control-lgin">
                                 </div>
+                                @error('email')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="input-div pass">
                                 <div class="div lg-lable">
                                     <h5>Mật khẩu</h5>
                                     <input type="password" name="password" class="input form-control-lgin">
                                 </div>
+                                @error('password')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group d-block frm-text">
                                 <a href="{{route('showForgetPassword')}}" class="fg-login d-inline-block">Quên mật khẩu</a>
@@ -130,7 +136,7 @@
 </footer>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="{{asset('js/jquery-3.4.1.slim.min.js')}}"></script>
+{{--<script src="{{asset('js/jquery-3.4.1.slim.min.js')}}"></script>--}}
 <script src="{{asset('js/popper.min.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
 

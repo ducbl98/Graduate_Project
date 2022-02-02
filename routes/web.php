@@ -70,6 +70,8 @@ Route::namespace('Seeker')
         Route::get('/profile',[SeekerController::class,'showProfile'])->name('profile.show');
         Route::post('/profile/update-avatar',[SeekerController::class,'updateAvatar'])->name('profile.updateAvatar');
         Route::post('/profile/update-profile',[SeekerController::class,'updateProfile'])->name('profile.updateProfile');
+        Route::get('/change-password',[SeekerController::class,'showChangePassword'])->name('change-password.show');
+        Route::post('/change-password',[SeekerController::class,'changePassword'])->name('change-password.post');
         //Experience
         Route::post('/experience/add',[ExperienceController::class,'addExperience'])->name('experience.add');
         Route::post('/experience/edit',[ExperienceController::class,'editExperience'])->name('experience.edit');

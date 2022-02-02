@@ -13,6 +13,7 @@ use App\Models\Seeker;
 use App\Models\SeekerApplication;
 use App\Models\Technique;
 use App\Models\TechniqueType;
+use App\Models\User;
 use App\Rules\EqualArray;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
@@ -39,13 +40,15 @@ class PostController extends Controller
      */
     public function listPost()
     {
+        $companyId = Auth::id();
+        $companyProfile = User::with('company')->find($companyId);
         $job_titles = Job::query()->distinct()->pluck('title');
 //        dd($job_titles);
 //        $company = Company::with('user')->where('user_id',Auth::id())->first();
         $jobs = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
             ->where('created_by', Auth::id())->where('is_active', 1)->paginate(5);
         $isSearch = false;
-        return view('company.job-list', compact('jobs', 'isSearch', 'job_titles'));
+        return view('company.job-list', compact('jobs', 'isSearch', 'job_titles','companyProfile'));
     }
 
     /**
@@ -56,9 +59,11 @@ class PostController extends Controller
     public function createPost()
     {
         $categories = Category::all();
+        $companyId = Auth::id();
+        $companyProfile = User::with('company')->find($companyId);
         $provinces = Province::all();
         $techniqueTypes = TechniqueType::with('techniques')->get();
-        return view('company.job-create', compact('categories', 'techniqueTypes', 'provinces'));
+        return view('company.job-create', compact('categories', 'techniqueTypes', 'provinces','companyProfile'));
     }
 
     /**
@@ -69,6 +74,7 @@ class PostController extends Controller
      */
     public function storePost(CreatePostRequest $request): RedirectResponse
     {
+
         $request->validate([
             "technique_type_option" => [new EqualArray($request, ["technique_type_option", "optional_technique"])],
         ]);

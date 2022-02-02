@@ -36,7 +36,7 @@ class ForgotPasswordController extends Controller
             $message->to($request->email);
             $message->subject('Reset Password');
         });
-        toastr()->info('We have e-mailed your password reset link!');
+        toastr()->info('Link đặt lại mật khẩu đã được gửi lại qua email đã nhập!');
         return redirect()->route('seekerLogin');
     }
 
@@ -64,7 +64,7 @@ class ForgotPasswordController extends Controller
             ->update(['password' => Hash::make($request->password)]);
 
         DB::table('password_resets')->where(['email'=> $request->email])->delete();
-        toastr()->success('Your password has been changed!');
+        toastr()->success('Mật khẩu của bạn đã được đặt lại!');
         return redirect()->route($redirect);
     }
 }

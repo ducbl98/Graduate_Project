@@ -44,6 +44,6 @@ class EqualArray implements Rule
      */
     public function message()
     {
-        return 'The validation error message.';
+        return 'Trường này yêu cầu phải nhập.';
     }
 }

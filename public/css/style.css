@@ -764,7 +764,7 @@ ul.tnav-right {
 }
 
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-    color: #fff;
+    color: #00c292;
     background-color: transparent;
     border: none;
     height: 39px;
@@ -1939,7 +1939,7 @@ ul.job-add li {
 }
 
 .another-page {
-    background: #fff;
+    background: linear-gradient(to left, #1f4037, #99f2c8);
     margin-bottom: 20px;
     transition: all ease .3s;
     -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,0.06);

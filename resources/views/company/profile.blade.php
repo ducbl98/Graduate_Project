@@ -45,26 +45,6 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto tnav-left tn-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Việc Làm IT</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Tin Tức</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <div class="dropdown-menu tdropdown" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </li>
-                </ul>
                 <ul class="navbar-nav mr-auto my-2 my-lg-0 tnav-right tn-nav">
                     <li class="nav-item">
                         <img
@@ -100,19 +80,13 @@
     <div class="collapse navbar-collapse container" id="navbarNava">
         <ul class="navbar-nav nav-recuitment-li">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Quản lý đăng tuyển</a>
+                <a class="nav-link" href="{{route('company.post.list')}}">Quản lý đăng tuyển</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Quản lý ứng viên</a>
+                <a class="nav-link" href="{{route('company.candidate.list')}}">Quản lý ứng viên</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Quản lý đăng tin</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Quản lý hồ sơ</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Tài khoản</a>
+                <a class="nav-link" href="{{route('company.profile.show')}}">Tài khoản</a>
             </li>
         </ul>
         <ul class="rec-nav-right">
@@ -120,7 +94,7 @@
                 <a class="nav-link" href="#">Tìm hồ sơ</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Đăng tuyển</a>
+                <a class="nav-link" href="{{route('company.post.create')}}">Đăng tuyển</a>
             </li>
         </ul>
     </div>
@@ -312,11 +286,8 @@
                         </h3>
                     </header>
                     <div class="content-sidebar menu-trung-tam-ql menu-ql-employer">
-                        <h3 class="menu-ql-ntv">Quản lý tài khoản</h3>
-                        <h3 class="menu-ql-ntv">Quản lý dịch vụ</h3>
-                        <h3 class="menu-ql-ntv">Quản lý tin tuyển dụng</h3>
-                        <h3 class="menu-ql-ntv">Quản lý ứng viên</h3>
-                        <h3 class="menu-ql-ntv">Hỗ trợ và thông báo</h3>
+                        <a href="{{route('company.post.list')}}"><h3 class="menu-ql-ntv">Quản lý đăng tuyển</h3></a>
+                        <a href="{{route('company.candidate.list')}}"><h3 class="menu-ql-ntv">Quản lý ứng viên</h3></a>
                     </div>
                 </div>
             </div>

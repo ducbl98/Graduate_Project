@@ -44,4 +44,23 @@ class EditPostRequest extends FormRequest
             'details'=> 'required|string'
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'required' => "Trường này là bắt buộc",
+            'string' => "Yêu cầu kiểu chuỗi",
+            'email' => "Yêu cầu đúng định dạng email",
+            'numeric' => "Yêu cầu kiểu số",
+            'optional_category.required_without' => "Yêu cầu trường này khi danh mục trống ",
+            'optional_technique.required_without' => "Yêu cầu trường này khi công nghệ trống ",
+            'technique_type_option.required_with'=>"Yêu cầu trường này đi kèm",
+            'distinct'=>"Yêu cầu không trùng nhau",
+            'between' => "Yêu cầu độ dài từ :min đến :max ký tự",
+            'max' => "Không được quá :max ký tự",
+            'min' => "Yêu cầu độ dài tối thiểu :min ký tự",
+            'salary_max.greater_than_field'=>"Yêu cầu lớn hơn trường lương thấp nhất",
+            'not_in' => " Yêu cầu lớn hơn 0",
+        ];
+    }
 }

@@ -77,16 +77,20 @@ class CompanyController extends Controller
 
     public function listCandidates()
     {
+        $companyId = Auth::id();
+        $companyProfile = User::with('company')->find($companyId);
         $candidates = SeekerApplication::with('user.seeker', 'job')
             ->whereRelation('job', 'jobs.created_by', '=', Auth::id())
             ->where('is_active', 1)
             ->orderBy('updated_at', 'desc')
             ->get();
-        return view('company.candidate-list', compact('candidates'));
+        return view('company.candidate-list', compact('candidates','companyProfile'));
     }
 
     public function detailCandidate($id)
     {
+        $companyId = Auth::id();
+        $companyProfile = User::with('company')->find($companyId);
         $candidateAppliedJob = SeekerApplication::with('user.seeker.experiences', 'user.seeker.educations', 'user.seeker.skills', 'job','response')
             ->where([
                 ['id', '=', $id],
@@ -95,7 +99,7 @@ class CompanyController extends Controller
 //        dd($candidateAppliedJob);
         $cvCandidate = $candidateAppliedJob->getMedia();
         $isRespond =$candidateAppliedJob->response;
-        return view('company.candidate-detail', compact('candidateAppliedJob','isRespond','cvCandidate','id'));
+        return view('company.candidate-detail', compact('candidateAppliedJob','isRespond','cvCandidate','id','companyProfile'));
     }
 
     public function downloadCandidateCV($id)

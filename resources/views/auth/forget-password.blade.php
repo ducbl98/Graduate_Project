@@ -25,14 +25,14 @@
                 <div class="login-logo">
                     <h3>
                         <!-- <a href="#">Tech<span class="txb-logo">Jobs.</span></a> -->
-                        <a href="#">
-                            <img src="{{ asset('img/techjobs_bgb.png') }}">
+                        <a href="{{route('homePage')}}">
+                            <img src="{{ asset('img/techjobs_bgw.png') }}">
                         </a>
                     </h3>
-                    <span class="login-breadcrumb"><em>/</em> Forget Password</span>
+                    <span class="login-breadcrumb"><em>/</em> Quên mật khẩu</span>
                 </div>
                 <div class="login-right">
-                    <a href="{{route('homePage')}}" class="btn btn-return">Return Home</a>
+                    <a href="{{route('homePage')}}" class="btn btn-return">Quay về trang chủ</a>
                 </div>
             </div>
         </div>
@@ -63,8 +63,11 @@
                                     <h5>Địa Chỉ Email<span class="req">*</span></h5>
                                     <input type="text" name="email" class="input form-control-lgin">
                                 </div>
+                                @error('email')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
-                            <button type="submit" class="btn btn-primary float-right btn-login d-block w-100">Send Password Reset Link</button>
+                            <button type="submit" class="btn btn-primary float-right btn-login d-block w-100">Gửi link Quên mật khẩu</button>
                         </form>
                     </div>
                 </div>

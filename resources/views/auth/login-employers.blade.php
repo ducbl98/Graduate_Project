@@ -65,12 +65,18 @@
                                     <h5>Địa Chỉ Email<span class="req">*</span></h5>
                                     <input type="text" name="email" class="input form-control-lgin">
                                 </div>
+                                @error('email')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="input-div one">
                                 <div class="div lg-lable">
                                     <h5>Mật khẩu<span class="req">*</span></h5>
                                     <input type="password" name="password" class="input form-control-lgin">
                                 </div>
+                                @error('password')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group d-block frm-text">
                                 <a href="{{route('showForgetPassword')}}" class="fg-login d-inline-block">Quên mật khẩu</a>
