@@ -49,7 +49,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto tnav-left tn-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Việc Làm IT</a>
+                        <a class="nav-link" href="{{route('job.all')}}">Việc Làm IT</a>
                     </li>
                 </ul>
                 @if(!$isSeeker)
@@ -291,7 +291,7 @@
                                             </div>
                                         @else
                                             <div class="job-salary">
-                                                <a href="#" style="color: orange">
+                                                <a href="{{route('seekerLogin')}}" style="color: orange">
                                                     <i class="fa fa-money" aria-hidden="true"></i>
                                                     Đăng nhập để xem mức lương
                                                     <i class="fa fa-sign-in" aria-hidden="true"></i>
@@ -304,13 +304,13 @@
                                     </div>
                                 </div>
                                 <div class="wrap-btn-appl">
-                                    <a href="#" class="btn btn-appl">Apply Now</a>
+                                    <a href="{{route('job.showPost',['jobId'=>$job->id])}}" class="btn btn-appl">Xem chi tiết</a>
                                 </div>
                             </div>
                         </div>
                         @endforeach
                         <div class="readmorestyle-wrap">
-                            <a href="#" class="readallstyle reads1">Xem tất cả</a>
+                            <a href="{{route('job.all')}}" class="readallstyle reads1">Xem tất cả</a>
                         </div>
                     </div>
                 </div>

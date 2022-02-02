@@ -90,6 +90,7 @@ class SeekerController extends Controller
             ['id', '=', $id],
             ['is_active', '=', 1]
         ])->first();
+//        dd($appliedJob);
         return view('seeker.job-applied-detail', compact('appliedJob'));
     }
 
@@ -120,7 +121,16 @@ class SeekerController extends Controller
             ->whereRelation('seeker_application','seeker_applications.is_respond','=',1)
             ->where('id',$id)->first();
 //        dd($companyResponse);
-        return view('seeker.company-response-detail',compact('companyResponse'));
+        return view('seeker.company-response-detail',compact('companyResponse','id'));
+    }
+
+    public function downloadAttachmentCompany($id){
+        $companyResponse = CompanyResponse::with('seeker_application.job.user.company')
+            ->whereRelation('seeker_application','seeker_applications.user_id','=',Auth::id())
+            ->whereRelation('seeker_application','seeker_applications.is_respond','=',1)
+            ->where('id',$id)->first();
+        $attachment = $companyResponse->getMedia();
+        return $attachment[0];
     }
 
 

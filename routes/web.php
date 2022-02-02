@@ -39,7 +39,8 @@ Route::post('admin-login', [AuthController::class, 'adminLoginProcess'])->name('
 
 Route::get('seeker-login', [AuthController::class, 'seekerLogin'])->name('seekerLogin');
 Route::get('company-login', [AuthController::class, 'companyLogin'])->name('companyLogin');
-Route::post('login', [AuthController::class, 'login'])->name('login');
+Route::post('seeker-login', [AuthController::class, 'seekerLoginPost'])->name('seekerLoginPost');
+Route::post('company-login', [AuthController::class, 'companyLoginPost'])->name('companyLoginPost');
 Route::get('seeker-register', [AuthController::class, 'showSeekerRegister'])->name('showSeekerRegister');
 Route::get('company-register', [AuthController::class, 'showCompanyRegister'])->name('showCompanyRegister');
 Route::post('seeker-register', [AuthController::class, 'seekerRegister'])->name('seekerRegister');
@@ -54,6 +55,7 @@ Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPass
 Route::get('account/verify/{token}', [AuthController::class, 'verifyAccount'])->name('user.verify');
 
 Route::get('job/list-all-job-and-search/{categoryId?}/{type?}',[PostController::class,'listAllJobAndSearch'])->name('job.listAllJobAndSearch');
+Route::get('job/all',[PostController::class,'findAllJobs'])->name('job.all');
 Route::post('job/search',[PostController::class,'searchPost'])->name('job.search');
 Route::post('job/search-by-company',[PostController::class,'searchPostByCompany'])->name('job.searchByCompany');
 Route::post('job/search-by-salary',[PostController::class,'searchPostBySalary'])->name('job.searchBySalary');
@@ -88,6 +90,7 @@ Route::namespace('Seeker')
         //Company Response
         Route::get('/company-response/list',[SeekerController::class,'listCompanyResponses'])->name('company.response.list');
         Route::get('/company-response/detail/{id}',[SeekerController::class,'detailCompanyResponse'])->name('company.response.detail');
+        Route::get('/company-response/download/{id}',[SeekerController::class, 'downloadAttachmentCompany'])->name('company.response.downloadAttachment');
     });
 
 Route::namespace('Company')
@@ -109,6 +112,7 @@ Route::namespace('Company')
         Route::get('/candidate/list',[CompanyController::class,'listCandidates'])->name('candidate.list');
         Route::get('/candidate/detail/{id}',[CompanyController::class,'detailCandidate'])->name('candidate.detail');
         Route::post('/candidate/reply',[CompanyController::class,'replyCandidate'])->name('candidate.reply');
+        Route::get('/candidate/download/{id}',[CompanyController::class,'downloadCandidateCV'])->name('candidate.downloadCV');
     });
 //Route::get('/admin', function () {
 //    return view('admin-index-2');

@@ -104,7 +104,7 @@
                             </div>
 
                             <h5 class="fs-16 fw-700 mb-3 mt-3">Hồ sơ đính kèm</h5>
-                            <a href="#" class="mb-5 d-block">{{$companyResponse->attachment}}</a>
+                            <a href="{{route('seeker.company.response.downloadAttachment',['id'=>$id])}}" class="mb-5 d-block">{{$companyResponse->attachment}}</a>
                             <br>
                             <a href="{{ Illuminate\Support\Facades\URL::previous() }}" class="btn btn-success"> <i class="fa fa-arrow-left"></i>  Go Back</a>
                         </div>

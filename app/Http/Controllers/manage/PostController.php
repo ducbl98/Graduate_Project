@@ -139,21 +139,21 @@ class PostController extends Controller
     {
         $user = Auth::user();
         $isSeeker = $user && $user->role == 1;
-        $seeker =Seeker::with('user')->where('user_id',Auth::id())->first();
+        $seeker = Seeker::with('user')->where('user_id', Auth::id())->first();
         $isApplied = false;
         $job = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
             ->find($id);
-        if ($user){
+        if ($user) {
             $seekerApplication = SeekerApplication::where([
-                ['user_id','=',$user->id],
-                ['job_id','=',$id]
+                ['user_id', '=', $user->id],
+                ['job_id', '=', $id]
             ])->first();
-            if ($seekerApplication){
+            if ($seekerApplication) {
                 $isApplied = true;
             }
         }
 //        dd($isApplied,$isSeeker);
-        return view('guest-seeker.job-detail',compact('job','seeker','isSeeker','isApplied'));
+        return view('guest-seeker.job-detail', compact('job', 'seeker', 'isSeeker', 'isApplied'));
     }
 
     /**
@@ -286,7 +286,18 @@ class PostController extends Controller
         return view('company.job-list', compact('jobs', 'isSearch', 'job_titles'));
     }
 
-    public function searchPost(Request $request)
+    public function findAllJobs()
+    {
+        $jobs = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
+            ->whereRelation('user', 'users.is_active', '=', 1)
+            ->where('is_active', 1)
+            ->get();
+        session()->forget('jobs');
+        session()->put('jobs', $jobs);
+        return redirect()->route('job.listAllJobAndSearch');
+    }
+
+    function searchPost(Request $request)
     {
         $paramSearch = 'empty&&empty&&empty';
         $title = $request->keyword ? '%' . $request->keyword . '%' : '';
@@ -295,22 +306,22 @@ class PostController extends Controller
         $existProvince = $request->province;
 //        dd($existTitle,$existTechnique,$existProvince);
         $jobs = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
-            ->whereRelation('user','users.is_active','=',1)
+            ->whereRelation('user', 'users.is_active', '=', 1)
             ->where('is_active', 1)
             ->get();
         $jobSearchTitle = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
-            ->whereRelation('user','users.is_active','=',1)
+            ->whereRelation('user', 'users.is_active', '=', 1)
             ->where([
                 ['is_active', '=', 1],
                 ['title', 'LIKE', $title]
             ])->get();
         $jobSearchTechnique = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
-            ->whereRelation('user','users.is_active','=',1)
+            ->whereRelation('user', 'users.is_active', '=', 1)
             ->whereRelation('techniques', 'techniques.id', '=', $request->technique)
             ->where('is_active', 1)
             ->get();
         $jobSearchProvince = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
-            ->whereRelation('user','users.is_active','=',1)
+            ->whereRelation('user', 'users.is_active', '=', 1)
             ->whereRelation('province', 'provinces.id', '=', $request->province)
             ->where('is_active', 1)
             ->get();
@@ -318,44 +329,45 @@ class PostController extends Controller
             if (!$existTechnique) {
                 if ($existTitle) {
                     $jobs = $jobs->intersect($jobSearchTitle);
-                    $paramSearch = implode('&&',[$existTitle,'empty','empty']);
+                    $paramSearch = implode('&&', [$existTitle, 'empty', 'empty']);
                 }
             } else {
                 if ($existTitle) {
                     $jobs = $jobs->intersect($jobSearchTitle)->intersect($jobSearchTechnique);
-                    $paramSearch = implode('&&',[$existTitle,$existTechnique,'empty']);
+                    $paramSearch = implode('&&', [$existTitle, $existTechnique, 'empty']);
                 } else {
                     $jobs = $jobs->intersect($jobSearchTechnique);
-                    $paramSearch = implode('&&',['empty',$existTechnique,'empty']);
+                    $paramSearch = implode('&&', ['empty', $existTechnique, 'empty']);
                 }
             }
         } else {
             if (!$existTechnique) {
                 if ($existTitle) {
                     $jobs = $jobs->intersect($jobSearchTitle)->intersect($jobSearchProvince);
-                    $paramSearch = implode('&&',[$existTitle,'empty',$existProvince]);
+                    $paramSearch = implode('&&', [$existTitle, 'empty', $existProvince]);
                 } else {
                     $jobs = $jobs->intersect($jobSearchProvince);
-                    $paramSearch = implode('&&',['empty','empty',$existProvince]);
+                    $paramSearch = implode('&&', ['empty', 'empty', $existProvince]);
                 }
             } else {
                 if ($existTitle) {
                     $jobs = $jobs->intersect($jobSearchTitle)->intersect($jobSearchTechnique)->intersect($jobSearchProvince);
-                    $paramSearch = implode('&&',[$existTitle,$existTechnique,$existProvince]);
+                    $paramSearch = implode('&&', [$existTitle, $existTechnique, $existProvince]);
                 } else {
                     $jobs = $jobs->intersect($jobSearchTechnique)->intersect($jobSearchProvince);
-                    $paramSearch = implode('&&',['empty',$existTechnique,$existProvince]);
+                    $paramSearch = implode('&&', ['empty', $existTechnique, $existProvince]);
                 }
             }
         }
         session()->forget('jobs');
         session()->put('jobs', $jobs);
-        return redirect()->route('job.listAllJobAndSearch',['categoryId'=>$paramSearch,'type'=>'common']);
+        return redirect()->route('job.listAllJobAndSearch', ['categoryId' => $paramSearch, 'type' => 'common']);
 //        dd($jobs);
 //        dd($request,$jobs,$jobSearchTitle,$jobSearchTechnique,$jobSearchProvince);
     }
 
-    public function searchPostBySalary(Request $request)
+    public
+    function searchPostBySalary(Request $request)
     {
 //        dd($request);
         $salary_range = explode(';', $request->salary_range);
@@ -372,7 +384,7 @@ class PostController extends Controller
 
 //        dd($salary_range,$salary_unit);
         $jobs = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
-            ->whereRelation('user','users.is_active','=',1)
+            ->whereRelation('user', 'users.is_active', '=', 1)
             ->where([
                 ['is_active', '=', 1],
                 ['salary_unit', '=', $salary_unit],
@@ -389,18 +401,19 @@ class PostController extends Controller
 ////        dd($request,$jobs,$jobSearchTitle,$jobSearchTechnique,$jobSearchProvince);
     }
 
-    public function searchPostByCategory($categoryId): RedirectResponse
+    public
+    function searchPostByCategory($categoryId): RedirectResponse
     {
 //        dd($categoryId);
         $jobs = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
-            ->whereRelation('user','users.is_active','=',1)
+            ->whereRelation('user', 'users.is_active', '=', 1)
             ->whereRelation('categories', 'categories.id', '=', $categoryId)
             ->where('is_active', 1)
             ->get();
 //        dd($jobs);
         session()->forget('jobs');
         session()->put('jobs', $jobs);
-        return redirect()->route('job.listAllJobAndSearch', ['categoryId' => $categoryId,'type'=>'category']);
+        return redirect()->route('job.listAllJobAndSearch', ['categoryId' => $categoryId, 'type' => 'category']);
 //        return redirect()->route('job.listAllJobAndSearch',['jobs' => $jobs]);
 //        $jobs =Pagination::paginate($jobs,1);
 //        return view('guest-seeker.job-search-and-list',compact('jobs', 'techniqueTypes','provinces','categories','totalJobs','categoryId'));
@@ -410,7 +423,8 @@ class PostController extends Controller
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function listAllJobAndSearch(Request $request)
+    public
+    function listAllJobAndSearch(Request $request)
     {
 //        dd($categoryId);
 //        dd($request->route('categoryId'));
@@ -426,18 +440,18 @@ class PostController extends Controller
         $jobs = Pagination::paginate($jobs, 2, null, [
             'path' => LengthAwarePaginator::resolveCurrentPath(),
         ]);
-        $existTitle = $existTechnique = $existProvince =null;
-        if($type === 'common'){
-            $explode = explode('&&',$categoryId);
-            $existTitle = $explode[0]==='empty'?'':$explode[0];
-            $existTechnique =$explode[1]==='empty'?0:$explode[1];
-            $existProvince = $explode[2]==='empty'?0:$explode[2];
+        $existTitle = $existTechnique = $existProvince = null;
+        if ($type === 'common') {
+            $explode = explode('&&', $categoryId);
+            $existTitle = $explode[0] === 'empty' ? '' : $explode[0];
+            $existTechnique = $explode[1] === 'empty' ? 0 : $explode[1];
+            $existProvince = $explode[2] === 'empty' ? 0 : $explode[2];
         }
 //        dd($existTitle,$existTechnique,$existProvince);
         $techniqueTypes = TechniqueType::with('techniques')->get();
         $provinces = Province::all();
         $totalJobs = Job::where('is_active', 1)
-            ->whereRelation('user','users.is_active','=',1)
+            ->whereRelation('user', 'users.is_active', '=', 1)
             ->count();
 //        $categories = Category::withCount('jobs')->orderBy('jobs_count', 'desc')->get();
         $categories = Category::with('jobs.user')
@@ -450,20 +464,22 @@ class PostController extends Controller
             ->orderBy('jobs_count', 'desc')
             ->get();
         return view('guest-seeker.job-search-and-list', compact('jobs', 'techniqueTypes', 'provinces', 'categories',
-            'totalJobs', 'categoryId', 'totalSearchJobs','type','existTitle','existTechnique','existProvince','isSeeker'));
+            'totalJobs', 'categoryId', 'totalSearchJobs', 'type', 'existTitle', 'existTechnique', 'existProvince', 'isSeeker'));
 
     }
 
-    public function searchPostByCompany(Request $request){
+    public
+    function searchPostByCompany(Request $request)
+    {
         $jobs = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
-            ->whereRelation('user','users.is_active','=',1)
-            ->whereRelation('user', 'name', 'LIKE', '%'.$request->company_name.'%')
+            ->whereRelation('user', 'users.is_active', '=', 1)
+            ->whereRelation('user', 'name', 'LIKE', '%' . $request->company_name . '%')
             ->where('is_active', 1)
             ->get();
 
         session()->forget('jobs');
         session()->put('jobs', $jobs);
-        return redirect()->route('job.listAllJobAndSearch', ['categoryId' => $request->company_name,'type'=>'company']);
+        return redirect()->route('job.listAllJobAndSearch', ['categoryId' => $request->company_name, 'type' => 'company']);
 
     }
 }

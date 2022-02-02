@@ -31,14 +31,14 @@
                 <div class="login-logo">
                     <h3>
                         <!-- <a href="#">Tech<span class="txb-logo">Jobs.</span></a> -->
-                        <a href="#">
+                        <a href="{{route('homePage')}}">
                             <img src="{{asset('img/techjobs_bgw.png')}}" alt="TechJobs">
                         </a>
                     </h3>
                     <span class="login-breadcrumb"><em>/</em> Đăng Nhập</span>
                 </div>
                 <div class="login-right">
-                    <a href="{{route('homePage')}}" class="btn btn-return">Return Home</a>
+                    <a href="{{route('homePage')}}" class="btn btn-return">Quay về trang chủ</a>
                 </div>
             </div>
         </div>
@@ -59,20 +59,20 @@
                     <!-- login main form -->
                     <div class="col-md-6 col-sm-12 col-12 login-main-right">
 
-                        <form action="{{route('login')}}" method="POST" class="login-form">
+                        <form action="{{route('seekerLoginPost')}}" method="POST" class="login-form">
                             @csrf
                             <div class="login-main-header">
                                 <h3>Đăng Nhập</h3>
                             </div>
                             <div class="input-div one">
                                 <div class="div lg-lable">
-                                    <h5>Email</h5>
+                                    <h5>Tài khoản email</h5>
                                     <input type="text" name="email" class="input form-control-lgin">
                                 </div>
                             </div>
                             <div class="input-div pass">
                                 <div class="div lg-lable">
-                                    <h5>Password</h5>
+                                    <h5>Mật khẩu</h5>
                                     <input type="password" name="password" class="input form-control-lgin">
                                 </div>
                             </div>

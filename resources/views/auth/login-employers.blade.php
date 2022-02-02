@@ -27,14 +27,14 @@
                 <div class="login-logo">
                     <h3>
                         <!-- <a href="#">Tech<span class="txb-logo">Jobs.</span></a> -->
-                        <a href="#">
+                        <a href="{{route('homePage')}}">
                             <img src="{{asset('img/techjobs_bgw.png')}}" alt="TechJobs">
                         </a>
                     </h3>
-                    <span class="login-breadcrumb"><em>/</em> Login As Employer</span>
+                    <span class="login-breadcrumb"><em>/</em> Đăng nhập nhà tuyển dụng</span>
                 </div>
                 <div class="login-right">
-                    <a href="{{route('homePage')}}" class="btn btn-return">Return Home</a>
+                    <a href="{{route('homePage')}}" class="btn btn-return">Quay về trang chủ</a>
                 </div>
             </div>
         </div>
@@ -55,7 +55,7 @@
                     <!-- login main form -->
                     <div class="col-md-6 col-sm-12 col-12 login-main-right">
 
-                        <form action="{{route('login')}}" method="POST" class="login-form reg-form">
+                        <form action="{{route('companyLoginPost')}}" method="POST" class="login-form reg-form">
                             @csrf
                             <div class="login-main-header">
                                 <h3>Đăng Nhập Tài Khoản Nhà Tuyển Dụng</h3>

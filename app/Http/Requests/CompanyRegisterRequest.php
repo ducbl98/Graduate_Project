@@ -32,4 +32,6 @@ class CompanyRegisterRequest extends FormRequest
             'address'=> 'required|string|between:2,30',
         ];
     }
+
+
 }

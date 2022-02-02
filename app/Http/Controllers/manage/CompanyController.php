@@ -15,6 +15,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class CompanyController extends Controller
 {
@@ -92,8 +93,20 @@ class CompanyController extends Controller
                 ['is_active', '=', 1]
             ])->first();
 //        dd($candidateAppliedJob);
+        $cvCandidate = $candidateAppliedJob->getMedia();
         $isRespond =$candidateAppliedJob->response;
-        return view('company.candidate-detail', compact('candidateAppliedJob','isRespond'));
+        return view('company.candidate-detail', compact('candidateAppliedJob','isRespond','cvCandidate','id'));
+    }
+
+    public function downloadCandidateCV($id)
+    {
+        $candidateAppliedJob = SeekerApplication::where([
+                ['id', '=', $id],
+                ['is_active', '=', 1]
+            ])->first();
+//        dd($candidateAppliedJob);
+        $cvCandidate = $candidateAppliedJob->getMedia();
+        return $cvCandidate[0];
     }
 
     public function replyCandidate(CompanyResponseRequest $request)
@@ -107,6 +120,9 @@ class CompanyController extends Controller
             'attachment' => $responseFile ? $responseFile->getClientOriginalName() : null,
             'seeker_application_id' => $request->seeker_application_id
         ]);
+        $seekerApplication = SeekerApplication::find($request->seeker_application_id);
+        $seekerApplication->is_respond =1 ;
+        $seekerApplication->save();
         if ($responseFile){
             $company_response->addMediaFromRequest('attachment')->toMediaCollection();
         }

@@ -61,14 +61,17 @@
                             <a class="nav-link" href="{{ route('seekerLogin') }}">Đăng Nhập</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn-employers" href="{{route('showCompanyRegister')}}" tabindex="-1" aria-disabled="true">Nhà Tuyển Dụng</a>
+                            <a class="nav-link btn-employers" href="{{route('showCompanyRegister')}}" tabindex="-1"
+                               aria-disabled="true">Nhà Tuyển Dụng</a>
                         </li>
                     </ul>
                 @else
                     <ul class="navbar-nav mr-auto my-2 my-lg-0 tnav-right tn-nav">
                         <li class="nav-item">
-                            <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/51158316-fd7e-48ca-b5fe-8542e9dfe357/denpw7t-09ac7bf3-0bd5-4a0c-bfa3-7f5762f6aaa5.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzUxMTU4MzE2LWZkN2UtNDhjYS1iNWZlLTg1NDJlOWRmZTM1N1wvZGVucHc3dC0wOWFjN2JmMy0wYmQ1LTRhMGMtYmZhMy03ZjU3NjJmNmFhYTUucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.D0bPWTJZRiyKO645ADf5TaSlxU-i4CDfxYaOsvKuDeY" alt=""
-                                 style="vertical-align: middle; width: 35px; height: 35px; border-radius: 50%;">
+                            <img
+                                src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/51158316-fd7e-48ca-b5fe-8542e9dfe357/denpw7t-09ac7bf3-0bd5-4a0c-bfa3-7f5762f6aaa5.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzUxMTU4MzE2LWZkN2UtNDhjYS1iNWZlLTg1NDJlOWRmZTM1N1wvZGVucHc3dC0wOWFjN2JmMy0wYmQ1LTRhMGMtYmZhMy03ZjU3NjJmNmFhYTUucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.D0bPWTJZRiyKO645ADf5TaSlxU-i4CDfxYaOsvKuDeY"
+                                alt=""
+                                style="vertical-align: middle; width: 35px; height: 35px; border-radius: 50%;">
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
@@ -77,13 +80,16 @@
                             </a>
                             <div class="dropdown-menu tdropdown" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{route('seeker.profile.show')}}">Trang cá nhân</a>
-                                <a class="dropdown-item" href="{{route('seeker.job.apply.list')}}">Công việc đã ứng tuyển</a>
-                                <a class="dropdown-item" href="{{route('seeker.company.response.list')}}">Phản hồi từ nhà tuyển dụng</a>
+                                <a class="dropdown-item" href="{{route('seeker.job.apply.list')}}">Công việc đã ứng
+                                    tuyển</a>
+                                <a class="dropdown-item" href="{{route('seeker.company.response.list')}}">Phản hồi từ
+                                    nhà tuyển dụng</a>
                                 <a class="dropdown-item" href="{{route('logout')}}">Đăng xuất</a>
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn-employers" href="{{route('showCompanyRegister')}}" tabindex="-1" aria-disabled="true">Nhà Tuyển Dụng</a>
+                            <a class="nav-link btn-employers" href="{{route('showCompanyRegister')}}" tabindex="-1"
+                               aria-disabled="true">Nhà Tuyển Dụng</a>
                         </li>
                     </ul>
                 @endif
@@ -102,17 +108,20 @@
 
             <ul class="nav nav-tabs search-nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item search-nav-item">
-                    <a class="nav-link snav-link {{$type === 'company' ? '' :'active'}}" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                    <a class="nav-link snav-link {{$type === 'company' ? '' :'active'}}" id="home-tab" data-toggle="tab"
+                       href="#home" role="tab"
                        aria-controls="home" aria-selected="true">Tìm việc làm</a>
                 </li>
                 <li class="nav-item search-nav-item">
-                    <a class="nav-link snav-link {{$type === 'company' ? 'active' : ''}}" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                    <a class="nav-link snav-link {{$type === 'company' ? 'active' : ''}}" id="profile-tab"
+                       data-toggle="tab" href="#profile" role="tab"
                        aria-controls="profile" aria-selected="false">Tìm công ty</a>
                 </li>
             </ul>
             <div class="tab-content search-tab-content" id="myTabContent">
                 <!-- content tab 1 -->
-                <div class="tab-pane stab-pane fade {{$type === 'company' ? '' :'show active'}}" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="tab-pane stab-pane fade {{$type === 'company' ? '' :'show active'}}" id="home"
+                     role="tabpanel" aria-labelledby="home-tab">
                     <form action="{{route('job.search')}}" method="POST" class="bn-search-form">
                         @csrf
                         <div class="row">
@@ -160,14 +169,16 @@
                 </div>
                 <!-- (end) content tab 1 -->
                 <!-- content tab 2 -->
-                <div class="tab-pane stab-pane fade {{$type === 'company' ? 'show active' : ''}}" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="tab-pane stab-pane fade {{$type === 'company' ? 'show active' : ''}}" id="profile"
+                     role="tabpanel" aria-labelledby="profile-tab">
                     <form action="{{route('job.searchByCompany')}}" method="POST" class="bn-search-form">
                         @csrf
                         <div class="row">
                             <div class="col-md-10 col-sm-12">
                                 <div class="input-group s-input-group w-100">
                                     <input name="company_name" type="text" class="form-control sinput"
-                                           placeholder="Nhập tên công ty " value={{$type === 'company' ? $categoryId : ''}}>
+                                           placeholder="Nhập tên công ty "
+                                           value={{$type === 'company' ? $categoryId : ''}}>
                                     <span><i class="fa fa-search"></i></span>
                                 </div>
                             </div>
@@ -483,13 +494,23 @@
                                                     @endforeach
                                                 </a>
                                             </div>
-                                            <div class="job-salary">
-                                                <i class="fa fa-money" aria-hidden="true"></i>
-                                                <span class="salary-min">{{$job->salary_min}}<em
-                                                        class="salary-unit">{{$job->salary_unit}}</em></span>
-                                                <span class="salary-max">{{$job->salary_max}}<em
-                                                        class="salary-unit">{{$job->salary_unit}}</em></span>
-                                            </div>
+                                            @if($isSeeker)
+                                                <div class="job-salary">
+                                                    <i class="fa fa-money" aria-hidden="true"></i>
+                                                    <span class="salary-min">{{$job->salary_min}}<em
+                                                            class="salary-unit">{{$job->salary_unit}}</em></span>
+                                                    <span class="salary-max">{{$job->salary_max}}<em
+                                                            class="salary-unit">{{$job->salary_unit}}</em></span>
+                                                </div>
+                                            @else
+                                                <div class="job-salary">
+                                                    <a href="{{route('seekerLogin')}}" style="color: orange">
+                                                        <i class="fa fa-money" aria-hidden="true"></i>
+                                                        Đăng nhập để xem mức lương
+                                                        <i class="fa fa-sign-in" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                            @endif
                                             <div class="job-deadline">
                                                 <span><i class="fa fa-clock-o"
                                                          aria-hidden="true"></i>  Hạn nộp: <strong>{{$job->expire}}</strong></span>
@@ -497,7 +518,8 @@
                                         </div>
                                     </div>
                                     <div class="wrap-btn-appl">
-                                        <a href="{{route('job.showPost',['jobId'=>$job->id])}}" class="btn btn-appl">Xem chi tiết</a>
+                                        <a href="{{route('job.showPost',['jobId'=>$job->id])}}" class="btn btn-appl">Xem
+                                            chi tiết</a>
                                     </div>
                                 </div>
                             </div>

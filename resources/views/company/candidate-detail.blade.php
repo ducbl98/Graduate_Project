@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/select4.min.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    @toastr_css
 
     <!-- main css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
@@ -206,38 +207,77 @@
                                                 <div class="col-md-8"><b>{{$candidateAppliedJob->user->email}}</b></div>
                                             </div>
                                         </div>
+                                        <h5 class="fs-16 fw-700 mb-3 mt-3">Trình độ học vấn</h5>
+                                        @foreach($candidateAppliedJob->user->seeker->educations as $education)
+                                            <div class="row">
+                                                <div class="col-6 pr-10 row pt-2 pb-2">
+                                                    <div class="col-md-6">Cơ sở đào tạo</div>
+                                                    <div class="col-md-6" style="color: darkblue">
+                                                        <b> {{$education->facility}}</b></div>
+                                                </div>
+                                                <div class="col-6 pr-10 row pt-2 pb-2">
+                                                    <div class="col-md-6">Chuyên nghành</div>
+                                                    <div class="col-md-6" style="color: darkblue">
+                                                        <b> {{$education->major}}</b></div>
+                                                </div>
+                                                <div class="col-12 row pt-2 pb-2">
+                                                    <div class="col-md-5">Kết quả</div>
+                                                    <div class="col-md-7" style="color: darkblue">
+                                                        <b> {{$education->degree}}</b>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 row pt-2 pb-2">
+                                                    <div class="col-md-5">Thời gian</div>
+                                                    <div class="col-md-7" style="color: darkblue">
+                                                        <b> {{Carbon\Carbon::parse($education->time_start)->format('d/m/Y')}}
+                                                            - {{$education->state}}</b>
+                                                    </div>
+                                                </div>
+                                                <p style="border-bottom: 1px dashed #ccc; display: block; width: 100%;"></p>
+                                            </div>
+                                        @endforeach
                                         <h5 class="fs-16 fw-700 mb-3 mt-3">Kinh nghiệm làm việc</h5>
-                                        <div class="row">
-                                            <div class="col-6 pr-10 row pt-2 pb-2">
-                                                <div class="col-md-6">Chức vụ</div>
-                                                <div class="col-md-6"><b> dsadsa</b></div>
+                                        @foreach($candidateAppliedJob->user->seeker->experiences as $experience)
+                                            <div class="row">
+                                                <div class="col-6 pr-10 row pt-2 pb-2">
+                                                    <div class="col-md-6">Chức vụ</div>
+                                                    <div class="col-md-6" style="color: darkblue">
+                                                        <b> {{$experience->name}}</b></div>
+                                                </div>
+                                                <div class="col-6 pr-10 row pt-2 pb-2">
+                                                    <div class="col-md-4">Công ty</div>
+                                                    <div class="col-md-8" style="color: darkblue">
+                                                        <b> {{$experience->company_name}}</b></div>
+                                                </div>
+                                                <div class="col-12 row pt-2 pb-2">
+                                                    <div class="col-md-5">Thời gian làm việc</div>
+                                                    <div class="col-md-7" style="color: darkblue">
+                                                        <b> {{Carbon\Carbon::parse($experience->time_start)->format('d/m/Y')}}
+                                                            - {{Carbon\Carbon::parse($experience->time_finish)->format('d/m/Y')}}</b>
+                                                    </div>
+                                                </div>
+                                                <p style="border-bottom: 1px dashed #ccc; display: block; width: 100%;"></p>
                                             </div>
-                                            <div class="col-6 pr-10 row pt-2 pb-2">
-                                                <div class="col-md-4">Công ty</div>
-                                                <div class="col-md-8"><b> sdsadas</b></div>
-                                            </div>
-                                            <div class="col-12 row pt-2 pb-2">
-                                                <div class="col-md-3">Thời gian làm việc</div>
-                                                <div class="col-md-9"><b> sdasd - adsadasda</b></div>
-                                            </div>
-                                            <p style="border-bottom: 1px dashed #ccc; display: block; width: 100%;"></p>
-                                        </div>
+                                        @endforeach
                                         <h5 class="fs-16 fw-700 mb-3 mt-3">Kỹ năng</h5>
                                         <div class="user_exp_edu Experience_11642 div-exp-height">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    dsadsadsad
-                                                </div>
-                                                <div class="col-md-6">
+                                            @foreach($candidateAppliedJob->user->seeker->skills as $skill)
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        {{$skill->name}}
+                                                    </div>
+                                                    <div class="col-md-6">
                                                     <span style="color: #ffc107">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
+                                                        @for($i=0;$i<$skill->level;$i++)
+                                                            <i class="fa fa-star"></i>
+                                                        @endfor
+                                                        @for($i=0;$i<5-$skill->level;$i++)
+                                                            <i class="fa fa-star-o"></i>
+                                                        @endfor
                                                     </span>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            @endforeach
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <hr class="break-line pt-1 pb-1">
@@ -250,11 +290,11 @@
                             <h5 class="fs-16 fw-700 mb-3 mt-3">Nội dung thư</h5>
                             <div class="cover-letterx">
                                 <textarea class="w-100" rows="15" class="letterx">
-                                    asdsadsad
+                                    {{$candidateAppliedJob->introduction}}
                                 </textarea>
                             </div>
                             <h5 class="fs-16 fw-700 mb-3 mt-3">Hồ sơ đính kèm</h5>
-                            <a href="#" class="mb-5 d-block"> sdfdsfds</a>
+                            <a href="{{route('company.candidate.downloadCV',['id'=>$id])}}" class="mb-5 d-block"> {{$candidateAppliedJob->resume}}</a>
                         </div>
                     </div>
                     <div class="rec-submit">
@@ -630,5 +670,8 @@
     $('#feedbackEmp').modal('show');
     @endif
 </script>
+@jquery
+@toastr_js
+@toastr_render
 </body>
 </html>

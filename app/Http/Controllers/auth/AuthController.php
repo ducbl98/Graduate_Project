@@ -31,7 +31,8 @@ class AuthController extends Controller
         $isSeeker = $user && $user->role == 1;
         $jobs = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
             ->whereRelation('user', 'users.is_active', '=', 1)
-            ->where('is_active', 1)->orderBy('created_at', 'desc')->get();
+            ->where('is_active', 1)->orderBy('created_at', 'desc')
+            ->skip(0)->take(8)->get();
         $techniqueTypes = TechniqueType::with('techniques')->get();
         $provinces = Province::all();
 //        $categories = Category::with('jobs.user')->withCount('jobs')
@@ -169,7 +170,7 @@ class AuthController extends Controller
         return view('auth.login-employers');
     }
 
-    public function login(LoginRequest $request): RedirectResponse
+    public function seekerLoginPost(LoginRequest $request): RedirectResponse
     {
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
@@ -179,16 +180,34 @@ class AuthController extends Controller
                 toastr()->error('Tài khoản đã bị vô hiệu hóa !');
                 return back();
             }
-            switch ($userRole) {
-                case 1 :
-                    toastr()->success('Bạn đã đăng nhập thành công !');
-                    return redirect()->intended();
-                case 2 :
-                    toastr()->success('Bạn đã đăng nhập thành công !');
-                    return redirect()->route('companyPage');
-                case 3:
-                    toastr()->error('Sai thông tin đăng nhập !');
-                    return back();
+            if ($userRole == 1) {
+                toastr()->success('Bạn đã đăng nhập thành công !');
+                return redirect()->intended();
+            } else {
+                toastr()->error('Sai thông tin đăng nhập !');
+                return back();
+            }
+        }
+        toastr()->error('Sai thông tin đăng nhập !');
+        return back();
+    }
+
+    public function companyLoginPost(LoginRequest $request): RedirectResponse
+    {
+        $credentials = $request->only('email', 'password');
+        if (Auth::attempt($credentials)) {
+            $userRole = Auth::user()->role;
+            $isActive = Auth::user()->is_active;
+            if (!$isActive) {
+                toastr()->error('Tài khoản đã bị vô hiệu hóa !');
+                return back();
+            }
+            if ($userRole == 2) {
+                toastr()->success('Bạn đã đăng nhập thành công !');
+                return redirect()->route('companyPage');
+            } else {
+                toastr()->error('Sai thông tin đăng nhập !');
+                return back();
             }
         }
         toastr()->error('Sai thông tin đăng nhập !');
