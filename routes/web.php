@@ -93,6 +93,8 @@ Route::namespace('Seeker')
         Route::get('/company-response/list',[SeekerController::class,'listCompanyResponses'])->name('company.response.list');
         Route::get('/company-response/detail/{id}',[SeekerController::class,'detailCompanyResponse'])->name('company.response.detail');
         Route::get('/company-response/download/{id}',[SeekerController::class, 'downloadAttachmentCompany'])->name('company.response.downloadAttachment');
+        //Save Jobs
+        Route::get('/save-jobs',[SeekerController::class,'listSavedJobs'])->name('job.save');
     });
 
 Route::namespace('Company')
@@ -102,6 +104,8 @@ Route::namespace('Company')
     ->group(function () {
         Route::get('/profile',[CompanyController::class,'showProfile'])->name('profile.show');
         Route::post('/profile/update-profile',[CompanyController::class,'updateProfile'])->name('profile.updateProfile');
+        Route::get('/change-password',[CompanyController::class,'showChangePassword'])->name('change-password.show');
+        Route::post('/change-password',[CompanyController::class,'changePassword'])->name('change-password.post');
         //Post
         Route::get('/post/list',[PostController::class,'listPost'])->name('post.list');
         Route::get('/post/create',[PostController::class,'createPost'])->name('post.create');

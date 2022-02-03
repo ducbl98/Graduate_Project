@@ -28,6 +28,7 @@ class AuthController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $seekerProfile = User::with('seeker')->find(Auth::id());
         $isSeeker = $user && $user->role == 1;
         $jobs = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
             ->whereRelation('user', 'users.is_active', '=', 1)
@@ -50,14 +51,16 @@ class AuthController extends Controller
             ->orderBy('jobs_count', 'desc')
             ->get();
 //        dd($categories);
-        return view('welcome', compact('isSeeker', 'jobs', 'techniqueTypes', 'provinces', 'categories'));
+        return view('welcome', compact('isSeeker', 'jobs', 'techniqueTypes', 'provinces', 'categories','seekerProfile'));
     }
 
     public function indexCompany()
     {
         $user = Auth::user();
+        $companyProfile = User::with('company','jobs')->find(Auth::id());
+//        dd($companyProfile);
         $isCompany = $user && $user->role == 2;
-        return view('company-index', compact('isCompany'));
+        return view('company-index', compact('isCompany','companyProfile'));
     }
 
     public function showSeekerRegister()

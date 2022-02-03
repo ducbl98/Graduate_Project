@@ -48,49 +48,23 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto tnav-left tn-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Việc Làm IT</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Tin Tức</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <div class="dropdown-menu tdropdown" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </li>
-                </ul>
                 <ul class="navbar-nav mr-auto my-2 my-lg-0 tnav-right tn-nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#"><i class="fa fa-search" aria-hidden="true"></i> <span
-                                class="hidden-text">Tìm kiếm</span></a>
-                    </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Đăng Ký</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Đăng Nhập</a>
+                        <img
+                            src="{{ $companyProfile->company->avatar_url ? asset('storage/'.$companyProfile->company->avatar_url) : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/OOjs_UI_icon_userAvatar-constructive.svg/1024px-OOjs_UI_icon_userAvatar-constructive.svg.png" }}"
+                            alt=""
+                            style="vertical-align: middle; width: 35px; height: 35px; border-radius: 50%;">
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            VI
+                        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            {{$companyProfile->name}}
                         </a>
                         <div class="dropdown-menu tdropdown" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">English</a>
+                            <a class="dropdown-item" href="{{route('company.profile.show')}}">Trang cá nhân</a>
+                            <a class="dropdown-item" href="{{route('company.change-password.show')}}">Thay đổi mật khẩu</a>
+                            <a class="dropdown-item" href="{{route('logout')}}">Đăng xuất</a>
                         </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn-employers" href="#" tabindex="-1" aria-disabled="true"
-                           style="color: #fff!important">Nhà Tuyển Dụng</a>
                     </li>
                 </ul>
             </div>
@@ -113,16 +87,10 @@
                 <a class="nav-link" href="{{route('company.post.list')}}">Quản lý đăng tuyển</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Quản lý ứng viên</a>
+                <a class="nav-link" href="{{route('company.candidate.list')}}">Quản lý ứng viên</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Quản lý đăng tin</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Quản lý hồ sơ</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Tài khoản</a>
+                <a class="nav-link" href="{{route('company.profile.show')}}">Tài khoản</a>
             </li>
         </ul>
         <ul class="rec-nav-right">
@@ -130,7 +98,7 @@
                 <a class="nav-link" href="#">Tìm hồ sơ</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Đăng tuyển</a>
+                <a class="nav-link" href="{{route('company.post.create')}}">Đăng tuyển</a>
             </li>
         </ul>
     </div>
@@ -401,13 +369,15 @@
             <div class="col-md-4 col-sm-12 col-12">
                 <div class="recuiter-info">
                     <div class="recuiter-info-avt">
-                        <img src="{{asset('img/icon_avatar.jpg')}}">
+                        <img
+                            src="{{ $companyProfile->company->avatar_url ? asset('storage/'.$companyProfile->company->avatar_url) : "img/icon_avatar.jpg" }}"
+                        >
                     </div>
                     <div class="clearfix list-rec">
-                        <h4>NESTLE Inc.</h4>
+                        <h4>{{$companyProfile->name}}</h4>
                         <ul>
-                            <li><a href="#">Việc làm đang đăng <strong>(0)</strong></a></li>
-                            <li><a href="#">Follower <strong>(450)</strong></a></li>
+                            <li><a href="#">Việc làm đã đăng <strong>({{count($companyProfile->jobs)}})</strong></a></li>
+                            {{--                            <li><a href="#">Follower <strong>(450)</strong></a></li>--}}
                         </ul>
                     </div>
                 </div>
@@ -420,118 +390,8 @@
                         </h3>
                     </header>
                     <div class="content-sidebar menu-trung-tam-ql menu-ql-employer">
-                        <h3 class="menu-ql-ntv">
-                            Quản lý tài khoản
-                        </h3>
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    Tài khoản
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Giấy phép kinh doanh
-                                </a>
-                            </li>
-                        </ul>
-                        <h3 class="menu-ql-ntv">
-                            Quản lý dịch vụ
-                        </h3>
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    Lịch sử dịch vụ
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" target="_blank">
-                                    Báo giá
-                                </a>
-                            </li>
-                        </ul>
-                        <h3 class="menu-ql-ntv">
-                            Quản lý tin tuyển dụng
-                        </h3>
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    Đăng tin tuyển dụng
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Danh sách tin tuyển dụng
-                                </a>
-                            </li>
-                        </ul>
-                        <h3 class="menu-ql-ntv">
-                            Quản lý ứng viên
-                        </h3>
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    Tìm kiếm hồ sơ
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Hồ sơ đã lưu
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Hồ sơ đã ứng tuyển
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" title="Thông báo hồ sơ phù hợp">
-                                    Thông báo hồ sơ phù hợp
-                                </a>
-                            </li>
-                        </ul>
-                        <h3 class="menu-ql-ntv">
-                            Hỗ trợ và thông báo
-                        </h3>
-                        <ul>
-                            <li>
-                                <a href="#" title="Gửi yêu cầu đến ban quản trị">
-                                    Gửi yêu cầu đến ban quản trị
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" title="Ban quản trị thông báo">
-                                    Ban quản trị thông báo
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" title="Hướng dẫn thao tác">
-                                    Hướng dẫn thao tác
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" target="_blank">
-                                    <span>Thông tin thanh toán</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a target="_blank" href="#">
-                                    <span>Cổng tra cứu lương</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a target="_blank" href="#">
-                                    <span> Cẩm nang tuyển dụng</span>
-                                </a>
-                            </li>
-                        </ul>
-                        <ul>
-                            <li class="logout">
-                                <a href="#" title="Đăng xuất">
-                                    Đăng xuất
-                                </a>
-                            </li>
-                        </ul>
+                        <a href="{{route('company.post.list')}}"><h3 class="menu-ql-ntv">Quản lý đăng tuyển</h3></a>
+                        <a href="{{route('company.candidate.list')}}"><h3 class="menu-ql-ntv">Quản lý ứng viên</h3></a>
                     </div>
                 </div>
             </div>

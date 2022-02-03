@@ -78,17 +78,18 @@
                     <ul class="navbar-nav mr-auto my-2 my-lg-0 tnav-right tn-nav">
                         <li class="nav-item">
                             <img
-                                src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/51158316-fd7e-48ca-b5fe-8542e9dfe357/denpw7t-09ac7bf3-0bd5-4a0c-bfa3-7f5762f6aaa5.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzUxMTU4MzE2LWZkN2UtNDhjYS1iNWZlLTg1NDJlOWRmZTM1N1wvZGVucHc3dC0wOWFjN2JmMy0wYmQ1LTRhMGMtYmZhMy03ZjU3NjJmNmFhYTUucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.D0bPWTJZRiyKO645ADf5TaSlxU-i4CDfxYaOsvKuDeY"
+                                src="{{ $companyProfile->company->avatar_url ? asset('storage/'.$companyProfile->company->avatar_url) : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/OOjs_UI_icon_userAvatar-constructive.svg/1024px-OOjs_UI_icon_userAvatar-constructive.svg.png" }}"
                                 alt=""
                                 style="vertical-align: middle; width: 35px; height: 35px; border-radius: 50%;">
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
-                                Profile
+                                {{$companyProfile->name}}
                             </a>
                             <div class="dropdown-menu tdropdown" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{route('company.profile.show')}}">Trang cá nhân</a>
+                                <a class="dropdown-item" href="{{route('company.change-password.show')}}">Thay đổi mật khẩu</a>
                                 <a class="dropdown-item" href="{{route('logout')}}">Đăng xuất</a>
                             </div>
                         </li>
@@ -147,10 +148,9 @@
             </div>
             <div class="tv-profile-main text-center">
                 <img class="tv-profile-img"
-                     src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e8ec609a-f5e5-4a17-8390-9f819fcd8e1b/ddj9om5-4e49c76d-dc38-4e8a-afd6-fc3994ed1d3c.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2U4ZWM2MDlhLWY1ZTUtNGExNy04MzkwLTlmODE5ZmNkOGUxYlwvZGRqOW9tNS00ZTQ5Yzc2ZC1kYzM4LTRlOGEtYWZkNi1mYzM5OTRlZDFkM2MucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.PwW9RPGX7l7ei5VUJmZJGLhry2KkVqok8E8pfxcDgmk"
+                     src="{{ $companyProfile->company->avatar_url ? asset('storage/'.$companyProfile->company->avatar_url) : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/OOjs_UI_icon_userAvatar-constructive.svg/1024px-OOjs_UI_icon_userAvatar-constructive.svg.png" }}"
                      alt="">
-                <h2 class="tv-profile-name fs-16 mt-10">Home1
-                </h2>
+                <h2 class="tv-profile-name fs-16 mt-10">{{$companyProfile->name}}</h2>
             </div>
             <div class="tv-pro-nav-side-menu">
                 <div class="menu-list">
@@ -161,25 +161,24 @@
                                 <img class="icon-flat" src="https://timviec.com.vn/icon-menu/setting.png"> Quản lý chung
                             </a>
                         </li>
-                        <li class="">
+                        {{--<li class="">
                             <a href="#">
                                 <img class="icon-flat" src="https://timviec.com.vn/icon-menu/upload.png"> Đăng tin tuyển
                                 dụng
                             </a>
-                        </li>
+                        </li>--}}
                         <li class="">
                             <a href="#">
-                                <img class="icon-flat" src="https://timviec.com.vn/icon-menu/forms.png"> Tất cả tuyển
-                                dụng
+                                <img class="icon-flat" src="https://timviec.com.vn/icon-menu/forms.png"> Quản lý đăng tuyển
                             </a>
                         </li>
                         <li class="" id="tooltip_ung_vien">
                             <a href="#" style="padding-left: 12px;">
                                 <i class="fas fa-users" style="margin-right: 6px;font-size: 18px;color: #666;">
-                                </i>Ứng viên
+                                </i>Quản lý ứng viên
                             </a>
                         </li>
-                        <li class="">
+                        {{--<li class="">
                             <a href="#">
                                 <img class="icon-flat" src="https://timviec.com.vn/icon-menu/start.png"> Hồ sơ đã lưu
                             </a>
@@ -218,14 +217,14 @@
                                 <img class="icon-flat" src="https://timviec.com.vn/icon-menu/work.png"> Thông tin công
                                 ty
                             </a>
-                        </li>
-                        {{--                        <li class="">--}}
-                        {{--                            <a href="https://timviec.com.vn/nha-tuyen-dung/giay-phep-kinh-doanh" style="padding-left: 12px;">--}}
-                        {{--                                <i class="far fa-file-certificate" style="margin-right: 6px;font-size: 18px;color: #666;">--}}
-                        {{--                                </i>Giấy phép kinh doanh--}}
-                        {{--                            </a>--}}
-                        {{--                        </li>--}}
-                        <li class="">
+                        </li>--}}
+                        {{--                        <li class="">
+                                                    <a href="https://timviec.com.vn/nha-tuyen-dung/giay-phep-kinh-doanh" style="padding-left: 12px;">
+                                                        <i class="far fa-file-certificate" style="margin-right: 6px;font-size: 18px;color: #666;">
+                                                        </i>Giấy phép kinh doanh
+                                                    </a>
+                                                </li>--}}
+                        {{--<li class="">
                             <a href="https://timviec.com.vn/nha-tuyen-dung/danh-sach-chien-dich">
                                 <img class="icon-flat" src="https://timviec.com.vn/icon-menu/resume.png"> Danh sách
                                 chiến dịch
@@ -241,15 +240,15 @@
                             <a href="https://timviec.com.vn/nha-tuyen-dung/email-da-gui">
                                 <img class="icon-flat" src="https://timviec.com.vn/icon-menu/email.png"> Email đã gửi
                             </a>
-                        </li>
+                        </li>--}}
                         <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: -94.6px;">
                             <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;">
                             </div>
                         </div>
-                        <div class="ps-scrollbar-y-rail" style="top: 97.6px; height: 658px; right: 3px;">
+                        {{--<div class="ps-scrollbar-y-rail" style="top: 97.6px; height: 658px; right: 3px;">
                             <div class="ps-scrollbar-y" tabindex="0" style="top: 85px; height: 572px;">
                             </div>
-                        </div>
+                        </div>--}}
                     </ul>
                 </div>
             </div>
@@ -265,7 +264,7 @@
                             <div class="bg-white box_shadow pd-20 mb-20">
                                 <i class="fas fa-briefcase mr-10">
                                 </i>
-                                <span class="fs-24 fw-500">12</span>
+                                <span class="fs-24 fw-500">{{count($companyProfile->jobs)}}</span>
                                 <p class="mb-0">Việc làm đã đăng
                                 </p>
                             </div>
@@ -282,29 +281,29 @@
                             </div>
                         </a>
                     </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4">
+                    {{--<div class="col-sm-6 col-md-6 col-lg-4">
                         <a href="#">
                             <div class="bg-white box_shadow pd-20 mb-20">
                                 <i class="fas fa-newspaper mr-10">
                                 </i>
-                                <span class="fs-24 fw-500">12</span>
+                                <span class="fs-24 fw-500">0</span>
                                 <p class="mb-0">Tin tức đã đăng
                                 </p>
                             </div>
                         </a>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4">
+                    </div>--}}
+                    {{--<div class="col-sm-6 col-md-6 col-lg-4">
                         <a href="#">
                             <div class="bg-white box_shadow pd-20 mb-20">
                                 <i class="fas fa-eye mr-10">
                                 </i>
-                                <span class="fs-24 fw-500">12</span>
+                                <span class="fs-24 fw-500">0</span>
                                 <p class="mb-0">Lượt tương tác trên việc làm
                                 </p>
                             </div>
                         </a>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-4">
+                    </div>--}}
+                    {{--<div class="col-sm-6 col-md-6 col-lg-4">
                         <div class="bg-white box_shadow pd-20 mb-20">
                             <i class="fas fa-sync mr-10">
                             </i>
@@ -312,7 +311,7 @@
                             <p class="mb-0">Lượt tương tác trên tin tức
                             </p>
                         </div>
-                    </div>
+                    </div>--}}
                     <div class="col-sm-6 col-md-6 col-lg-4">
                         <div class="bg-white box_shadow pd-20 mb-20">
                             <i class="fas fa-file-signature mr-10">

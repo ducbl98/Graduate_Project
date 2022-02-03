@@ -48,34 +48,26 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto tnav-left tn-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Việc Làm IT</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Tin Tức</a>
+                        <a class="nav-link" href="{{route('job.all')}}">Việc Làm IT</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav mr-auto my-2 my-lg-0 tnav-right tn-nav">
                     <li class="nav-item">
                         <img
-                            src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/51158316-fd7e-48ca-b5fe-8542e9dfe357/denpw7t-09ac7bf3-0bd5-4a0c-bfa3-7f5762f6aaa5.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzUxMTU4MzE2LWZkN2UtNDhjYS1iNWZlLTg1NDJlOWRmZTM1N1wvZGVucHc3dC0wOWFjN2JmMy0wYmQ1LTRhMGMtYmZhMy03ZjU3NjJmNmFhYTUucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.D0bPWTJZRiyKO645ADf5TaSlxU-i4CDfxYaOsvKuDeY"
-                            alt=""
-                            style="vertical-align: middle; width: 35px; height: 35px; border-radius: 50%;">
+                            src="{{ $seekerProfile->seeker->avatar_url ? asset('storage/'.$seekerProfile->seeker->avatar_url) : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/OOjs_UI_icon_userAvatar-constructive.svg/1024px-OOjs_UI_icon_userAvatar-constructive.svg.png" }}"                             style="vertical-align: middle; width: 35px; height: 35px; border-radius: 50%;">
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
-                            Profile
+                            {{$seekerProfile->name}}
                         </a>
                         <div class="dropdown-menu tdropdown" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{route('seeker.profile.show')}}">Trang cá nhân</a>
+                            <a class="dropdown-item" href="{{route('seeker.change-password.show')}}">Thay đổi mật khẩu</a>
+                            <a class="dropdown-item" href="{{route('seeker.job.apply.list')}}">Công việc đã ứng tuyển</a>
+                            <a class="dropdown-item" href="{{route('seeker.company.response.list')}}">Phản hồi từ nhà tuyển dụng</a>
                             <a class="dropdown-item" href="{{route('logout')}}">Đăng xuất</a>
                         </div>
-                    </li>
-                    <li class="nav-item">
-                        <a style="background-color: #0f6674 !important;" class="nav-link btn-employers"
-                           href="{{route('showCompanyRegister')}}" tabindex="-1" aria-disabled="true">
-                            Nhà Tuyển Dụng
-                        </a>
                     </li>
                 </ul>
             </div>

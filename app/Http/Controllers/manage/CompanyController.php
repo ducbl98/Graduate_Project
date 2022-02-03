@@ -14,6 +14,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -43,6 +44,37 @@ class CompanyController extends Controller
 //        $seeker->save();
 //        return redirect()->route('seeker.profile.show');
 //    }
+
+    public function showChangePassword()
+    {
+        $companyId = Auth::id();
+        $companyProfile = User::with('company')->find($companyId);
+        return view('company.change-password',compact('companyProfile'));
+    }
+
+    public function changePassword(Request $request)
+    {
+        $this->validate($request,[
+            'oldPassword'=>'required|string|min:6',
+            'newPassword'=>'required|string|min:6|confirmed',
+        ],[
+            'required' => "Trường này là bắt buộc",
+            'string' => "Yêu cầu kiểu chuỗi",
+            'min' => "Yêu cầu độ dài tối thiểu :min ký tự",
+            'confirmed' => "Mật khẩu nhập lại không khớp"
+        ]);
+
+        if (!(Hash::check($request->get('oldPassword'), Auth::user()->password))) {
+            toastr()->error('Mật khẩu cũ không đúng !');
+            return redirect()->back();
+        }
+
+        $user = Auth::user();
+        $user->password = Hash::make($request->get('newPassword'));
+        $user->save();
+        toastr()->success('Thay đổi mật khẩu thành công !');
+        return redirect()->back();
+    }
 
     public function updateProfile(Request $request): RedirectResponse
     {
@@ -84,30 +116,30 @@ class CompanyController extends Controller
             ->where('is_active', 1)
             ->orderBy('updated_at', 'desc')
             ->get();
-        return view('company.candidate-list', compact('candidates','companyProfile'));
+        return view('company.candidate-list', compact('candidates', 'companyProfile'));
     }
 
     public function detailCandidate($id)
     {
         $companyId = Auth::id();
         $companyProfile = User::with('company')->find($companyId);
-        $candidateAppliedJob = SeekerApplication::with('user.seeker.experiences', 'user.seeker.educations', 'user.seeker.skills', 'job','response')
+        $candidateAppliedJob = SeekerApplication::with('user.seeker.experiences', 'user.seeker.educations', 'user.seeker.skills', 'job', 'response')
             ->where([
                 ['id', '=', $id],
                 ['is_active', '=', 1]
             ])->first();
 //        dd($candidateAppliedJob);
         $cvCandidate = $candidateAppliedJob->getMedia();
-        $isRespond =$candidateAppliedJob->response;
-        return view('company.candidate-detail', compact('candidateAppliedJob','isRespond','cvCandidate','id','companyProfile'));
+        $isRespond = $candidateAppliedJob->response;
+        return view('company.candidate-detail', compact('candidateAppliedJob', 'isRespond', 'cvCandidate', 'id', 'companyProfile'));
     }
 
     public function downloadCandidateCV($id)
     {
         $candidateAppliedJob = SeekerApplication::where([
-                ['id', '=', $id],
-                ['is_active', '=', 1]
-            ])->first();
+            ['id', '=', $id],
+            ['is_active', '=', 1]
+        ])->first();
 //        dd($candidateAppliedJob);
         $cvCandidate = $candidateAppliedJob->getMedia();
         return $cvCandidate[0];
@@ -125,12 +157,12 @@ class CompanyController extends Controller
             'seeker_application_id' => $request->seeker_application_id
         ]);
         $seekerApplication = SeekerApplication::find($request->seeker_application_id);
-        $seekerApplication->is_respond =1 ;
+        $seekerApplication->is_respond = 1;
         $seekerApplication->save();
-        if ($responseFile){
+        if ($responseFile) {
             $company_response->addMediaFromRequest('attachment')->toMediaCollection();
         }
         toastr()->success('Phản hồi ứng viên thành công !');
-        return redirect()->route('company.candidate.detail',['id'=>$request->seeker_application_id]);
+        return redirect()->route('company.candidate.detail', ['id' => $request->seeker_application_id]);
     }
 }

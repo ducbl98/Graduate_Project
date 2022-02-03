@@ -27,7 +27,8 @@ class SeekerController extends Controller
     }
 
     public function showChangePassword(){
-        return view('seeker.change-password');
+        $seekerProfile = User::with('seeker')->find(Auth::id());
+        return view('seeker.change-password',compact('seekerProfile'));
     }
     public function changePassword(Request $request){
         $this->validate($request,[
@@ -102,22 +103,24 @@ class SeekerController extends Controller
 
     public function listAppliedJob()
     {
+        $seekerProfile = User::with('seeker')->find(Auth::id());
         $appliedJobs = SeekerApplication::with('user', 'job.user')->where([
             ['user_id', '=', Auth::id()],
             ['is_active', '=', 1]
         ])->get();
-        return view('seeker.job-applied-list', compact('appliedJobs'));
+        return view('seeker.job-applied-list', compact('appliedJobs','seekerProfile'));
     }
 
     public function detailAppliedJob($id)
     {
+        $seekerProfile = User::with('seeker')->find(Auth::id());
         $appliedJob = SeekerApplication::with('user.seeker.experiences', 'user.seeker.educations', 'user.seeker.skills', 'job')->where([
             ['user_id', '=', Auth::id()],
             ['id', '=', $id],
             ['is_active', '=', 1]
         ])->first();
 //        dd($appliedJob);
-        return view('seeker.job-applied-detail', compact('appliedJob'));
+        return view('seeker.job-applied-detail', compact('appliedJob','seekerProfile'));
     }
 
     public function deleteAppliedJob($id): RedirectResponse
@@ -133,21 +136,23 @@ class SeekerController extends Controller
     }
 
     public function listCompanyResponses(){
+        $seekerProfile = User::with('seeker')->find(Auth::id());
         $companyResponses = CompanyResponse::with('seeker_application.job.user.company')
             ->whereRelation('seeker_application','seeker_applications.user_id','=',Auth::id())
             ->whereRelation('seeker_application','seeker_applications.is_respond','=',1)
             ->get();
 //        dd($companyResponses);
-        return view('seeker.company-response-list',compact('companyResponses'));
+        return view('seeker.company-response-list',compact('companyResponses','seekerProfile'));
     }
 
     public function detailCompanyResponse($id){
+        $seekerProfile = User::with('seeker')->find(Auth::id());
         $companyResponse = CompanyResponse::with('seeker_application.job.user.company')
             ->whereRelation('seeker_application','seeker_applications.user_id','=',Auth::id())
             ->whereRelation('seeker_application','seeker_applications.is_respond','=',1)
             ->where('id',$id)->first();
 //        dd($companyResponse);
-        return view('seeker.company-response-detail',compact('companyResponse','id'));
+        return view('seeker.company-response-detail',compact('companyResponse','id','seekerProfile'));
     }
 
     public function downloadAttachmentCompany($id){
@@ -157,6 +162,11 @@ class SeekerController extends Controller
             ->where('id',$id)->first();
         $attachment = $companyResponse->getMedia();
         return $attachment[0];
+    }
+
+    public function listSavedJobs(){
+        $seekerProfile = User::with('seeker')->find(Auth::id());
+        return view('seeker.save-jobs',compact('seekerProfile'));
     }
 
 

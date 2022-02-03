@@ -41,7 +41,7 @@ class PostController extends Controller
     public function listPost()
     {
         $companyId = Auth::id();
-        $companyProfile = User::with('company')->find($companyId);
+        $companyProfile = User::with('company','jobs')->find($companyId);
         $job_titles = Job::query()->distinct()->pluck('title');
 //        dd($job_titles);
 //        $company = Company::with('user')->where('user_id',Auth::id())->first();
@@ -60,7 +60,7 @@ class PostController extends Controller
     {
         $categories = Category::all();
         $companyId = Auth::id();
-        $companyProfile = User::with('company')->find($companyId);
+        $companyProfile = User::with('company','jobs')->find($companyId);
         $provinces = Province::all();
         $techniqueTypes = TechniqueType::with('techniques')->get();
         return view('company.job-create', compact('categories', 'techniqueTypes', 'provinces','companyProfile'));
@@ -145,6 +145,7 @@ class PostController extends Controller
     {
         $user = Auth::user();
         $isSeeker = $user && $user->role == 1;
+        $seekerProfile = User::with('seeker')->find(Auth::id());
         $seeker = Seeker::with('user')->where('user_id', Auth::id())->first();
         $isApplied = false;
         $job = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
@@ -159,7 +160,7 @@ class PostController extends Controller
             }
         }
 //        dd($isApplied,$isSeeker);
-        return view('guest-seeker.job-detail', compact('job', 'seeker', 'isSeeker', 'isApplied'));
+        return view('guest-seeker.job-detail', compact('job', 'seeker', 'isSeeker', 'isApplied','seekerProfile'));
     }
 
     /**
@@ -170,6 +171,8 @@ class PostController extends Controller
      */
     public function editPost(int $id)
     {
+        $companyId = Auth::id();
+        $companyProfile = User::with('company','jobs')->find($companyId);
         $jobCategoryIds = [];
         $jobTechniqueIds = [];
         $job = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
@@ -186,7 +189,7 @@ class PostController extends Controller
         }
 //        dd($jobCategoryIds,$jobTechniqueIds);
         return view('company.job-edit', compact('job', 'categories', 'techniqueTypes', 'provinces',
-            'jobTechniqueIds', 'jobCategoryIds'));
+            'jobTechniqueIds', 'jobCategoryIds','companyProfile'));
     }
 
     /**
@@ -436,6 +439,7 @@ class PostController extends Controller
 //        dd($request->route('categoryId'));
         $user = Auth::user();
         $isSeeker = $user && $user->role == 1;
+        $seekerProfile = User::with('seeker')->find(Auth::id());
         $categoryId = $request->route('categoryId');
         $type = $request->route('type');
         $jobs = session()->get('jobs');
@@ -470,7 +474,7 @@ class PostController extends Controller
             ->orderBy('jobs_count', 'desc')
             ->get();
         return view('guest-seeker.job-search-and-list', compact('jobs', 'techniqueTypes', 'provinces', 'categories',
-            'totalJobs', 'categoryId', 'totalSearchJobs', 'type', 'existTitle', 'existTechnique', 'existProvince', 'isSeeker'));
+            'totalJobs', 'categoryId', 'totalSearchJobs', 'type', 'existTitle', 'existTechnique', 'existProvince', 'isSeeker','seekerProfile'));
 
     }
 

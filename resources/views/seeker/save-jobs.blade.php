@@ -27,82 +27,6 @@
 
     <!-- main css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
-    <style>
-        .identify-contact {
-            border: 1px solid #bfcbd9;
-            background: #fffdf3;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-    </style>
-    <style>
-        .cover-letterx textarea {
-            background: #fafafa;
-            border: none;
-            padding: 0 15px;
-            color: #333;
-        }
-
-        .cover-letterx:after {
-            content: "";
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 10px;
-            background-color: transparent;
-            background-size: 15px 15px;
-            background-image: radial-gradient(farthest-side, rgba(0, 0, 0, 0) 6px, #fafafa 0);
-            bottom: -6px;
-        }
-
-        .cover-letterx:before {
-            content: "";
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 10px;
-            background-color: transparent;
-            background-size: 15px 15px;
-            background-image: radial-gradient(farthest-side, rgba(0, 0, 0, 0) 6px, #fafafa 0);
-            transform: rotate(180deg);
-            top: -10px;
-        }
-
-        .cover-letterx {
-            position: relative;
-        }
-
-        .clw textarea, .clw {
-            background: #fff;
-        }
-
-        .clw:after, .clw:before {
-            background-image: radial-gradient(farthest-side, rgba(0, 0, 0, 0) 6px, #fff 0);
-        }
-    </style>
-
-    <style>
-        .identify-contact p {
-            line-height: 1.9;
-            margin-bottom: 10px;
-        }
-
-        .identify-contact input {
-            border: 1px solid #bfcbd9;
-            width: 100%;
-            border-radius: 5px;
-            padding: 10px 10px;
-        }
-
-        .identify-contact {
-            border: 1px solid #bfcbd9;
-            background: #fffdf3;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-    </style>
 </head>
 <body>
 <!-- main nav -->
@@ -160,126 +84,46 @@
     <div class="container published-recuitment-content">
         <div class="row">
             <div class="col-md-8 col-sm-12 col-12 recuitment-inner mt-3">
-                <div class="recuitment-form">
-                    <h3 class="rect-heading" style="font-size: 28px; padding-left: 22px; font-weight: 500;">
-                        {{$appliedJob->job->title}}
-                    </h3>
-                    <hr class="break-line">
-                    <div class="user--profile-right">
-                        <div class="user--profile-group">
-                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                                 data-parent="#accordionExample">
-                                <div class="card-body recuitment-body">
-                                    <div class="identify-contact">
-                                        <h5 class="fs-16 fw-700 mb-3">Thông tin ứng viên
-                                        </h5>
-                                        <div class="row">
-                                            <div class="col-12 pr-10 row pt-2 pb-2">
-                                                <div class="col-md-2">Họ tên</div>
-                                                <div class="col-md-8 pl-5 ml-2"><b>{{$appliedJob->user->name}}</b></div>
-                                            </div>
-                                            <div class="col-6 pr-10 row pt-2 pb-2">
-                                                <div class="col-md-6">Số điện thoại</div>
-                                                <div class="col-md-6"><b>{{$appliedJob->user->seeker->phone_number}}</b>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 pr-10 row pt-2 pb-2">
-                                                <div class="col-md-4">Email</div>
-                                                <div class="col-md-8"><b>{{$appliedJob->user->email}}</b></div>
-                                            </div>
+                <div class="job-board-wrap">
+                    <div class="job-group">
+                        <div class="job pagi">
+                            <div class="job-content">
+                                <div class="job-logo">
+                                    <a href="#">
+                                        <img src="{{asset('img/fpt-logo.png')}}" class="job-logo-ima" alt="job-logo">
+                                    </a>
+                                </div>
+
+                                <div class="job-desc">
+                                    <div class="job-title">
+                                        <a href="#">[HCM] 02 Solution Architects–Up to $2000</a>
+                                    </div>
+                                    <div class="job-company">
+                                        <a href="#">Fpt Software</a> | <a href="#" class="job-address"><i
+                                                class="fa fa-map-marker" aria-hidden="true"></i>
+                                            Đà Nẵng</a>
+                                    </div>
+
+                                    <div class="job-inf">
+                                        <div class="job-main-skill">
+                                            <i class="fa fa-code" aria-hidden="true"></i> <a href="#"> Java</a>
                                         </div>
-                                        <h5 class="fs-16 fw-700 mb-3 mt-3">Trình độ học vấn</h5>
-                                        @foreach($appliedJob->user->seeker->educations as $education)
-                                            <div class="row">
-                                                <div class="col-6 pr-10 row pt-2 pb-2">
-                                                    <div class="col-md-6">Cơ sở đào tạo</div>
-                                                    <div class="col-md-6" style="color: darkblue">
-                                                        <b> {{$education->facility}}</b></div>
-                                                </div>
-                                                <div class="col-6 pr-10 row pt-2 pb-2">
-                                                    <div class="col-md-6">Chuyên nghành</div>
-                                                    <div class="col-md-6" style="color: darkblue">
-                                                        <b> {{$education->major}}</b></div>
-                                                </div>
-                                                <div class="col-12 row pt-2 pb-2">
-                                                    <div class="col-md-5">Kết quả</div>
-                                                    <div class="col-md-7" style="color: darkblue">
-                                                        <b> {{$education->degree}}</b>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 row pt-2 pb-2">
-                                                    <div class="col-md-5">Thời gian</div>
-                                                    <div class="col-md-7" style="color: darkblue">
-                                                        <b> {{Carbon\Carbon::parse($education->time_start)->format('d/m/Y')}}
-                                                            - {{$education->state}}</b>
-                                                    </div>
-                                                </div>
-                                                <p style="border-bottom: 1px dashed #ccc; display: block; width: 100%;"></p>
-                                            </div>
-                                        @endforeach
-                                        <h5 class="fs-16 fw-700 mb-3 mt-3">Kinh nghiệm làm việc</h5>
-                                        @foreach($appliedJob->user->seeker->experiences as $experience)
-                                            <div class="row">
-                                                <div class="col-6 pr-10 row pt-2 pb-2">
-                                                    <div class="col-md-6">Chức vụ</div>
-                                                    <div class="col-md-6" style="color: darkblue">
-                                                        <b> {{$experience->name}}</b></div>
-                                                </div>
-                                                <div class="col-6 pr-10 row pt-2 pb-2">
-                                                    <div class="col-md-4">Công ty</div>
-                                                    <div class="col-md-8" style="color: darkblue">
-                                                        <b> {{$experience->company_name}}</b></div>
-                                                </div>
-                                                <div class="col-12 row pt-2 pb-2">
-                                                    <div class="col-md-5">Thời gian làm việc</div>
-                                                    <div class="col-md-7" style="color: darkblue">
-                                                        <b> {{Carbon\Carbon::parse($experience->time_start)->format('d/m/Y')}}
-                                                            - {{Carbon\Carbon::parse($experience->time_finish)->format('d/m/Y')}}</b>
-                                                    </div>
-                                                </div>
-                                                <p style="border-bottom: 1px dashed #ccc; display: block; width: 100%;"></p>
-                                            </div>
-                                        @endforeach
-                                        <h5 class="fs-16 fw-700 mb-3 mt-3">Kỹ năng</h5>
-                                        <div class="user_exp_edu Experience_11642 div-exp-height">
-                                            @foreach($appliedJob->user->seeker->skills as $skill)
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        {{$skill->name}}
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                    <span style="color: #ffc107">
-                                                        @for($i=0;$i<$skill->level;$i++)
-                                                            <i class="fa fa-star"></i>
-                                                        @endfor
-                                                        @for($i=0;$i<5-$skill->level;$i++)
-                                                            <i class="fa fa-star-o"></i>
-                                                        @endfor
-                                                    </span>
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <hr class="break-line pt-1 pb-1">
-                                                </div>
-                                            </div>
+                                        <div class="job-salary">
+                                            <i class="fa fa-money" aria-hidden="true"></i>
+                                            <span class="salary-min">15<em class="salary-unit">triệu</em></span>
+                                            <span class="salary-max">35 <em class="salary-unit">triệu</em></span>
+                                        </div>
+                                        <div class="job-deadline">
+                                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>  Hạn nộp: <strong>31/12/2019</strong></span>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="wrap-btn-appl">
+                                    <a href="#" class="btn btn-appl">Apply Now</a>
+                                </div>
                             </div>
-                            <h5 class="fs-16 fw-700 mb-3 mt-3">Nội dung thư</h5>
-                            <div class="cover-letterx">
-                                <textarea class="w-100 letterx" rows="15"
-                                          style="padding-top:20px;border: 1px solid blue;border-radius: 10px;">
-                                    {{$appliedJob->introduction}}
-                                </textarea>
-                            </div>
-                            <h5 class="fs-16 fw-700 mb-3 mt-3">Hồ sơ đính kèm</h5>
-                            <a href="#" class="mb-5 d-block">{{$appliedJob->resume}}</a>
                         </div>
                     </div>
-
                 </div>
             </div>
             <div class="col-md-4 col-sm-12 col-12">
@@ -573,3 +417,4 @@
 <!-- Read More Plugin -->
 </body>
 </html>
+

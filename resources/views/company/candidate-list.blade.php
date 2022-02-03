@@ -58,7 +58,7 @@
                 <ul class="navbar-nav mr-auto my-2 my-lg-0 tnav-right tn-nav">
                     <li class="nav-item">
                         <img
-                            src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/51158316-fd7e-48ca-b5fe-8542e9dfe357/denpw7t-09ac7bf3-0bd5-4a0c-bfa3-7f5762f6aaa5.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzUxMTU4MzE2LWZkN2UtNDhjYS1iNWZlLTg1NDJlOWRmZTM1N1wvZGVucHc3dC0wOWFjN2JmMy0wYmQ1LTRhMGMtYmZhMy03ZjU3NjJmNmFhYTUucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.D0bPWTJZRiyKO645ADf5TaSlxU-i4CDfxYaOsvKuDeY"
+                            src="{{ $companyProfile->company->avatar_url ? asset('storage/'.$companyProfile->company->avatar_url) : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/OOjs_UI_icon_userAvatar-constructive.svg/1024px-OOjs_UI_icon_userAvatar-constructive.svg.png" }}"
                             alt=""
                             style="vertical-align: middle; width: 35px; height: 35px; border-radius: 50%;">
                     </li>
@@ -69,6 +69,7 @@
                         </a>
                         <div class="dropdown-menu tdropdown" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{route('company.profile.show')}}">Trang cá nhân</a>
+                            <a class="dropdown-item" href="{{route('company.change-password.show')}}">Thay đổi mật khẩu</a>
                             <a class="dropdown-item" href="{{route('logout')}}">Đăng xuất</a>
                         </div>
                     </li>
@@ -175,13 +176,15 @@
             <div class="col-md-4 col-sm-12 col-12">
                 <div class="recuiter-info">
                     <div class="recuiter-info-avt">
-                        <img src="{{asset('img/icon_avatar.jpg')}}">
+                        <img
+                            src="{{ $companyProfile->company->avatar_url ? asset('storage/'.$companyProfile->company->avatar_url) : "img/icon_avatar.jpg" }}"
+                        >
                     </div>
                     <div class="clearfix list-rec">
-                        <h4>NESTLE Inc.</h4>
+                        <h4>{{$companyProfile->name}}</h4>
                         <ul>
-                            <li><a href="#">Việc làm đang đăng <strong>(0)</strong></a></li>
-                            <li><a href="#">Follower <strong>(450)</strong></a></li>
+                            <li><a href="#">Việc làm đã đăng <strong>({{count($companyProfile->jobs)}})</strong></a></li>
+                            {{--                            <li><a href="#">Follower <strong>(450)</strong></a></li>--}}
                         </ul>
                     </div>
                 </div>

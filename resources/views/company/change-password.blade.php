@@ -26,6 +26,8 @@
 
     <!-- main css -->
     <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
+
+    @toastr_css
 </head>
 <body>
 <!-- main nav -->
@@ -108,98 +110,16 @@
     <div class="container published-recuitment-content">
         <div class="row">
             <div class="col-md-8 col-sm-12 col-12 recuitment-inner">
-                <form action="{{route('company.profile.updateProfile')}}" method="POST" class="employee-form" enctype="multipart/form-data">
+                <form action="{{route('company.change-password.post')}}" method="POST" class="employee-form">
                     @csrf
                     <div class="accordion" id="accordionExample">
-                        <div class="card recuitment-card">
-                            <div class="card-header recuitment-card-header" id="headingOne">
-                                <h2 class="mb-0">
-                                    <a class="btn btn-link btn-block text-left recuitment-header" type="button"
-                                       data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
-                                       aria-controls="collapseOne">
-                                        Thông tin tài khoản
-                                        <span id="clickc1_advance2" class="clicksd">
-                                            <i class="fa fa fa-angle-up"></i>
-                                        </span>
-                                    </a>
-                                </h2>
-                            </div>
-
-                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                                 data-parent="#accordionExample">
-                                <div class="card-body recuitment-body row">
-                                    <div class="col-md-3">
-                                        <div class="avatar-upload">
-                                            <div class="avatar-edit">
-                                                <input type='file' name="company_avatar" id="imageUpload"
-                                                       accept=".png, .jpg, .jpeg"/>
-                                                <label for="imageUpload"></label>
-                                            </div>
-                                            <div class="avatar-preview">
-                                                <div id="imagePreview"
-                                                     style="background-image: url({{$companyProfile->company->avatar_url ? "'/storage/".$companyProfile->company->avatar_url."'" :"https://i.pravatar.cc/500?img=7"}});">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label text-right label">Người liên hệ<span
-                                                    style="color: red" class="pl-2">*</span></label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="contact_name"
-                                                       value="{{$companyProfile->company->contact_name}}"
-                                                       placeholder="Nhập tên người liên hệ">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label text-right label">Tên công ty<span
-                                                    style="color: red" class="pl-2">*</span></label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="name"
-                                                       value="{{$companyProfile->name}}"
-                                                       placeholder="Nhập tên công ty">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label text-right label">Email<span
-                                                    style="color: red" class="pl-2">*</span></label>
-                                            <div class="col-sm-9">
-                                                <input disabled type="text" class="form-control"
-                                                       value="{{$companyProfile->email}}"
-                                                       placeholder="Địa chỉ email">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label text-right label">Địa chỉ<span
-                                                    style="color: red" class="pl-2">*</span></label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="address"
-                                                       value="{{$companyProfile->company->address}}"
-                                                       placeholder="Nhập địa chỉ">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label text-right label">Số điện
-                                                thoại</label>
-                                            <div class="col-sm-9">
-                                                <input type="number" name="phone_number"
-                                                       value="{{$companyProfile->company->phone_number}}"
-                                                       class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
                         <div class="card recuitment-card">
                             <div class="card-header recuitment-card-header" id="headingThree">
                                 <h2 class="mb-0">
                                     <a class="btn btn-link btn-block text-left collapsed recuitment-header"
                                        type="button" data-toggle="collapse" data-target="#collapseThree"
                                        aria-expanded="false" aria-controls="collapseThree">
-                                        Thông tin chung
+                                        Thay đổi mật khẩu
                                         <span id="clickc1_advance1" class="clicksd">
                                             <i class="fa fa fa-angle-up"></i>
                                         </span>
@@ -210,45 +130,36 @@
                                  data-parent="#accordionExample">
                                 <div class="card-body recuitment-body">
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label text-right label">Quy mô nhân sự<span
+                                        <label class="col-sm-3 col-form-label text-right label">Mật khẩu cũ <span
                                                 style="color: red" class="pl-2">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="number" class="form-control" name="size"
-                                                   value="{{$companyProfile->company->size}}"
-                                                   placeholder="Nhập số lượng nhân viên"/>
+                                            <input type="password" class="form-control" name="oldPassword" id="oldPassword"
+                                                   placeholder="Nhập mật khẩu cũ" data-toggle="password"/>
+                                            @error('oldPassword')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label text-right label">Tỉnh/ Thành phô<span
+                                        <label class="col-sm-3 col-form-label text-right label">Mật khẩu mới <span
                                                 style="color: red" class="pl-2">*</span></label>
                                         <div class="col-sm-9">
-                                            <select type="text" name=province_id class="form-control" id="jobProvince2">
-                                                @foreach($provinces as $province)
-                                                    <option
-                                                        value="{{$province->id}}"
-                                                        {{$companyProfile->company->province_id == $province->id ? "selected" : ""}}
-                                                    >
-                                                        {{$province->name}}
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                            <input type="password" class="form-control" name="newPassword" id="newPassword"
+                                                   placeholder="Nhập mật khẩu mới" data-toggle="password"/>
+                                            @error('newPassword')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label text-right label">Sơ lược về công ty<span
+                                        <label class="col-sm-3 col-form-label text-right label">Mật khẩu mới nhập lại <span
                                                 style="color: red" class="pl-2">*</span></label>
                                         <div class="col-sm-9">
-                                            <textarea type="text" name="description" class="form-control"
-                                                      placeholder="Sơ lược về công ty" rows="10"
-                                                      style="align-content:center; overflow:auto; border:6px outset #000000;"
-                                            >{{$companyProfile->company->description}}</textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label text-right label">Website</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" name="website" class="form-control"
-                                                   value="{{$companyProfile->company->website}}" placeholder="Website"/>
+                                            <input type="password" class="form-control" name="newPassword_confirmation" id="newPasswordConfirmation"
+                                                   placeholder="Nhập lại mật khẩu mới" data-toggle="password"/>
+                                            @error('newPassword')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -262,7 +173,6 @@
                         </button>
                     </div>
                 </form>
-
             </div>
             <!-- Side bar -->
             <div class="col-md-4 col-sm-12 col-12">
@@ -430,7 +340,7 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="{{asset('js/jquery-3.4.1.slim.min.js')}}"></script>
+{{--<script src="{{asset('js/jquery-3.4.1.slim.min.js')}}"></script>--}}
 <script src="{{asset('js/popper.min.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
 <script src="{{asset('js/select2.min.js')}}"></script>
@@ -440,24 +350,15 @@
 <!-- Owl Stylesheets Javascript -->
 <script src="{{asset('js/owlcarousel/owl.carousel.js00')}}"></script>
 <!-- Read More Plugin -->
+<script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
 <script type="text/javascript">
-    // Avatar upload and preview
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
-                // $('#imagePreview').hide();
-                // $('#imagePreview').fadeIn(650);
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-    $("#imageUpload").change(function () {
-        readURL(this);
-    });
+    $("#oldPassword").password('toggle');
+    $("#newPassword").password('toggle');
+    $("#newPasswordConfirmation").password('toggle');
 </script>
+@jquery
+@toastr_js
+@toastr_render
 
 
 </body>
