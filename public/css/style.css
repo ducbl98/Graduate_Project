@@ -1780,6 +1780,24 @@ a.readallstyle.reads2:hover {
     margin-bottom: 7px;
 }
 
+.btn-save {
+    /*padding: .6rem 2.5rem;*/
+    text-transform: uppercase;
+    font-weight: 700;
+    background-color: hotpink;
+    border-color: hotpink;
+    margin-bottom: 7px;
+}
+
+.btn-unsave {
+    /*padding: .6rem 2.5rem;*/
+    text-transform: uppercase;
+    font-weight: 700;
+    background-color: #69FFB4;
+    border-color: #69FFB4;
+    margin-bottom: 7px;
+}
+
 .btn-login-warning {
     padding: -0.4rem 2.5rem;
     text-transform: uppercase;

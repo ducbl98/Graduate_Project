@@ -746,7 +746,8 @@
                     <ul class="navbar-nav mr-auto my-2 my-lg-0 tnav-right tn-nav">
                         <li class="nav-item">
                             <img
-                                src="{{ $seekerProfile->seeker->avatar_url ? asset('storage/'.$seekerProfile->seeker->avatar_url) : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/OOjs_UI_icon_userAvatar-constructive.svg/1024px-OOjs_UI_icon_userAvatar-constructive.svg.png" }}"                             style="vertical-align: middle; width: 35px; height: 35px; border-radius: 50%;">
+                                src="{{ $seekerProfile->seeker->avatar_url ? asset('storage/'.$seekerProfile->seeker->avatar_url) : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/OOjs_UI_icon_userAvatar-constructive.svg/1024px-OOjs_UI_icon_userAvatar-constructive.svg.png" }}"
+                                style="vertical-align: middle; width: 35px; height: 35px; border-radius: 50%;">
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
@@ -755,9 +756,12 @@
                             </a>
                             <div class="dropdown-menu tdropdown" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{route('seeker.profile.show')}}">Trang cá nhân</a>
-                                <a class="dropdown-item" href="{{route('seeker.change-password.show')}}">Thay đổi mật khẩu</a>
-                                <a class="dropdown-item" href="{{route('seeker.job.apply.list')}}">Công việc đã ứng tuyển</a>
-                                <a class="dropdown-item" href="{{route('seeker.company.response.list')}}">Phản hồi từ nhà tuyển dụng</a>
+                                <a class="dropdown-item" href="{{route('seeker.change-password.show')}}">Thay đổi mật
+                                    khẩu</a>
+                                <a class="dropdown-item" href="{{route('seeker.job.apply.list')}}">Công việc đã ứng
+                                    tuyển</a>
+                                <a class="dropdown-item" href="{{route('seeker.company.response.list')}}">Phản hồi từ
+                                    nhà tuyển dụng</a>
                                 <a class="dropdown-item" href="{{route('logout')}}">Đăng xuất</a>
                             </div>
                         </li>
@@ -832,6 +836,14 @@
                                 <a href="{{route('seekerLogin')}}" class="btn btn-warning btn-login-warning">Đăng nhập
                                     để ứng tuyển</a>
                             @endif
+                            @if(!$isSaveJob)
+                                <a href="{{route('seeker.job.save',['id'=>$job->id])}}"
+                                   class="btn btn-primary btn-save">Lưu công việc</a>
+                            @else
+                                <a href="{{route('seeker.job.unSave',['id'=>$job->id])}}"
+                                   class="btn btn-primary btn-unsave">Bỏ lưu công việc</a>
+                            @endif
+
                             <p class="jd-view">Lượt xem: <span>1.520</span></p>
                         </div>
                     </div>

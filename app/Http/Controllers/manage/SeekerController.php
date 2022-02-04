@@ -7,6 +7,7 @@ use App\Http\Requests\JobApplyRequest;
 use App\Http\Requests\SeekerImageUpdateRequest;
 use App\Http\Requests\SeekerProfileUpdateRequest;
 use App\Models\CompanyResponse;
+use App\Models\SavedJob;
 use App\Models\Seeker;
 use App\Models\SeekerApplication;
 use App\Models\User;
@@ -166,7 +167,31 @@ class SeekerController extends Controller
 
     public function listSavedJobs(){
         $seekerProfile = User::with('seeker')->find(Auth::id());
-        return view('seeker.save-jobs',compact('seekerProfile'));
+        $saveJobs = SavedJob::with('job.user','job.province','job.techniques')->where('user_id',Auth::id())->get();
+        return view('seeker.save-jobs',compact('seekerProfile','saveJobs'));
+    }
+
+    public function saveJobs($id){
+        $savedJob = SavedJob::updateOrCreate([
+            'user_id' => Auth::id(),
+            'job_id' => $id,
+        ]);
+        toastr()->success('Lưu tin tuyển dụng thành công');
+        return back();
+    }
+
+    public function unSaveJobs($id){
+        $userSaveJob = SavedJob::where([
+            ['user_id', '=', Auth::id()],
+            ['job_id', '=', $id]
+        ])->first();
+        if ($userSaveJob){
+            $userSaveJob->delete();
+            toastr()->success('Bỏ lưu tin tuyển dụng thành công');
+            return back();
+        }
+        toastr()->error('Đã xảy ra lỗi !');
+        return back();
     }
 
 

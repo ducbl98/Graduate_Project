@@ -56,4 +56,9 @@ class Job extends Model
     {
         return $this->hasMany(SeekerApplication::class);
     }
+
+    public function saveJobs(): HasMany
+    {
+        return $this->hasMany(SavedJob::class);
+    }
 }

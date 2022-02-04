@@ -27,6 +27,8 @@
 
     <!-- main css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+
+    @toastr_css
 </head>
 <body>
 <!-- main nav -->
@@ -54,7 +56,8 @@
                 <ul class="navbar-nav mr-auto my-2 my-lg-0 tnav-right tn-nav">
                     <li class="nav-item">
                         <img
-                            src="{{ $seekerProfile->seeker->avatar_url ? asset('storage/'.$seekerProfile->seeker->avatar_url) : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/OOjs_UI_icon_userAvatar-constructive.svg/1024px-OOjs_UI_icon_userAvatar-constructive.svg.png" }}"                             style="vertical-align: middle; width: 35px; height: 35px; border-radius: 50%;">
+                            src="{{ $seekerProfile->seeker->avatar_url ? asset('storage/'.$seekerProfile->seeker->avatar_url) : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/OOjs_UI_icon_userAvatar-constructive.svg/1024px-OOjs_UI_icon_userAvatar-constructive.svg.png" }}"
+                            style="vertical-align: middle; width: 35px; height: 35px; border-radius: 50%;">
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
@@ -63,9 +66,12 @@
                         </a>
                         <div class="dropdown-menu tdropdown" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{route('seeker.profile.show')}}">Trang cá nhân</a>
-                            <a class="dropdown-item" href="{{route('seeker.change-password.show')}}">Thay đổi mật khẩu</a>
-                            <a class="dropdown-item" href="{{route('seeker.job.apply.list')}}">Công việc đã ứng tuyển</a>
-                            <a class="dropdown-item" href="{{route('seeker.company.response.list')}}">Phản hồi từ nhà tuyển dụng</a>
+                            <a class="dropdown-item" href="{{route('seeker.change-password.show')}}">Thay đổi mật
+                                khẩu</a>
+                            <a class="dropdown-item" href="{{route('seeker.job.apply.list')}}">Công việc đã ứng
+                                tuyển</a>
+                            <a class="dropdown-item" href="{{route('seeker.company.response.list')}}">Phản hồi từ nhà
+                                tuyển dụng</a>
                             <a class="dropdown-item" href="{{route('logout')}}">Đăng xuất</a>
                         </div>
                     </li>
@@ -122,6 +128,68 @@
                                     <a href="#" class="btn btn-appl">Apply Now</a>
                                 </div>
                             </div>
+                            @if(count($saveJobs)==0)
+                                @foreach($saveJobs as $saveJob)
+                                <div class="job-content">
+                                    <div class="job-logo">
+                                        <a href="#">
+                                            <img
+                                                src="{{$saveJob->job->image ? ( str_contains($saveJob->job->image,'img') ? asset($saveJob->job->image) :asset('storage/'.$saveJob->job->image)) : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/OOjs_UI_icon_userAvatar-constructive.svg/1024px-OOjs_UI_icon_userAvatar-constructive.svg.png"}}"
+                                                class="job-logo-ima"
+                                                alt="job-logo">
+                                        </a>
+                                    </div>
+
+                                    <div class="job-desc">
+                                        <div class="job-title">
+                                            <a href="#">{{$saveJob->job->title}}</a>
+                                        </div>
+                                        <div class="job-company">
+                                            <a href="#">{{$saveJob->job->user->name}}</a> | <a href="#" class="job-address"><i
+                                                    class="fa fa-map-marker" aria-hidden="true"></i>
+                                                {{$saveJob->job->province->name}}</a>
+                                        </div>
+
+                                        <div class="job-inf">
+                                            <div class="job-main-skill">
+                                                <i class="fa fa-code" aria-hidden="true"></i>
+                                                <a href="#">
+                                                    @foreach($saveJob->job->techniques as $job_technique)
+                                                        @if($job_technique->techniqueType->name == 'Language' )
+                                                            {{$job_technique->name}}
+                                                            @break
+                                                        @endif
+                                                    @endforeach
+                                                </a>
+                                            </div>
+                                            <div class="job-salary">
+                                                <i class="fa fa-money" aria-hidden="true"></i>
+                                                <span class="salary-min">{{$saveJob->job->salary_min}}<em
+                                                        class="salary-unit">{{$saveJob->job->salary_unit}}</em></span>
+                                                <span class="salary-max">{{$saveJob->job->salary_max}}<em
+                                                        class="salary-unit">{{$saveJob->job->salary_unit}}</em></span>
+                                            </div>
+                                            <div class="job-deadline">
+                                                <span><i class="fa fa-clock-o"
+                                                         aria-hidden="true"></i>  Hạn nộp: <strong>{{$saveJob->job->expire}}</strong></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="wrap-btn-appl">
+                                        <a href="{{route('job.showPost',['jobId'=>$saveJob->job_id])}}">
+                                            <i class="fa fa-info-circle fa-3x" style="color: #0f43a4" aria-hidden="true"></i>
+                                        </a>
+                                        <a href="{{route('seeker.job.unSave',['id'=>$saveJob->job_id])}}">
+                                            <i class="fa fa-times fa-3x" style="color: #c41212"
+                                               aria-hidden="true"></i>
+                                        </a>
+
+                                    </div>
+                                </div>
+                            @endforeach
+                            @else
+                                <h2>Chưa lưu công việc nào</h2>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -405,7 +473,7 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="{{asset('js/jquery-3.4.1.slim.min.js')}}"></script>
+{{--<script src="{{asset('js/jquery-3.4.1.slim.min.js')}}"></script>--}}
 <script src="{{asset('js/popper.min.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
 <script src="{{asset('js/select2.min.js')}}"></script>
@@ -415,6 +483,9 @@
 <!-- Owl Stylesheets Javascript -->
 <script src="{{asset('js/owlcarousel/owl.carousel.js')}}"></script>
 <!-- Read More Plugin -->
+@jquery
+@toastr_js
+@toastr_render
 </body>
 </html>
 

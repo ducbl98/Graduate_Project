@@ -94,7 +94,9 @@ Route::namespace('Seeker')
         Route::get('/company-response/detail/{id}',[SeekerController::class,'detailCompanyResponse'])->name('company.response.detail');
         Route::get('/company-response/download/{id}',[SeekerController::class, 'downloadAttachmentCompany'])->name('company.response.downloadAttachment');
         //Save Jobs
-        Route::get('/save-jobs',[SeekerController::class,'listSavedJobs'])->name('job.save');
+        Route::get('/save-jobs/list',[SeekerController::class,'listSavedJobs'])->name('job.save.list');
+        Route::get('/save-jobs/{id}',[SeekerController::class,'saveJobs'])->name('job.save');
+        Route::get('/un-save-jobs/{id}',[SeekerController::class,'unSaveJobs'])->name('job.unSave');
     });
 
 Route::namespace('Company')
