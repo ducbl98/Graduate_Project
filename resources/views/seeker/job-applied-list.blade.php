@@ -65,6 +65,7 @@
                             <a class="dropdown-item" href="{{route('seeker.profile.show')}}">Trang cá nhân</a>
                             <a class="dropdown-item" href="{{route('seeker.change-password.show')}}">Thay đổi mật khẩu</a>
                             <a class="dropdown-item" href="{{route('seeker.job.apply.list')}}">Công việc đã ứng tuyển</a>
+                            <a class="dropdown-item" href="{{route('seeker.job.save.list')}}">Công việc đã lưu</a>
                             <a class="dropdown-item" href="{{route('seeker.company.response.list')}}">Phản hồi từ nhà tuyển dụng</a>
                             <a class="dropdown-item" href="{{route('logout')}}">Đăng xuất</a>
                         </div>
@@ -97,7 +98,13 @@
                                     <th></th>
                                 </tr>
                                 @foreach($appliedJobs as $appliedJob)
-                                    <tr>
+                                    <tr
+                                        @if($appliedJob->is_respond)
+                                            style="background-color: #6af584"
+                                        @elseif($appliedJob->is_skip)
+                                            style="background-color: #f6ef75"
+                                        @endif
+                                    >
                                         <td>{{$appliedJob->job->title}}</td>
                                         <td>{{$appliedJob->resume}}</td>
                                         <td>{{$appliedJob->created_at}}</td>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\manage;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ApplyChangeRequest;
 use App\Http\Requests\JobApplyRequest;
 use App\Http\Requests\SeekerImageUpdateRequest;
 use App\Http\Requests\SeekerProfileUpdateRequest;
@@ -102,13 +103,36 @@ class SeekerController extends Controller
         return redirect()->back();
     }
 
+    public function changeApplyJob(ApplyChangeRequest $request)
+    {
+        $user = Auth::user();
+//        dd($request);
+        $cv = $request->resume;
+//        dd($cv);
+        $seeker_application = SeekerApplication::find($request->get('apply_id'));
+//        dd($seeker_application);
+        $seeker_application->email = $request->get('email');
+        $seeker_application->phone_number = $request->get('phone_number');
+        $seeker_application->introduction = $request->get('introduction');
+        if ($cv){
+            $seeker_application->resume = $cv->getClientOriginalName();
+            $seeker_application->clearMediaCollection();
+            $seeker_application->addMediaFromRequest('resume')->toMediaCollection();
+//            dd($seeker_application->getMedia());
+        }
+        $seeker_application->save();
+//        dd($seeker_application->getMedia());
+        toastr()->success('Thay đổi ứng tuyển công việc thành công !');
+        return redirect()->back();
+    }
+
     public function listAppliedJob()
     {
         $seekerProfile = User::with('seeker')->find(Auth::id());
         $appliedJobs = SeekerApplication::with('user', 'job.user')->where([
             ['user_id', '=', Auth::id()],
             ['is_active', '=', 1]
-        ])->orderBy('updated_at','desc')->get();
+        ])->orderBy('created_at','desc')->get();
         return view('seeker.job-applied-list', compact('appliedJobs','seekerProfile'));
     }
 
@@ -147,12 +171,14 @@ class SeekerController extends Controller
         return view('seeker.company-response-list',compact('companyResponses','seekerProfile'));
     }
 
-    public function detailCompanyResponse($id){
+    public function detailCompanyResponse($id = 0,Request $request){
         $seekerProfile = User::with('seeker')->find(Auth::id());
+        $columnSearch = $request->get('seeker_application_id') ? 'seeker_application_id' : 'id';
+        $dataSearch = $request->get('seeker_application_id') ? $request->get('seeker_application_id') : $id;
         $companyResponse = CompanyResponse::with('seeker_application.job.user.company')
             ->whereRelation('seeker_application','seeker_applications.user_id','=',Auth::id())
             ->whereRelation('seeker_application','seeker_applications.is_respond','=',1)
-            ->where('id',$id)->first();
+            ->where($columnSearch,$dataSearch)->first();
 //        dd($companyResponse);
         return view('seeker.company-response-detail',compact('companyResponse','id','seekerProfile'));
     }
@@ -168,7 +194,10 @@ class SeekerController extends Controller
 
     public function listSavedJobs(){
         $seekerProfile = User::with('seeker')->find(Auth::id());
-        $saveJobs = SavedJob::with('job.user','job.province','job.techniques')->where('user_id',Auth::id())->get();
+        $saveJobs = SavedJob::with('job.user','job.province','job.techniques')
+            ->where('user_id',Auth::id())
+            ->orderBy('updated_at','DESC')
+            ->get();
 //        dd($saveJobs);
         return view('seeker.save-jobs',compact('seekerProfile','saveJobs'));
     }

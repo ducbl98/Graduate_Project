@@ -1267,7 +1267,7 @@
                 <input type="hidden" name="job_id" value="{{$job->id}}">
                 <input type="hidden" name="user_id" value="{{$seeker ? $seeker->user->id :''}}">
                 <div class="modal-body">
-                    <p class="mb-3">Bạn đang ứng tuyển vào vị trí: <b>2</b></p>
+                    <p class="mb-3">Bạn đang ứng tuyển vào vị trí: <b>{{$job->title}}</b></p>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group input-file-container">
@@ -1336,13 +1336,13 @@
                                                       style="height: 186px; width: 100%; border: 1px solid #ccc; border-radius: 8px;">
 Kính gửi Quý Công ty Công ty TNHH FFG,
 
-Tôi là: ,
+Tôi là: {{$seeker->user->name}},
 
-Qua website techjob.vn, tôi được biết Quý công ty đang có nhu cầu tuyển dụng nhân sự cho vị trí adsa.
+Qua website techjob.vn, tôi được biết Quý công ty đang có nhu cầu tuyển dụng nhân sự cho vị trí {{$job->categories[0]->name}}.
 
 Qua thông tin tuyển dụng công ty cung cấp, tôi tin rằng với năng lực của mình, tôi hoàn toàn đáp ứng được yêu cầu công việc của Quý công ty.
 
-Vì vậy, qua techjob.vn, tôi xin nộp đơn ứng tuyển vào vị trí asd của Quý công ty.
+Vì vậy, qua techjob.vn, tôi xin nộp đơn ứng tuyển vào vị trí {{$job->categories[0]->name}} của Quý công ty.
 
 Tôi xin cam đoan những điều nêu trong hồ sơ hoàn toàn là sự thật, nếu có gì sai trái tôi xin chịu hoàn toàn trách nhiệm.
 
@@ -1362,7 +1362,7 @@ Xin trân trọng cảm ơn,
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn-sm btn-secondary" data-dismiss="modal">Đóng</button>
                     <button type="submit" class="btn-sm btn-primary">Nộp hồ sơ ứng tuyển</button>
                 </div>
             </form>

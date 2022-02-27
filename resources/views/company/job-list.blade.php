@@ -31,9 +31,9 @@
     <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
-</head>
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    @toastr_css
+</head>
 
 <body>
 <!-- main nav -->
@@ -722,7 +722,8 @@
 <!-- Owl Stylesheets Javascript -->
 <script src="{{asset('js/owlcarousel/owl.carousel.js')}}"></script>
 <!-- Read More Plugin -->
-
-
+@jquery
+@toastr_js
+@toastr_render
 </body>
 </html>

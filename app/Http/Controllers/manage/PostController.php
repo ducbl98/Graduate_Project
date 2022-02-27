@@ -137,7 +137,7 @@ class PostController extends Controller
         } catch (Exception $e) {
             dd($e);
         }
-
+        toastr()->success('Tạo tin tuyển dụng thành công !');
         return redirect()->route('company.post.list');
     }
 
@@ -173,9 +173,7 @@ class PostController extends Controller
                 $isSaveJob = true;
             }
         }
-//        dd(Carbon::now());
-//        dd($job->expire);
-        dd(Carbon::createFromFormat('Y-m-d',$job->expire)> Carbon::now());
+//        dd(Carbon::createFromFormat('Y-m-d',$job->expire)> Carbon::now());
 //        dd($isApplied,$isSeeker);
 //        dd($job);
         return view('guest-seeker.job-detail', compact('job', 'seeker', 'isSeeker', 'isApplied', 'seekerProfile','isSaveJob'));
@@ -273,7 +271,7 @@ class PostController extends Controller
         } catch (Exception $e) {
             dd($e);
         }
-
+        toastr()->success('Sửa tin tuyển dụng thành công !');
         return redirect()->route('company.post.list');
     }
 

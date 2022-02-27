@@ -66,12 +66,10 @@
                         </a>
                         <div class="dropdown-menu tdropdown" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{route('seeker.profile.show')}}">Trang cá nhân</a>
-                            <a class="dropdown-item" href="{{route('seeker.change-password.show')}}">Thay đổi mật
-                                khẩu</a>
-                            <a class="dropdown-item" href="{{route('seeker.job.apply.list')}}">Công việc đã ứng
-                                tuyển</a>
-                            <a class="dropdown-item" href="{{route('seeker.company.response.list')}}">Phản hồi từ nhà
-                                tuyển dụng</a>
+                            <a class="dropdown-item" href="{{route('seeker.change-password.show')}}">Thay đổi mật khẩu</a>
+                            <a class="dropdown-item" href="{{route('seeker.job.apply.list')}}">Công việc đã ứng tuyển</a>
+                            <a class="dropdown-item" href="{{route('seeker.job.save.list')}}">Công việc đã lưu</a>
+                            <a class="dropdown-item" href="{{route('seeker.company.response.list')}}">Phản hồi từ nhà tuyển dụng</a>
                             <a class="dropdown-item" href="{{route('logout')}}">Đăng xuất</a>
                         </div>
                     </li>

@@ -86,12 +86,13 @@ Route::namespace('Seeker')
         Route::get('/education/delete',[EducationController::class,'deleteEducation'])->name('education.delete');
         //Apply Job
         Route::post('/job/apply',[SeekerController::class,'applyJob'])->name('job.apply');
+        Route::post('/job/change-apply',[SeekerController::class,'changeApplyJob'])->name('job.changeApply');
         Route::get('/job-applied/list',[SeekerController::class,'listAppliedJob'])->name('job.apply.list');
         Route::get('/job-applied/detail/{id}',[SeekerController::class,'detailAppliedJob'])->name('job.apply.detail');
         Route::get('/job-applied/delete/{id}',[SeekerController::class,'deleteAppliedJob'])->name('job.apply.delete');
         //Company Response
         Route::get('/company-response/list',[SeekerController::class,'listCompanyResponses'])->name('company.response.list');
-        Route::get('/company-response/detail/{id}',[SeekerController::class,'detailCompanyResponse'])->name('company.response.detail');
+        Route::get('/company-response/detail/{id?}',[SeekerController::class,'detailCompanyResponse'])->name('company.response.detail');
         Route::get('/company-response/download/{id}',[SeekerController::class, 'downloadAttachmentCompany'])->name('company.response.downloadAttachment');
         //Save Jobs
         Route::get('/save-jobs/list',[SeekerController::class,'listSavedJobs'])->name('job.save.list');

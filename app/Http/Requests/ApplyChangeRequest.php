@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class JobApplyRequest extends FormRequest
+class ApplyChangeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,22 +24,19 @@ class JobApplyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'job_id' => 'required',
-            'user_id' => 'required|numeric',
-            'resume' => 'required|file',
-            'phone_number' => 'required|string',
-            'email' => 'required|string',
-            'introduction' => 'required|string',
+            'resume' => 'file',
+            'phone_number' => ['string','regex:/(84|0[3|5|7|8|9])+([0-9]{8})\b/'],
+            'email' => 'string',
+            'introduction' => 'string',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'required' => "Trường này là bắt buộc",
+            'regex' => " Yêu cầu nhập đúng định dạng điện thoại",
             'string' => "Yêu cầu kiểu chuỗi",
             'file' => "Yêu cầu kiểu file",
-            'numeric' => "Yêu cầu số nguyên"
         ];
     }
 }
