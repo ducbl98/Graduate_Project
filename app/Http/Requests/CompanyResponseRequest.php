@@ -29,4 +29,13 @@ class CompanyResponseRequest extends FormRequest
             'attachment' => 'file',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'required' => "Trường này là bắt buộc",
+            'string' => "Yêu cầu kiểu chuỗi",
+            'attachment' => "Yêu cầu kiểu file"
+        ];
+    }
 }

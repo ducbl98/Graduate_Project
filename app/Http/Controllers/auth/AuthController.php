@@ -32,7 +32,9 @@ class AuthController extends Controller
         $isSeeker = $user && $user->role == 1;
         $jobs = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
             ->whereRelation('user', 'users.is_active', '=', 1)
-            ->where('is_active', 1)->orderBy('created_at', 'desc')
+            ->where('is_active', 1)
+            ->whereDate('expire','>=',Carbon::today())
+            ->orderBy('created_at', 'DESC')
             ->skip(0)->take(8)->get();
         $techniqueTypes = TechniqueType::with('techniques')->get();
         $provinces = Province::all();
@@ -45,9 +47,11 @@ class AuthController extends Controller
             ->withCount(['jobs' => function (Builder $query) {
                 $query->join('users', 'jobs.created_by', '=', 'users.id');
                 $query->where('users.is_active', '=', 1);
+                $query->where('jobs.expire', '>=', Carbon::today());
             }])
             ->whereRelation('jobs.user', 'users.is_active', '=', 1)
             ->whereRelation('jobs', 'jobs.is_active', '=', 1)
+            ->whereRelation('jobs', 'jobs.expire', '>=', Carbon::today())
             ->orderBy('jobs_count', 'desc')
             ->get();
 //        dd($categories);
@@ -132,8 +136,8 @@ class AuthController extends Controller
             $message->subject('Email Verification Mail');
         });
 
-        toastr()->success('Great! Register Successfully !')
-            ->info('We have send email confirmation to your email . Please check your email');
+        toastr()->success('Đăng ký thành công !')
+            ->info('Chúng tôi đã gửi email xác thực tới email của bạn. Hãy kiểm tra hòm thư');
         return redirect()->route('companyLogin');
 
     }
@@ -165,6 +169,7 @@ class AuthController extends Controller
         if (!session()->has('url.intended')) {
             session(['url.intended' => url()->previous()]);
         }
+//        dd(session('url.intended'));
         return view('auth.login-employees');
     }
 
@@ -178,7 +183,12 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             $userRole = Auth::user()->role;
+            $isEmailVerified =Auth::user()->is_email_verified;
             $isActive = Auth::user()->is_active;
+            if (!$isEmailVerified){
+                toastr()->warning('Bạn cần xác thực tài khoản. Chúng tôi đã gửi link xác thực qua email , Hãy kiểm tra email!');
+                return back();
+            }
             if (!$isActive) {
                 toastr()->error('Tài khoản đã bị vô hiệu hóa !');
                 return back();
@@ -200,7 +210,12 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             $userRole = Auth::user()->role;
+            $isEmailVerified =Auth::user()->is_email_verified;
             $isActive = Auth::user()->is_active;
+            if (!$isEmailVerified){
+                toastr()->warning('Bạn cần xác thực tài khoản. Chúng tôi đã gửi link xác thực qua email , Hãy kiểm tra email!');
+                return back();
+            }
             if (!$isActive) {
                 toastr()->error('Tài khoản đã bị vô hiệu hóa !');
                 return back();
@@ -240,9 +255,9 @@ class AuthController extends Controller
                 $verifyUser->user->is_email_verified = 1;
                 $verifyUser->user->email_verified_at = Carbon::now();
                 $verifyUser->user->save();
-                $message = "Your e-mail is verified. You can now login.";
+                $message = "Email đã được xác thực. Bạn có thể đăng nhập ngay !.";
             } else {
-                $message = "Your e-mail is already verified. You can now login.";
+                $message = "Email đã được xác thực. Bạn có thể đăng nhập ngay !.";
             }
         }
         toastr()->info($message);

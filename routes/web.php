@@ -115,11 +115,12 @@ Route::namespace('Company')
         Route::post('/post/store',[PostController::class,'storePost'])->name('post.store');
         Route::post('/post/{id}/update',[PostController::class,'updatePost'])->name('post.update');
         Route::get('/post/{id}/delete',[PostController::class,'deletePost'])->name('post.delete');
-        Route::post('/post/search',[PostController::class, 'companySearchPost'])->name('post.search');
+        Route::get('/post/search',[PostController::class, 'companySearchPost'])->name('post.search');
         //Candidate
         Route::get('/candidate/list',[CompanyController::class,'listCandidates'])->name('candidate.list');
         Route::get('/candidate/detail/{id}',[CompanyController::class,'detailCandidate'])->name('candidate.detail');
         Route::post('/candidate/reply',[CompanyController::class,'replyCandidate'])->name('candidate.reply');
+        Route::get('/candidate/dismiss/{id}',[CompanyController::class,'dismissCandidate'])->name('candidate.dismiss');
         Route::get('/candidate/download/{id}',[CompanyController::class,'downloadCandidateCV'])->name('candidate.downloadCV');
     });
 //Route::get('/admin', function () {

@@ -52,7 +52,7 @@ class CompanyController extends Controller
         return view('company.change-password',compact('companyProfile'));
     }
 
-    public function changePassword(Request $request)
+    public function changePassword(Request $request): RedirectResponse
     {
         $this->validate($request,[
             'oldPassword'=>'required|string|min:6',
@@ -88,7 +88,7 @@ class CompanyController extends Controller
             $newAvatarName = time() . '-' . $company->user->name . "." . $avatar->getClientOriginalExtension();
             $request->file('company_avatar')->storeAs('images/companies', $newAvatarName);
             $company->avatar_url = 'images/companies/' . $newAvatarName;
-            Job::where('created_by', $company->id)->update([
+            Job::where('created_by', $company->user_id)->update([
                 'image' => 'images/companies/' . $newAvatarName,
             ]);
         }
@@ -130,8 +130,10 @@ class CompanyController extends Controller
             ])->first();
 //        dd($candidateAppliedJob);
         $cvCandidate = $candidateAppliedJob->getMedia();
-        $isRespond = $candidateAppliedJob->response;
-        return view('company.candidate-detail', compact('candidateAppliedJob', 'isRespond', 'cvCandidate', 'id', 'companyProfile'));
+        $isRespond = $candidateAppliedJob->is_respond;
+        $isSkip = $candidateAppliedJob->is_skip;
+//        dd($isSkip);
+        return view('company.candidate-detail', compact('candidateAppliedJob', 'isRespond', 'cvCandidate', 'id', 'companyProfile','isSkip'));
     }
 
     public function downloadCandidateCV($id)
@@ -145,7 +147,7 @@ class CompanyController extends Controller
         return $cvCandidate[0];
     }
 
-    public function replyCandidate(CompanyResponseRequest $request)
+    public function replyCandidate(CompanyResponseRequest $request): RedirectResponse
     {
 //        dd($request);
         $responseFile = $request->attachment;
@@ -164,5 +166,16 @@ class CompanyController extends Controller
         }
         toastr()->success('Phản hồi ứng viên thành công !');
         return redirect()->route('company.candidate.detail', ['id' => $request->seeker_application_id]);
+    }
+
+    public function dismissCandidate(int $id): RedirectResponse
+    {
+//        dd($id);
+        $seekerApplication = SeekerApplication::find($id);
+//        dd($seekerApplication);
+        $seekerApplication->is_skip=1;
+        $seekerApplication->save();
+        toastr()->success('Bỏ qua ứng viên thành công !');
+        return redirect()->route('company.candidate.detail', ['id' => $id]);
     }
 }

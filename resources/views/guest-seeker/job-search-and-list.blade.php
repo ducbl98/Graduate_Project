@@ -85,6 +85,7 @@
                                 <a class="dropdown-item" href="{{route('seeker.profile.show')}}">Trang cá nhân</a>
                                 <a class="dropdown-item" href="{{route('seeker.change-password.show')}}">Thay đổi mật khẩu</a>
                                 <a class="dropdown-item" href="{{route('seeker.job.apply.list')}}">Công việc đã ứng tuyển</a>
+                                <a class="dropdown-item" href="{{route('seeker.job.save.list')}}">Công việc đã lưu</a>
                                 <a class="dropdown-item" href="{{route('seeker.company.response.list')}}">Phản hồi từ nhà tuyển dụng</a>
                                 <a class="dropdown-item" href="{{route('logout')}}">Đăng xuất</a>
                             </div>
@@ -419,7 +420,7 @@
                 <h4 class="search-find">Tìm thấy {{$totalSearchJobs}} việc làm đang tuyển dụng</h4>
                 <div class="job-board-wrap">
                     <div class="job-group">
-                        <div class="job pagi">
+                        {{--<div class="job pagi">
                             <div class="job-content">
                                 <div class="job-logo">
                                     <a href="#">
@@ -455,7 +456,7 @@
                                     <a href="#" class="btn btn-appl">Apply Now</a>
                                 </div>
                             </div>
-                        </div>
+                        </div>--}}
                         @foreach($jobs as $job)
                             <div class="job pagi">
                                 <div class="job-content">
@@ -509,10 +510,10 @@
                                                     </a>
                                                 </div>
                                             @endif
-                                            <div class="job-deadline">
+                                        </div>
+                                        <div class="job-deadline">
                                                 <span><i class="fa fa-clock-o"
                                                          aria-hidden="true"></i>  Hạn nộp: <strong>{{$job->expire}}</strong></span>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="wrap-btn-appl">

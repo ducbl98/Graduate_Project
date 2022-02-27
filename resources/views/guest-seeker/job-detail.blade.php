@@ -760,6 +760,7 @@
                                     khẩu</a>
                                 <a class="dropdown-item" href="{{route('seeker.job.apply.list')}}">Công việc đã ứng
                                     tuyển</a>
+                                <a class="dropdown-item" href="{{route('seeker.job.save.list')}}">Công việc đã lưu</a>
                                 <a class="dropdown-item" href="{{route('seeker.company.response.list')}}">Phản hồi từ
                                     nhà tuyển dụng</a>
                                 <a class="dropdown-item" href="{{route('logout')}}">Đăng xuất</a>
@@ -784,7 +785,9 @@
                 <div class="col-md-2 col-sm-12 col-12">
                     <div class="job-detail-header-logo">
                         <a href="#">
-                            <img src="{{asset('img/fpt-logo.png')}}" class="job-logo-ima" alt="job-logo">
+                            <img
+                                src="{{$job->image ? ( str_contains($job->image,'img') ? asset($job->image) :asset('storage/'.$job->image)) : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/OOjs_UI_icon_userAvatar-constructive.svg/1024px-OOjs_UI_icon_userAvatar-constructive.svg.png"}}"
+                                class="job-logo-ima" alt="job-logo">
                         </a>
                     </div>
                 </div>
@@ -836,15 +839,17 @@
                                 <a href="{{route('seekerLogin')}}" class="btn btn-warning btn-login-warning">Đăng nhập
                                     để ứng tuyển</a>
                             @endif
-                            @if(!$isSaveJob)
-                                <a href="{{route('seeker.job.save',['id'=>$job->id])}}"
-                                   class="btn btn-primary btn-save">Lưu công việc</a>
-                            @else
-                                <a href="{{route('seeker.job.unSave',['id'=>$job->id])}}"
-                                   class="btn btn-primary btn-unsave">Bỏ lưu công việc</a>
+                            @if($isSeeker)
+                                @if(!$isSaveJob)
+                                    <a href="{{route('seeker.job.save',['id'=>$job->id])}}"
+                                       class="btn btn-primary btn-save">Lưu công việc</a>
+                                @else
+                                    <a href="{{route('seeker.job.unSave',['id'=>$job->id])}}"
+                                       class="btn btn-primary btn-unsave">Bỏ lưu công việc</a>
+                                @endif
                             @endif
 
-                            <p class="jd-view">Lượt xem: <span>1.520</span></p>
+                            {{--                            <p class="jd-view">Lượt xem: <span>1.520</span></p>--}}
                         </div>
                     </div>
                 </div>
@@ -872,24 +877,33 @@
                             <div class="welfare-list">
                                 <ul>
                                     <li>
-                                        <p><i class="fa fa-usd icn-welfare"></i>Have opponunity for growth.</p>
+                                        {{--                                        <p><i class="fa fa-usd icn-welfare"></i>Have opponunity for growth.</p>--}}
+                                        <p><i class="fa fa-usd icn-welfare"></i>Có cơ hội phát triển.</p>
                                     </li>
                                     <li>
-                                        <p><i class="fa fa-user icn-welfare"></i>Working under energisitic, innovative,
-                                            friendly environment.</p>
+                                        {{--                                        <p><i class="fa fa-user icn-welfare"></i>Working under energisitic, innovative,--}}
+                                        {{--                                            friendly environment.</p>--}}
+                                        <p><i class="fa fa-user icn-welfare"></i>Làm việc trong môi trường năng động
+                                            ,thân thiện</p>
                                     </li>
                                     <li>
-                                        <p><i class="fa fa-check-circle icn-welfare"></i>Competitive salary and
-                                            attractive benefits packages.</p>
+                                        {{--                                        <p><i class="fa fa-check-circle icn-welfare"></i>Competitive salary and--}}
+                                        {{--                                            attractive benefits packages.</p>--}}
+                                        <p><i class="fa fa-check-circle icn-welfare"></i>Mức lương cạnh tranh và nhiều
+                                            chế độ đãi ngộ</p>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <h2 class="widget-title">
-                        <span>Mô tả công việc</span>
-                    </h2>
                     <div class="jd-content">
+                        <textarea disabled style="width: 100%;border: none" name="" id="" cols="30" rows="50">{{$job->details}}
+                        </textarea>
+                    </div>
+                    {{--                    <h2 class="widget-title">--}}
+                    {{--                        <span>Mô tả công việc</span>--}}
+                    {{--                    </h2>--}}
+                    {{--<div class="jd-content">
                         (*). Validus Vietnam is looking for a Senior QA Engineer for Web and Mobile applications.<br>
                         As a Senior QA Engineer, you will be working alongside the Vietnam technology and product
                         development teams to create and execute manual and automated tests to ensure product quality.
@@ -958,7 +972,7 @@
                         - Private health insurance;<br>
                         - Annual professional training and development $2K (ie. Courses, workshops, events, etc. must be
                         approved by line manager).<br>
-                    </div>
+                    </div>--}}
 
                 </div>
 
@@ -979,7 +993,7 @@
                                     <span class="ji-title">Nơi làm việc:</span>
                                 </div>
                                 <div class="col-sm-8">
-                                    <span class="ji-main">Đà Nẵng</span>
+                                    <span class="ji-main">{{$job->province->name}}</span>
                                 </div>
                             </div>
                         </div>
@@ -995,16 +1009,17 @@
                             </div>
                         </div>
 
-                        <div class="job-info-list">
+                        {{--<div class="job-info-list">
                             <div class="row">
                                 <div class="col-sm-4">
                                     <span class="ji-title">Lương:</span>
                                 </div>
                                 <div class="col-sm-8">
-                                    <span class="ji-main">1000$ - 3000$</span>
+                                    <span
+                                        class="ji-main">{{$job->salary_min}}{{$job->salary_unit}} - {{$job->salary_max}}{{$job->salary_unit}}</span>
                                 </div>
                             </div>
-                        </div>
+                        </div>--}}
 
                         <div class="job-info-list">
                             <div class="row">
@@ -1012,7 +1027,7 @@
                                     <span class="ji-title">Hạn nộp:</span>
                                 </div>
                                 <div class="col-sm-8">
-                                    <span class="ji-main">31/12/2019</span>
+                                    <span class="ji-main">{{$job->expire}}</span>
                                 </div>
                             </div>
                         </div>
@@ -1023,7 +1038,15 @@
                                     <span class="ji-title">Ngành nghề:</span>
                                 </div>
                                 <div class="col-sm-8">
-                                    <span class="ji-main">Quảng cáo, Đối ngoại</span>
+                                    <span class="ji-main">
+                                        @if(count($job->categories) == 1)
+                                            {{$job->categories[0]->name}}
+                                        @else
+                                            @foreach($job->categories as $category)
+                                                {{$category->name}},
+                                            @endforeach
+                                        @endif
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -1034,7 +1057,15 @@
                                     <span class="ji-title">Kỹ năng:</span>
                                 </div>
                                 <div class="col-sm-8">
-                                    <span class="ji-main">PR Activity</span>
+                                    <span class="ji-main">
+                                        @if(count($job->techniques) == 1)
+                                            {{$job->techniques[0]->name}}
+                                        @else
+                                            @foreach($job->techniques as $technique)
+                                                {{$technique->name}},
+                                            @endforeach
+                                        @endif
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -1045,7 +1076,7 @@
                                     <span class="ji-title">Kinh nghiệm:</span>
                                 </div>
                                 <div class="col-sm-8">
-                                    <span class="ji-main">1 năm</span>
+                                    <span class="ji-main">{{$job->experience}}</span>
                                 </div>
                             </div>
                         </div>
@@ -1060,141 +1091,144 @@
                     </h2>
                     <div class="company-intro">
                         <a href="#">
-                            <img src="{{asset('img/fpt-logo.png')}}" class="job-logo-ima" alt="job-logo">
+                            <img
+                                src="{{$job->image ? ( str_contains($job->image,'img') ? asset($job->image) :asset('storage/'.$job->image)) : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/OOjs_UI_icon_userAvatar-constructive.svg/1024px-OOjs_UI_icon_userAvatar-constructive.svg.png"}}"
+                                class="job-logo-ima" alt="job-logo">
                         </a>
                     </div>
-                    <h2 class="company-intro-name">Fpt Software</h2>
+                    <h2 class="company-intro-name">{{$job->user->name}}</h2>
                     <ul class="job-add">
                         <li>
                             <i class="fa fa-map-marker ja-icn"></i>
-                            <span>Trụ sở: 212 Phan Đăng Lưu - Hòa Cường Bắc - Hải Châu - Đà Nẵng </span>
+{{--                            <span>Trụ sở: 212 Phan Đăng Lưu - Hòa Cường Bắc - Hải Châu - Đà Nẵng </span>--}}
+                            <span>Trụ sở: {{$job->user->company->address}}</span>
                         </li>
                         <li>
                             <i class="fa fa-bar-chart ja-icn"></i>
-                            <span>Quy mô công ty: 50-100 người</span>
+                            <span>Quy mô công ty: {{$job->user->company->size}} người</span>
                         </li>
                     </ul>
 
-                    <div class="wrap-comp-info mb-2">
+                    {{--<div class="wrap-comp-info mb-2">
                         <a href="#" class="btn btn-primary btn-company">Xem thêm</a>
-                    </div>
+                    </div>--}}
                 </div>
 
-                <div class="side-bar mb-3">
-                    <h2 class="widget-title">
-                        <span>Việc làm tương tự</span>
-                    </h2>
+                {{--                <div class="side-bar mb-3">--}}
+                {{--                    <h2 class="widget-title">--}}
+                {{--                        <span>Việc làm tương tự</span>--}}
+                {{--                    </h2>--}}
 
-                    <div class="job-tt-contain">
-                        <div class="job-tt-item">
+                {{--                    <div class="job-tt-contain">--}}
+                {{--                        <div class="job-tt-item">--}}
 
-                            <a href="#" class="thumb">
-                                <div style="background-image: url('/img/alipay-logo.png');"></div>
-                            </a>
+                {{--                            <a href="#" class="thumb">--}}
+                {{--                                <div style="background-image: url('/img/alipay-logo.png');"></div>--}}
+                {{--                            </a>--}}
 
-                            <div class="info">
-                                <a href="#" class="jobname">
-                                    Fullstack .NET Developer (Angular/React)
-                                </a>
-                                <a href="#" class="company">
-                                    Alipay Software
-                                </a>
-                            </div>
-                        </div>
+                {{--                            <div class="info">--}}
+                {{--                                <a href="#" class="jobname">--}}
+                {{--                                    Fullstack .NET Developer (Angular/React)--}}
+                {{--                                </a>--}}
+                {{--                                <a href="#" class="company">--}}
+                {{--                                    Alipay Software--}}
+                {{--                                </a>--}}
+                {{--                            </div>--}}
+                {{--                        </div>--}}
 
-                        <div class="job-tt-item">
+                {{--                        <div class="job-tt-item">--}}
 
-                            <a href="#" class="thumb">
-                                <div style="background-image: url('/img/fpt-logo.png');"></div>
-                            </a>
+                {{--                            <a href="#" class="thumb">--}}
+                {{--                                <div style="background-image: url('/img/fpt-logo.png');"></div>--}}
+                {{--                            </a>--}}
 
-                            <div class="info">
-                                <a href="#" class="jobname">
-                                    [HCM] 02 Solution Architects–Up to $2000
-                                </a>
-                                <a href="#" class="company">
-                                    FPT Software
-                                </a>
-                            </div>
-                        </div>
-                        <div class="job-tt-item">
+                {{--                            <div class="info">--}}
+                {{--                                <a href="#" class="jobname">--}}
+                {{--                                    [HCM] 02 Solution Architects–Up to $2000--}}
+                {{--                                </a>--}}
+                {{--                                <a href="#" class="company">--}}
+                {{--                                    FPT Software--}}
+                {{--                                </a>--}}
+                {{--                            </div>--}}
+                {{--                        </div>--}}
+                {{--                        <div class="job-tt-item">--}}
 
-                            <a href="#" class="thumb">
-                                <div style="background-image: url('/img/alipay-logo.png');"></div>
-                            </a>
+                {{--                            <a href="#" class="thumb">--}}
+                {{--                                <div style="background-image: url('/img/alipay-logo.png');"></div>--}}
+                {{--                            </a>--}}
 
-                            <div class="info">
-                                <a href="#" class="jobname">
-                                    Fullstack .NET Developer (Angular/React)
-                                </a>
-                                <a href="#" class="company">
-                                    Alipay Software
-                                </a>
-                            </div>
-                        </div>
-                        <div class="job-tt-item">
+                {{--                            <div class="info">--}}
+                {{--                                <a href="#" class="jobname">--}}
+                {{--                                    Fullstack .NET Developer (Angular/React)--}}
+                {{--                                </a>--}}
+                {{--                                <a href="#" class="company">--}}
+                {{--                                    Alipay Software--}}
+                {{--                                </a>--}}
+                {{--                            </div>--}}
+                {{--                        </div>--}}
+                {{--                        <div class="job-tt-item">--}}
 
-                            <a href="#" class="thumb">
-                                <div style="background-image: url('/img/alipay-logo.png');"></div>
-                            </a>
+                {{--                            <a href="#" class="thumb">--}}
+                {{--                                <div style="background-image: url('/img/alipay-logo.png');"></div>--}}
+                {{--                            </a>--}}
 
-                            <div class="info">
-                                <a href="#" class="jobname">
-                                    Fullstack .NET Developer (Angular/React)
-                                </a>
-                                <a href="#" class="company">
-                                    Alipay Software
-                                </a>
-                            </div>
-                        </div>
-                        <div class="job-tt-item">
+                {{--                            <div class="info">--}}
+                {{--                                <a href="#" class="jobname">--}}
+                {{--                                    Fullstack .NET Developer (Angular/React)--}}
+                {{--                                </a>--}}
+                {{--                                <a href="#" class="company">--}}
+                {{--                                    Alipay Software--}}
+                {{--                                </a>--}}
+                {{--                            </div>--}}
+                {{--                        </div>--}}
+                {{--                        <div class="job-tt-item">--}}
 
-                            <a href="#" class="thumb">
-                                <div style="background-image: url('/img/alipay-logo.png');"></div>
-                            </a>
+                {{--                            <a href="#" class="thumb">--}}
+                {{--                                <div style="background-image: url('/img/alipay-logo.png');"></div>--}}
+                {{--                            </a>--}}
 
-                            <div class="info">
-                                <a href="#" class="jobname">
-                                    Fullstack .NET Developer (Angular/React)
-                                </a>
-                                <a href="#" class="company">
-                                    Alipay Software
-                                </a>
-                            </div>
-                        </div>
-                        <div class="job-tt-item">
+                {{--                            <div class="info">--}}
+                {{--                                <a href="#" class="jobname">--}}
+                {{--                                    Fullstack .NET Developer (Angular/React)--}}
+                {{--                                </a>--}}
+                {{--                                <a href="#" class="company">--}}
+                {{--                                    Alipay Software--}}
+                {{--                                </a>--}}
+                {{--                            </div>--}}
+                {{--                        </div>--}}
+                {{--                        <div class="job-tt-item">--}}
 
-                            <a href="#" class="thumb">
-                                <div style="background-image: url('/img/alipay-logo.png');"></div>
-                            </a>
+                {{--                            <a href="#" class="thumb">--}}
+                {{--                                <div style="background-image: url('/img/alipay-logo.png');"></div>--}}
+                {{--                            </a>--}}
 
-                            <div class="info">
-                                <a href="#" class="jobname">
-                                    Fullstack .NET Developer (Angular/React)
-                                </a>
-                                <a href="#" class="company">
-                                    Alipay Software
-                                </a>
-                            </div>
-                        </div>
-                        <div class="job-tt-item">
+                {{--                            <div class="info">--}}
+                {{--                                <a href="#" class="jobname">--}}
+                {{--                                    Fullstack .NET Developer (Angular/React)--}}
+                {{--                                </a>--}}
+                {{--                                <a href="#" class="company">--}}
+                {{--                                    Alipay Software--}}
+                {{--                                </a>--}}
+                {{--                            </div>--}}
+                {{--                        </div>--}}
+                {{--                        <div class="job-tt-item">--}}
 
-                            <a href="#" class="thumb">
-                                <div style="background-image: url('/img/alipay-logo.png');"></div>
-                            </a>
+                {{--                            <a href="#" class="thumb">--}}
+                {{--                                <div style="background-image: url('/img/alipay-logo.png');"></div>--}}
+                {{--                            </a>--}}
 
-                            <div class="info">
-                                <a href="#" class="jobname">
-                                    Fullstack .NET Developer (Angular/React)
-                                </a>
-                                <a href="#" class="company">
-                                    Alipay Software
-                                </a>
-                            </div>
-                        </div>
+                {{--                            <div class="info">--}}
+                {{--                                <a href="#" class="jobname">--}}
+                {{--                                    Fullstack .NET Developer (Angular/React)--}}
+                {{--                                </a>--}}
+                {{--                                <a href="#" class="company">--}}
+                {{--                                    Alipay Software--}}
+                {{--                                </a>--}}
+                {{--                            </div>--}}
+                {{--                        </div>--}}
 
-                    </div>
-                </div>
+                {{--                    </div>--}}
+                {{--                </div>--}}
 
                 <div class="side-bar mb-3">
 

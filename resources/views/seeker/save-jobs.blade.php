@@ -93,7 +93,7 @@
                 <div class="job-board-wrap">
                     <div class="job-group">
                         <div class="job pagi">
-                            <div class="job-content">
+                            {{--<div class="job-content">
                                 <div class="job-logo">
                                     <a href="#">
                                         <img src="{{asset('img/fpt-logo.png')}}" class="job-logo-ima" alt="job-logo">
@@ -127,8 +127,8 @@
                                 <div class="wrap-btn-appl">
                                     <a href="#" class="btn btn-appl">Apply Now</a>
                                 </div>
-                            </div>
-                            @if(count($saveJobs)==0)
+                            </div>--}}
+                            @if(count($saveJobs)!=0)
                                 @foreach($saveJobs as $saveJob)
                                 <div class="job-content">
                                     <div class="job-logo">
@@ -195,7 +195,7 @@
                 </div>
             </div>
             <div class="col-md-4 col-sm-12 col-12">
-                <div class="side-bar mb-3">
+                {{--<div class="side-bar mb-3">
                     <div class="block-sidebar" style="margin-bottom: 20px;">
                         <header>
                             <h3 class="title-sidebar font-roboto bg-primary">
@@ -311,25 +311,25 @@
                         </div>
 
                     </div>
-                </div>
+                </div>--}}
                 <div class="side-bar mb-3">
                     <div class="block-sidebar" style="margin-bottom: 20px;">
                         <div class="content-sidebar menu-trung-tam-ql menu-ql-employer">
                             <h3 class="menu-ql-ntv">
-                                Quản lý tài khoản
+                                Quản lý ứng tuyển
                             </h3>
                             <h3 class="menu-ql-ntv">
-                                Quản lý dịch vụ
+                                Danh sách phản hồi
                             </h3>
-                            <h3 class="menu-ql-ntv">
-                                Quản lý tin tuyển dụng
-                            </h3>
-                            <h3 class="menu-ql-ntv">
-                                Quản lý ứng viên
-                            </h3>
-                            <h3 class="menu-ql-ntv">
-                                Hỗ trợ và thông báo
-                            </h3>
+                            {{--                            <h3 class="menu-ql-ntv">--}}
+                            {{--                                Quản lý tin tuyển dụng--}}
+                            {{--                            </h3>--}}
+                            {{--                            <h3 class="menu-ql-ntv">--}}
+                            {{--                                Quản lý ứng viên--}}
+                            {{--                            </h3>--}}
+                            {{--                            <h3 class="menu-ql-ntv">--}}
+                            {{--                                Hỗ trợ và thông báo--}}
+                            {{--                            </h3>--}}
                         </div>
                     </div>
                 </div>

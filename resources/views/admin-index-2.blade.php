@@ -38,13 +38,13 @@
                 <div class="main-menu-header">
                     <img class="img-radius" src="{{asset('img/avatar-2.jpg')}}" alt="User-Profile-Image">
                     <div class="user-details">
-                        <div id="more-details">UX Designer <i class="fa fa-caret-down"></i></div>
+                        <div id="more-details">Admin<i class="fa fa-caret-down"></i></div>
                     </div>
                 </div>
                 <div class="collapse" id="nav-user-link">
                     <ul class="list-unstyled">
-                        <li class="list-group-item"><a href="#"><i class="feather icon-user m-r-5"></i>View Profile</a></li>
-                        <li class="list-group-item"><a href="{{route('logout')}}"><i class="feather icon-log-out m-r-5"></i>Logout</a></li>
+{{--                        <li class="list-group-item"><a href="#"><i class="feather icon-user m-r-5"></i>View Profile</a></li>--}}
+                        <li class="list-group-item"><a href="{{route('logout')}}"><i class="feather icon-log-out m-r-5"></i>Đăng xuất</a></li>
                     </ul>
                 </div>
             </div>
@@ -145,7 +145,7 @@
                     <div class="col-sm-6">
                         <div class="card support-bar overflow-hidden">
                             <div class="card-body pb-0">
-                                <h2 class="m-0">350</h2>
+                                <h2 class="m-0">0</h2>
                                 <span class="text-c-green">Tin tức đã xuất bản</span>
                             </div>
                             <div id="support-chart1"></div>
@@ -178,7 +178,7 @@
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-8">
-                                        <h4 class="text-c-yellow">$30200</h4>
+                                        <h4 class="text-c-yellow">0</h4>
                                         <h6 class="text-muted m-b-0">Người dùng</h6>
                                     </div>
                                     <div class="col-4 text-right">
@@ -203,7 +203,7 @@
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-8">
-                                        <h4 class="text-c-green">290+</h4>
+                                        <h4 class="text-c-green">0</h4>
                                         <h6 class="text-muted m-b-0">Nhà Tuyển Dụng</h6>
                                     </div>
                                     <div class="col-4 text-right">

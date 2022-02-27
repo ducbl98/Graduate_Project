@@ -496,141 +496,141 @@
                 </div>
             </div>
             <div class="col-md-4 col-sm-12 col-12">
-                <div class="side-bar mb-3">
-                    <div class="block-sidebar" style="margin-bottom: 20px;">
-                        <header>
-                            <h3 class="title-sidebar font-roboto bg-primary">
-                                Việc làm tương tự
-                            </h3>
-                        </header>
-                    </div>
-                    <div class="job-tt-contain">
-                        <div class="job-tt-item">
+{{--                <div class="side-bar mb-3">--}}
+{{--                    <div class="block-sidebar" style="margin-bottom: 20px;">--}}
+{{--                        <header>--}}
+{{--                            <h3 class="title-sidebar font-roboto bg-primary">--}}
+{{--                                Việc làm tương tự--}}
+{{--                            </h3>--}}
+{{--                        </header>--}}
+{{--                    </div>--}}
+{{--                    <div class="job-tt-contain">--}}
+{{--                        <div class="job-tt-item">--}}
 
-                            <a href="#" class="thumb">
-                                <div style="background-image: url('/img/alipay-logo.png');"></div>
-                            </a>
+{{--                            <a href="#" class="thumb">--}}
+{{--                                <div style="background-image: url('/img/alipay-logo.png');"></div>--}}
+{{--                            </a>--}}
 
-                            <div class="info">
-                                <a href="#" class="jobname">
-                                    Fullstack .NET Developer (Angular/React)
-                                </a>
-                                <a href="#" class="company">
-                                    Alipay Software
-                                </a>
-                            </div>
-                        </div>
-                        <div class="job-tt-item">
+{{--                            <div class="info">--}}
+{{--                                <a href="#" class="jobname">--}}
+{{--                                    Fullstack .NET Developer (Angular/React)--}}
+{{--                                </a>--}}
+{{--                                <a href="#" class="company">--}}
+{{--                                    Alipay Software--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="job-tt-item">--}}
 
-                            <a href="#" class="thumb">
-                                <div style="background-image: url('/img/fpt-logo.png');"></div>
-                            </a>
+{{--                            <a href="#" class="thumb">--}}
+{{--                                <div style="background-image: url('/img/fpt-logo.png');"></div>--}}
+{{--                            </a>--}}
 
-                            <div class="info">
-                                <a href="#" class="jobname">
-                                    [HCM] 02 Solution Architects–Up to $2000
-                                </a>
-                                <a href="#" class="company">
-                                    FPT Software
-                                </a>
-                            </div>
-                        </div>
-                        <div class="job-tt-item">
+{{--                            <div class="info">--}}
+{{--                                <a href="#" class="jobname">--}}
+{{--                                    [HCM] 02 Solution Architects–Up to $2000--}}
+{{--                                </a>--}}
+{{--                                <a href="#" class="company">--}}
+{{--                                    FPT Software--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="job-tt-item">--}}
 
-                            <a href="#" class="thumb">
-                                <div style="background-image: url('/img/alipay-logo.png');"></div>
-                            </a>
+{{--                            <a href="#" class="thumb">--}}
+{{--                                <div style="background-image: url('/img/alipay-logo.png');"></div>--}}
+{{--                            </a>--}}
 
-                            <div class="info">
-                                <a href="#" class="jobname">
-                                    Fullstack .NET Developer (Angular/React)
-                                </a>
-                                <a href="#" class="company">
-                                    Alipay Software
-                                </a>
-                            </div>
-                        </div>
-                        <div class="job-tt-item">
+{{--                            <div class="info">--}}
+{{--                                <a href="#" class="jobname">--}}
+{{--                                    Fullstack .NET Developer (Angular/React)--}}
+{{--                                </a>--}}
+{{--                                <a href="#" class="company">--}}
+{{--                                    Alipay Software--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="job-tt-item">--}}
 
-                            <a href="#" class="thumb">
-                                <div style="background-image: url('/img/alipay-logo.png');"></div>
-                            </a>
+{{--                            <a href="#" class="thumb">--}}
+{{--                                <div style="background-image: url('/img/alipay-logo.png');"></div>--}}
+{{--                            </a>--}}
 
-                            <div class="info">
-                                <a href="#" class="jobname">
-                                    Fullstack .NET Developer (Angular/React)
-                                </a>
-                                <a href="#" class="company">
-                                    Alipay Software
-                                </a>
-                            </div>
-                        </div>
-                        <div class="job-tt-item">
+{{--                            <div class="info">--}}
+{{--                                <a href="#" class="jobname">--}}
+{{--                                    Fullstack .NET Developer (Angular/React)--}}
+{{--                                </a>--}}
+{{--                                <a href="#" class="company">--}}
+{{--                                    Alipay Software--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="job-tt-item">--}}
 
-                            <a href="#" class="thumb">
-                                <div style="background-image: url('/img/alipay-logo.png');"></div>
-                            </a>
+{{--                            <a href="#" class="thumb">--}}
+{{--                                <div style="background-image: url('/img/alipay-logo.png');"></div>--}}
+{{--                            </a>--}}
 
-                            <div class="info">
-                                <a href="#" class="jobname">
-                                    Fullstack .NET Developer (Angular/React)
-                                </a>
-                                <a href="#" class="company">
-                                    Alipay Software
-                                </a>
-                            </div>
-                        </div>
-                        <div class="job-tt-item">
+{{--                            <div class="info">--}}
+{{--                                <a href="#" class="jobname">--}}
+{{--                                    Fullstack .NET Developer (Angular/React)--}}
+{{--                                </a>--}}
+{{--                                <a href="#" class="company">--}}
+{{--                                    Alipay Software--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="job-tt-item">--}}
 
-                            <a href="#" class="thumb">
-                                <div style="background-image: url('/img/alipay-logo.png');"></div>
-                            </a>
+{{--                            <a href="#" class="thumb">--}}
+{{--                                <div style="background-image: url('/img/alipay-logo.png');"></div>--}}
+{{--                            </a>--}}
 
-                            <div class="info">
-                                <a href="#" class="jobname">
-                                    Fullstack .NET Developer (Angular/React)
-                                </a>
-                                <a href="#" class="company">
-                                    Alipay Software
-                                </a>
-                            </div>
-                        </div>
-                        <div class="job-tt-item">
+{{--                            <div class="info">--}}
+{{--                                <a href="#" class="jobname">--}}
+{{--                                    Fullstack .NET Developer (Angular/React)--}}
+{{--                                </a>--}}
+{{--                                <a href="#" class="company">--}}
+{{--                                    Alipay Software--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="job-tt-item">--}}
 
-                            <a href="#" class="thumb">
-                                <div style="background-image: url('/img/alipay-logo.png');"></div>
-                            </a>
+{{--                            <a href="#" class="thumb">--}}
+{{--                                <div style="background-image: url('/img/alipay-logo.png');"></div>--}}
+{{--                            </a>--}}
 
-                            <div class="info">
-                                <a href="#" class="jobname">
-                                    Fullstack .NET Developer (Angular/React)
-                                </a>
-                                <a href="#" class="company">
-                                    Alipay Software
-                                </a>
-                            </div>
-                        </div>
+{{--                            <div class="info">--}}
+{{--                                <a href="#" class="jobname">--}}
+{{--                                    Fullstack .NET Developer (Angular/React)--}}
+{{--                                </a>--}}
+{{--                                <a href="#" class="company">--}}
+{{--                                    Alipay Software--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
 
-                    </div>
-                </div>
+{{--                    </div>--}}
+{{--                </div>--}}
                 <div class="side-bar mb-3">
                     <div class="block-sidebar" style="margin-bottom: 20px;">
                         <div class="content-sidebar menu-trung-tam-ql menu-ql-employer">
                             <h3 class="menu-ql-ntv">
-                                Quản lý tài khoản
+                                Quản lý ứng tuyển
                             </h3>
                             <h3 class="menu-ql-ntv">
-                                Quản lý dịch vụ
+                                Danh sách phản hồi
                             </h3>
-                            <h3 class="menu-ql-ntv">
-                                Quản lý tin tuyển dụng
-                            </h3>
-                            <h3 class="menu-ql-ntv">
-                                Quản lý ứng viên
-                            </h3>
-                            <h3 class="menu-ql-ntv">
-                                Hỗ trợ và thông báo
-                            </h3>
+{{--                            <h3 class="menu-ql-ntv">--}}
+{{--                                Quản lý tin tuyển dụng--}}
+{{--                            </h3>--}}
+{{--                            <h3 class="menu-ql-ntv">--}}
+{{--                                Quản lý ứng viên--}}
+{{--                            </h3>--}}
+{{--                            <h3 class="menu-ql-ntv">--}}
+{{--                                Hỗ trợ và thông báo--}}
+{{--                            </h3>--}}
                         </div>
                     </div>
                 </div>

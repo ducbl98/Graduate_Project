@@ -194,7 +194,7 @@
                                     <a class="btn btn-link btn-block text-left recuitment-header" type="button"
                                        data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
                                        aria-controls="collapseOne">
-                                        asdsadsad
+                                        {{$candidateAppliedJob->job->title}}
                                         <span id="clickc1_advance2" class="clicksd">
                                             <i class="fa fa fa-angle-up"></i>
                                         </span>
@@ -236,15 +236,16 @@
                                                     <div class="col-md-6" style="color: darkblue">
                                                         <b> {{$education->major}}</b></div>
                                                 </div>
-                                                <div class="col-12 row pt-2 pb-2">
-                                                    <div class="col-md-5">Kết quả</div>
-                                                    <div class="col-md-7" style="color: darkblue">
+                                                <div class="col-6 row pt-2 pb-2">
+                                                    <div class="col-md-6">Kết quả</div>
+                                                    <div class="col-md-6" style="color: darkblue">
                                                         <b> {{$education->degree}}</b>
                                                     </div>
                                                 </div>
-                                                <div class="col-12 row pt-2 pb-2">
-                                                    <div class="col-md-5">Thời gian</div>
-                                                    <div class="col-md-7" style="color: darkblue">
+                                                <div class="col-6 row pt-2 pb-2"></div>
+                                                <div class="col-6 row pt-2 pb-2">
+                                                    <div class="col-md-6">Thời gian</div>
+                                                    <div class="col-md-6" style="color: darkblue">
                                                         <b> {{Carbon\Carbon::parse($education->time_start)->format('d/m/Y')}}
                                                             - {{$education->state}}</b>
                                                     </div>
@@ -318,12 +319,16 @@
                             <a href="#" class="btn-submit-recuitment float-left mr-3"  style="background: yellowgreen;pointer-events: none;cursor: default">
                                 <i class="fa fa-check pr-2"></i> Đã phản hồi
                             </a>
+                        @elseif($isSkip)
+                            <a href="#" class="btn-submit-recuitment float-left mr-3"  style="background: #7cdbf8;pointer-events: none;cursor: default">
+                                <i class="fa fa-check pr-2"></i> Đã bỏ qua
+                            </a>
                         @else
                             <a href="#" class="btn-submit-recuitment float-left mr-3" style="background: #1c7430;"
                                data-toggle="modal" data-target="#feedbackEmp">
                                 <i class="fa fa-floppy-o pr-2"></i>Phản hồi
                             </a>
-                            <a href="#" class="btn-submit-recuitment float-left">
+                            <a href="{{route('company.candidate.dismiss',['id'=>$id])}}" class="btn-submit-recuitment float-left">
                                 <i class="fa fa-times pr-2"></i>Bỏ Qua
                             </a>
                         @endif
@@ -422,7 +427,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn-sm btn-secondary" data-dismiss="modal">Đóng</button>
                     <button type="submit" class="btn-sm btn-primary">Gửi Ngay!</button>
                 </div>
             </form>

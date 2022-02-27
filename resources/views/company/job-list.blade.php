@@ -127,13 +127,12 @@
                 <!-- content tab 2 -->
                 <div class="tab-pane stab-pane fade show active" id="profile" role="tabpanel"
                      aria-labelledby="profile-tab" style="margin-bottom: 15px">
-                    <form action="{{route('company.post.search')}}" method="POST" class="bn-search-form">
-                        @csrf
+                    <form action="{{route('company.post.search',['keyword'=>$search])}}" class="bn-search-form">
                         <div class="row">
                             <div class="col-md-10 col-sm-12">
                                 <div class="input-group s-input-group w-100">
-                                    <input type="text" id="job-search" name="keyword" class="form-control sinput"
-                                           placeholder="Nhập tiêu đề cần tìm ">
+                                    <input type="search" id="job-search" name="keyword" class="form-control sinput"
+                                           placeholder="Nhập tiêu đề cần tìm " value="{{$search}}">
                                     <span><i class="fa fa-search"></i></span>
                                 </div>
                             </div>
@@ -156,10 +155,10 @@
     <div class="container search-wrapper">
         <div class="row">
             <div class="col-md-8 col-sm-12 col-12">
-                <h4 class="search-find">{{$isSearch ? 'Tìm thấy '.count($jobs).' việc làm' : 'Tổng cộng có '.count($jobs).' việc làm'}}</h4>
+                <h4 class="search-find">{{$isSearch ? 'Tìm thấy '.$totalJobs.' việc làm' : 'Tổng cộng có '.$totalJobs.' việc làm'}}</h4>
                 <div class="job-board-wrap">
                     <div class="job-group">
-                        <div class="job pagi">
+                        {{--<div class="job pagi">
                             <div class="job-content">
                                 <div class="job-logo">
                                     <a href="#">
@@ -195,9 +194,13 @@
                                     <a href="#" class="btn btn-appl">Apply Now</a>
                                 </div>
                             </div>
-                        </div>
+                        </div>--}}
                         @foreach($jobs as $job)
-                            <div class="job pagi">
+                            <div class="job pagi"
+                                @if($job->expire < \Carbon\Carbon::today())
+                                    style="background-color: blanchedalmond"
+                                @endif
+                            >
                                 <div class="job-content">
                                     <div class="job-logo">
                                         <a href="#">
@@ -239,10 +242,16 @@
                                                 <span class="salary-max">{{$job->salary_max}}<em
                                                         class="salary-unit">{{$job->salary_unit}}</em></span>
                                             </div>
-                                            <div class="job-deadline">
-                                                <span><i class="fa fa-clock-o"
-                                                         aria-hidden="true"></i>  Hạn nộp: <strong>{{$job->expire}}</strong></span>
-                                            </div>
+                                        </div>
+                                        <div class="job-deadline">
+                                                <span><i class="fa fa-clock-o" aria-hidden="true"></i>
+                                                    Hạn nộp: <strong>
+                                                        {{\Carbon\Carbon::parse($job->expire)->format('d/m/Y')}}
+                                                        @if($job->expire < \Carbon\Carbon::today())
+                                                            <p class="text-danger">Đã hết hạn nộp</p>
+                                                        @endif
+                                                    </strong>
+                                                </span>
                                         </div>
                                     </div>
                                     <div class="wrap-btn-appl">
@@ -261,7 +270,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center">
-                    {!! $jobs->links() !!}
+                    {!! $jobs->withQueryString()->links() !!}
                 </div>
             </div>
             <div class="col-md-4 col-sm-12 col-12" style="margin-top: 45px">

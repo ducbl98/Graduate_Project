@@ -142,7 +142,7 @@
                                 <th>Email/Số điện thoại</th>
                                 <th>Vị trí ứng tuyển</th>
                                 <th>Nộp ngày</th>
-                                <th style="width: 100px;"></th>
+                                <th style="width: 100px;">Điều khiển</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -163,7 +163,6 @@
                                     </td>
                                     <td>
                                         <a href="{{route('company.candidate.detail',['id'=>$candidate->id])}}" class="btn-sm btn-primary"><i class="fa fa-eye"></i></a>
-                                        <a href="#" class="btn-sm btn-danger"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -350,148 +349,237 @@
 <script src="{{asset('js/owlcarousel/owl.carousel.js')}}"></script>
 <!-- Read More Plugin -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-{{--<script>
-    var error = {!! json_encode($errors->toArray()) !!};
-    var oldCategories = {!! json_encode(old('optional_category')) !!};
-    var oldTechniques = {!! json_encode(old('optional_technique')) !!};
-    var oldTechniqueTypes = {!! json_encode(old('technique_type_option')) !!};
-    console.log(error);
-    console.log(oldCategories,oldTechniques,oldTechniqueTypes);
-    var a = Object.keys(error).filter(function (key) {
-        return /(optional_category|optional_technique).\d|technique_type_option/.test(key);
-    });
-    console.log(a)
-    if(!Object.keys(error).length){
-        localStorage.removeItem('i')
-        localStorage.removeItem('j')
-    }
-
-    $(document).ready(function() {
-        $('.js-category-multiple').select2({
-            placeholder: "Chọn các danh mục"
-        });
-        $('.js-technique-multiple').select2({
-            placeholder: "Chọn các công nghệ"
-        })
-        var categories = {!! json_encode($techniqueTypes->toArray()) !!};
-        var categories_option = categories.map((category,index) =>`<option value="${category.id}">${category.name}</option>`).join('');
-        console.log(categories_option);
-        var i= localStorage.getItem('i')||0
-        var j= localStorage.getItem('j')||0
-
-        for (let k = 1; k <= i; k++) {
-            var ttoe = `technique_type_option`
-            var ote  = `optional_technique.${k-1}`
-            var html1 = error[ttoe] ? 'is-invalid': ''
-            var html2 = error[ttoe] ? '<div class="alert alert-danger">'+error[ttoe][0]+'</div>': ''
-            var html3 = error[ote] ? 'is-invalid': ''
-            var html4 = error[ote] ? '<div class="alert alert-danger">'+error[ote][0]+'</div>': ''
-            var html5 = '<div class="row" id="rw'+k+'">' +
-                '<div class="col-sm-5">' +
-                '<select type="text" name="technique_type_option[]" class="form-control '+html1+'" id="technique_type_option">' +
-                '<option value="0" disabled selected>Nhập technique type</option>' +
-                categories.map(category =>`<option value="${category.id}" ${oldTechniqueTypes[k-1] == category.id ? 'selected' : ''}>${category.name}</option>`).join('') +
-                '</select>' +
-                html2 +
-                '</div>' +
-                '<div class="col-sm-5">' +
-                '<input type="text" name="optional_technique[]" value="'+oldTechniques[k-1]+'" class="form-control '+html3+'">' +
-                html4 +
-                '</div>' +
-                '<div class="col-sm-2">' +
-                '<button type="button" name="remove" id="'+k+'" class="btn btn-danger btn_remove">' +
-                'X' +
-                '</button>' +
-                '</div>' +
-                '<br>' +
-                '</div>';
-            $('#optional_techniques').append(html5);
-        }
-
-        for (let m = 1; m <= j; m++) {
-            var oce = `optional_category.${m-1}`
-            var html6 = error[oce] ? 'is-invalid': ''
-            var html7 = error[oce] ? '<div class="alert alert-danger">'+error[oce][0]+'</div>': ''
-            var html8 = '<div class="row" id="rj'+m+'">' +
-                '<div class="col-sm-10">' +
-                '<input type="text" name="optional_category[]" value="'+oldCategories[m-1]+'" class="form-control '+html6+'">' +
-                html7 +
-                '</div>' +
-                '<div class="col-sm-2">' +
-                '<button type="button" name="remove" id="'+m+'" class="btn btn-danger btn_remove1">' +
-                'X' +
-                '</button>' +
-                '</div>' +
-                '<br>' +
-                '</div>';
-            $('#optional-categories').append(html8);
-        }
-
-        $('#add-technique').on('click',function (e) {
-            i++;
-            e.preventDefault();
-            var html = '<div class="row" id="rw'+i+'">' +
-                '<div class="col-sm-5">' +
-                '<select type="text" name="technique_type_option[]" class="form-control" id="technique_type_option">' +
-                '<option value="" disabled selected>Nhập technique type</option>' +
-                categories_option +
-                '</select>' +
-                '</div>' +
-                '<div class="col-sm-5">' +
-                '<input type="text" name="optional_technique[]" class="form-control">' +
-                '</div>' +
-                '<div class="col-sm-2">' +
-                '<button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">' +
-                'X' +
-                '</button>' +
-                '</div>' +
-                '<br>' +
-                '</div>';
-            $('#optional_techniques').append(html);
-        })
-
-        $('#add-category').on('click',function (e) {
-            j++;
-            e.preventDefault();
-            var html = '<div class="row" id="rj'+j+'">' +
-                '<div class="col-sm-10">' +
-                '<input type="text" name="optional_category[]" class="form-control">' +
-                '</div>' +
-                '<div class="col-sm-2">' +
-                '<button type="button" name="remove" id="'+j+'" class="btn btn-danger btn_remove1">' +
-                'X' +
-                '</button>' +
-                '</div>' +
-                '<br>' +
-                '</div>';
-            $('#optional-categories').append(html);
-        })
-
-        console.log(i)
-        console.log(j)
-
-        $(document).on('click', '.btn_remove', function(e) {
-            e.preventDefault()
-            var button_id = $(this).attr("id");
-            $('#rw' + button_id + '').remove();
-        });
-
-        $(document).on('click', '.btn_remove1', function(e) {
-            e.preventDefault()
-            var button_id = $(this).attr("id");
-            $('#rj' + button_id + '').remove();
-        });
-
-        $(document).on('click', '#submit-post-create', function (){
-            localStorage.setItem('i', i);
-            localStorage.setItem('j', j);
-        })
-    });
-</script>--}}
 <script>
     $(document).ready( function () {
-        $('#myTable').DataTable();
+        $('#myTable').DataTable( {
+            language: {
+                "processing": "Đang xử lý...",
+                "aria": {
+                    "sortAscending": ": Sắp xếp thứ tự tăng dần",
+                    "sortDescending": ": Sắp xếp thứ tự giảm dần"
+                },
+                "autoFill": {
+                    "cancel": "Hủy",
+                    "fill": "Điền tất cả ô với <i>%d</i>",
+                    "fillHorizontal": "Điền theo hàng ngang",
+                    "fillVertical": "Điền theo hàng dọc"
+                },
+                "buttons": {
+                    "collection": "Chọn lọc <span class=\"ui-button-icon-primary ui-icon ui-icon-triangle-1-s\"></span>",
+                    "colvis": "Hiển thị theo cột",
+                    "colvisRestore": "Khôi phục hiển thị",
+                    "copy": "Sao chép",
+                    "copyKeys": "Nhấn Ctrl hoặc u2318 + C để sao chép bảng dữ liệu vào clipboard.<br /><br />Để hủy, click vào thông báo này hoặc nhấn ESC",
+                    "copySuccess": {
+                        "1": "Đã sao chép 1 dòng dữ liệu vào clipboard",
+                        "_": "Đã sao chép %d dòng vào clipboard"
+                    },
+                    "copyTitle": "Sao chép vào clipboard",
+                    "pageLength": {
+                        "-1": "Xem tất cả các dòng",
+                        "_": "Hiển thị %d dòng"
+                    },
+                    "print": "In ấn",
+                    "createState": "Tạo trạng thái",
+                    "csv": "CSV",
+                    "excel": "Excel",
+                    "pdf": "PDF",
+                    "removeAllStates": "Xóa hết trạng thái",
+                    "removeState": "Xóa",
+                    "renameState": "Đổi tên",
+                    "savedStates": "Trạng thái đã lưu",
+                    "stateRestore": "Trạng thái %d",
+                    "updateState": "Cập nhật"
+                },
+                "infoThousands": "`",
+                "select": {
+                    "cells": {
+                        "1": "1 ô đang được chọn",
+                        "_": "%d ô đang được chọn"
+                    },
+                    "columns": {
+                        "1": "1 cột đang được chọn",
+                        "_": "%d cột đang được được chọn"
+                    },
+                    "rows": {
+                        "1": "1 dòng đang được chọn",
+                        "_": "%d dòng đang được chọn"
+                    }
+                },
+                "thousands": "`",
+                "searchBuilder": {
+                    "title": {
+                        "0": "Thiết lập tìm kiếm",
+                        "_": "Thiết lập tìm kiếm (%d)"
+                    },
+                    "button": {
+                        "0": "Thiết lập tìm kiếm",
+                        "_": "Thiết lập tìm kiếm (%d)"
+                    },
+                    "value": "Giá trị",
+                    "clearAll": "Xóa hết",
+                    "condition": "Điều kiện",
+                    "conditions": {
+                        "date": {
+                            "after": "Sau",
+                            "before": "Trước",
+                            "between": "Nằm giữa",
+                            "empty": "Rỗng",
+                            "equals": "Bằng với",
+                            "not": "Không phải",
+                            "notBetween": "Không nằm giữa",
+                            "notEmpty": "Không rỗng"
+                        },
+                        "number": {
+                            "between": "Nằm giữa",
+                            "empty": "Rỗng",
+                            "equals": "Bằng với",
+                            "gt": "Lớn hơn",
+                            "gte": "Lớn hơn hoặc bằng",
+                            "lt": "Nhỏ hơn",
+                            "lte": "Nhỏ hơn hoặc bằng",
+                            "not": "Không phải",
+                            "notBetween": "Không nằm giữa",
+                            "notEmpty": "Không rỗng"
+                        },
+                        "string": {
+                            "contains": "Chứa",
+                            "empty": "Rỗng",
+                            "endsWith": "Kết thúc bằng",
+                            "equals": "Bằng",
+                            "not": "Không phải",
+                            "notEmpty": "Không rỗng",
+                            "startsWith": "Bắt đầu với",
+                            "notContains": "Không chứa",
+                            "notEnds": "Không kết thúc với",
+                            "notStarts": "Không bắt đầu với"
+                        },
+                        "array": {
+                            "equals": "Bằng",
+                            "empty": "Trống",
+                            "contains": "Chứa",
+                            "not": "Không",
+                            "notEmpty": "Không được rỗng",
+                            "without": "không chứa"
+                        }
+                    },
+                    "logicAnd": "Và",
+                    "logicOr": "Hoặc",
+                    "add": "Thêm điều kiện",
+                    "data": "Dữ liệu",
+                    "deleteTitle": "Xóa quy tắc lọc",
+                    "leftTitle": "Giảm thụt lề",
+                    "rightTitle": "Tăng thụt lề"
+                },
+                "searchPanes": {
+                    "countFiltered": "{shown} ({total})",
+                    "emptyPanes": "Không có phần tìm kiếm",
+                    "clearMessage": "Xóa hết",
+                    "loadMessage": "Đang load phần tìm kiếm",
+                    "collapse": {
+                        "0": "Phần tìm kiếm",
+                        "_": "Phần tìm kiếm (%d)"
+                    },
+                    "title": "Bộ lọc đang hoạt động - %d",
+                    "count": "{total}",
+                    "collapseMessage": "Thu gọn tất cả",
+                    "showMessage": "Hiện tất cả"
+                },
+                "datetime": {
+                    "hours": "Giờ",
+                    "minutes": "Phút",
+                    "next": "Sau",
+                    "previous": "Trước",
+                    "seconds": "Giây",
+                    "amPm": [
+                        "am",
+                        "pm"
+                    ],
+                    "unknown": "-",
+                    "weekdays": [
+                        "Chủ nhật"
+                    ]
+                },
+                "emptyTable": "Không có dữ liệu",
+                "info": "Hiển thị _START_ tới _END_ của _TOTAL_ dữ liệu",
+                "infoEmpty": "Hiển thị 0 tới 0 của 0 dữ liệu",
+                "lengthMenu": "Hiển thị _MENU_ dữ liệu",
+                "loadingRecords": "Đang tải...",
+                "paginate": {
+                    "first": "Đầu tiên",
+                    "last": "Cuối cùng",
+                    "next": "Sau",
+                    "previous": "Trước"
+                },
+                "search": "Tìm kiếm:",
+                "zeroRecords": "Không tìm thấy kết quả",
+                "decimal": ",",
+                "editor": {
+                    "close": "Đóng",
+                    "create": {
+                        "button": "Thêm",
+                        "submit": "Thêm",
+                        "title": "Thêm mục mới"
+                    },
+                    "edit": {
+                        "button": "Sửa",
+                        "submit": "Cập nhật",
+                        "title": "Sửa mục"
+                    },
+                    "error": {
+                        "system": "Đã xảy ra lỗi hệ thống (&lt;a target=\"\\\"rel=\"nofollow\"href=\"\\\"&gt;Thêm thông tin&lt;/a&gt;)."
+                    },
+                    "multi": {
+                        "info": "Các mục đã chọn chứa các giá trị khác nhau cho đầu vào này. Để chỉnh sửa và đặt tất cả các mục cho đầu vào này thành cùng một giá trị, hãy nhấp hoặc nhấn vào đây, nếu không chúng sẽ giữ lại các giá trị riêng lẻ của chúng.",
+                        "noMulti": "Đầu vào này có thể được chỉnh sửa riêng lẻ, nhưng không phải là một phần của một nhóm.",
+                        "restore": "Hoàn tác thay đổi",
+                        "title": "Nhiều giá trị"
+                    },
+                    "remove": {
+                        "button": "Xóa",
+                        "confirm": {
+                            "1": "Bạn có chắc chắn muốn xóa 1 hàng không?",
+                            "_": "Bạn có chắc chắn muốn xóa %d hàng không?"
+                        },
+                        "submit": "Xóa",
+                        "title": "Xóa"
+                    }
+                },
+                "infoFiltered": "(được lọc từ _MAX_ dữ liệu)",
+                "searchPlaceholder": "Nhập tìm kiếm...",
+                "stateRestore": {
+                    "creationModal": {
+                        "button": "Thêm",
+                        "columns": {
+                            "search": "Tìm kiếm cột",
+                            "visible": "Khả năng hiển thị cột"
+                        },
+                        "name": "Tên:",
+                        "order": "Sắp xếp",
+                        "paging": "Phân trang",
+                        "scroller": "Cuộn vị trí",
+                        "search": "Tìm kiếm",
+                        "searchBuilder": "Trình tạo tìm kiếm",
+                        "select": "Chọn",
+                        "title": "Thêm trạng thái",
+                        "toggleLabel": "Bao gồm:"
+                    },
+                    "duplicateError": "Trạng thái có tên này đã tồn tại.",
+                    "emptyError": "Tên không được để trống.",
+                    "emptyStates": "Không có trạng thái đã lưu",
+                    "removeConfirm": "Bạn có chắc chắn muốn xóa %s không?",
+                    "removeError": "Không xóa được trạng thái.",
+                    "removeJoiner": "và",
+                    "removeSubmit": "Xóa",
+                    "removeTitle": "Xóa trạng thái",
+                    "renameButton": "Đổi tên",
+                    "renameLabel": "Tên mới cho %s:",
+                    "renameTitle": "Đổi tên trạng thái"
+                }
+            }
+        });
     } );
 </script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script></body>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+</body>
 </html>

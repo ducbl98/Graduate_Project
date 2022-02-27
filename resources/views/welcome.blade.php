@@ -214,7 +214,7 @@
                     </h2>
 
                     <div class="job-group">
-                        <div class="job pagi">
+                        {{--<div class="job pagi">
                             <div class="job-content">
                                 <div class="job-logo">
                                     <a href="#">
@@ -249,7 +249,7 @@
                                     <a href="#" class="btn btn-appl">Apply Now</a>
                                 </div>
                             </div>
-                        </div>
+                        </div>--}}
                         @foreach($jobs as $job)
                             <div class="job pagi">
                             <div class="job-content">
@@ -297,9 +297,9 @@
                                                 </a>
                                             </div>
                                         @endif
-                                        <div class="job-deadline">
-                                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>  Hạn nộp: <strong>{{$job->expire}}</strong></span>
-                                        </div>
+                                    </div>
+                                    <div class="job-deadline">
+                                        <span><i class="fa fa-clock-o" aria-hidden="true"></i>  Hạn nộp: <strong>{{$job->expire}}</strong></span>
                                     </div>
                                 </div>
                                 <div class="wrap-btn-appl">

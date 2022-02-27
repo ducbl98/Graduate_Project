@@ -25,6 +25,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\Pagination;
 use Illuminate\Support\Facades\Session;
@@ -41,15 +42,19 @@ class PostController extends Controller
      */
     public function listPost()
     {
+        $search='';
         $companyId = Auth::id();
         $companyProfile = User::with('company', 'jobs')->find($companyId);
         $job_titles = Job::query()->distinct()->pluck('title');
 //        dd($job_titles);
 //        $company = Company::with('user')->where('user_id',Auth::id())->first();
+        $totalJobs = Job::where('created_by','=',Auth::id())->count();
         $jobs = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
-            ->where('created_by', Auth::id())->where('is_active', 1)->paginate(5);
+            ->where('created_by', Auth::id())->where('is_active', 1)
+            ->orderBy('updated_at','DESC')
+            ->paginate(5);
         $isSearch = false;
-        return view('company.job-list', compact('jobs', 'isSearch', 'job_titles', 'companyProfile'));
+        return view('company.job-list', compact('jobs', 'isSearch', 'job_titles', 'companyProfile','totalJobs','search'));
     }
 
     /**
@@ -168,7 +173,11 @@ class PostController extends Controller
                 $isSaveJob = true;
             }
         }
+//        dd(Carbon::now());
+//        dd($job->expire);
+        dd(Carbon::createFromFormat('Y-m-d',$job->expire)> Carbon::now());
 //        dd($isApplied,$isSeeker);
+//        dd($job);
         return view('guest-seeker.job-detail', compact('job', 'seeker', 'isSeeker', 'isApplied', 'seekerProfile','isSaveJob'));
     }
 
@@ -291,17 +300,26 @@ class PostController extends Controller
     public function companySearchPost(Request $request)
     {
 //        dd($request);
+        $search = $request->get('keyword');
         $job_titles = Job::query()->distinct()->pluck('title');
+        $totalJobs = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
+            ->where([
+                ['created_by', '=', Auth::id()],
+                ['is_active', '=', 1],
+                ['title', 'LIKE', '%' . $request->keyword . '%']
+            ])->count();
+        $companyProfile = User::with('company', 'jobs')->find(Auth::id());
         $jobs = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
             ->where([
                 ['created_by', '=', Auth::id()],
                 ['is_active', '=', 1],
                 ['title', 'LIKE', '%' . $request->keyword . '%']
             ])
+            ->orderBy('updated_at','DESC')
             ->paginate(5);
         $isSearch = true;
 //        dd($jobs);
-        return view('company.job-list', compact('jobs', 'isSearch', 'job_titles'));
+        return view('company.job-list', compact('jobs', 'isSearch', 'job_titles','companyProfile','search','totalJobs'));
     }
 
     public function findAllJobs()
@@ -309,6 +327,8 @@ class PostController extends Controller
         $jobs = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
             ->whereRelation('user', 'users.is_active', '=', 1)
             ->where('is_active', 1)
+            ->whereDate('expire','>=',Carbon::today())
+            ->orderBy('updated_at','DESC')
             ->get();
         session()->forget('jobs');
         session()->put('jobs', $jobs);
@@ -326,22 +346,30 @@ class PostController extends Controller
         $jobs = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
             ->whereRelation('user', 'users.is_active', '=', 1)
             ->where('is_active', 1)
+            ->whereDate('expire','>=',Carbon::today())
+            ->orderBy('updated_at','DESC')
             ->get();
         $jobSearchTitle = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
             ->whereRelation('user', 'users.is_active', '=', 1)
             ->where([
                 ['is_active', '=', 1],
                 ['title', 'LIKE', $title]
-            ])->get();
+            ])
+            ->orderBy('updated_at','DESC')
+            ->get();
         $jobSearchTechnique = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
             ->whereRelation('user', 'users.is_active', '=', 1)
             ->whereRelation('techniques', 'techniques.id', '=', $request->technique)
             ->where('is_active', 1)
+            ->whereDate('expire','>=',Carbon::today())
+            ->orderBy('updated_at','DESC')
             ->get();
         $jobSearchProvince = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
             ->whereRelation('user', 'users.is_active', '=', 1)
             ->whereRelation('province', 'provinces.id', '=', $request->province)
             ->where('is_active', 1)
+            ->whereDate('expire','>=',Carbon::today())
+            ->orderBy('updated_at','DESC')
             ->get();
         if (!$existProvince) {
             if (!$existTechnique) {
@@ -409,6 +437,8 @@ class PostController extends Controller
                 ['salary_min', '>=', $salary_range[0]],
                 ['salary_max', '<=', $salary_range[1]]
             ])
+            ->whereDate('expire','>=',Carbon::today())
+            ->orderBy('updated_at','DESC')
             ->get();
 //        dd($jobs);
         session()->forget('jobs');
@@ -427,6 +457,8 @@ class PostController extends Controller
             ->whereRelation('user', 'users.is_active', '=', 1)
             ->whereRelation('categories', 'categories.id', '=', $categoryId)
             ->where('is_active', 1)
+            ->whereDate('expire','>=',Carbon::today())
+            ->orderBy('updated_at','DESC')
             ->get();
 //        dd($jobs);
         session()->forget('jobs');
@@ -456,7 +488,7 @@ class PostController extends Controller
         session()->put('jobs', $jobs);
 //        dd($jobs,session()->get('jobs'));
         $totalSearchJobs = count($jobs);
-        $jobs = Pagination::paginate($jobs, 2, null, [
+        $jobs = Pagination::paginate($jobs, 5, null, [
             'path' => LengthAwarePaginator::resolveCurrentPath(),
         ]);
         $existTitle = $existTechnique = $existProvince = null;
@@ -470,6 +502,7 @@ class PostController extends Controller
         $techniqueTypes = TechniqueType::with('techniques')->get();
         $provinces = Province::all();
         $totalJobs = Job::where('is_active', 1)
+            ->whereDate('expire','>=',Carbon::today())
             ->whereRelation('user', 'users.is_active', '=', 1)
             ->count();
 //        $categories = Category::withCount('jobs')->orderBy('jobs_count', 'desc')->get();
@@ -477,9 +510,11 @@ class PostController extends Controller
             ->withCount(['jobs' => function (Builder $query) {
                 $query->join('users', 'jobs.created_by', '=', 'users.id');
                 $query->where('users.is_active', '=', 1);
+                $query->where('jobs.expire', '>=', Carbon::today());
             }])
             ->whereRelation('jobs.user', 'users.is_active', '=', 1)
             ->whereRelation('jobs', 'jobs.is_active', '=', 1)
+            ->whereRelation('jobs', 'jobs.expire', '>=', Carbon::today())
             ->orderBy('jobs_count', 'desc')
             ->get();
         return view('guest-seeker.job-search-and-list', compact('jobs', 'techniqueTypes', 'provinces', 'categories',
@@ -487,13 +522,13 @@ class PostController extends Controller
 
     }
 
-    public
     function searchPostByCompany(Request $request)
     {
         $jobs = Job::with('province', 'techniques.techniqueType', 'categories', 'user.company')
             ->whereRelation('user', 'users.is_active', '=', 1)
             ->whereRelation('user', 'name', 'LIKE', '%' . $request->company_name . '%')
             ->where('is_active', 1)
+            ->orderBy('updated_at','DESC')
             ->get();
 
         session()->forget('jobs');

@@ -108,7 +108,7 @@ class SeekerController extends Controller
         $appliedJobs = SeekerApplication::with('user', 'job.user')->where([
             ['user_id', '=', Auth::id()],
             ['is_active', '=', 1]
-        ])->get();
+        ])->orderBy('updated_at','desc')->get();
         return view('seeker.job-applied-list', compact('appliedJobs','seekerProfile'));
     }
 
@@ -141,6 +141,7 @@ class SeekerController extends Controller
         $companyResponses = CompanyResponse::with('seeker_application.job.user.company')
             ->whereRelation('seeker_application','seeker_applications.user_id','=',Auth::id())
             ->whereRelation('seeker_application','seeker_applications.is_respond','=',1)
+            ->orderBy('updated_at','desc')
             ->get();
 //        dd($companyResponses);
         return view('seeker.company-response-list',compact('companyResponses','seekerProfile'));
@@ -168,6 +169,7 @@ class SeekerController extends Controller
     public function listSavedJobs(){
         $seekerProfile = User::with('seeker')->find(Auth::id());
         $saveJobs = SavedJob::with('job.user','job.province','job.techniques')->where('user_id',Auth::id())->get();
+//        dd($saveJobs);
         return view('seeker.save-jobs',compact('seekerProfile','saveJobs'));
     }
 
