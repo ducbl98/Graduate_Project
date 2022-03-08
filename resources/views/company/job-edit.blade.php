@@ -29,6 +29,7 @@
 
     <!-- multiple select -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 </head>
 <body>
 <!-- main nav -->
@@ -346,7 +347,7 @@
                                         <label class="col-sm-3 col-form-label text-right label">Mô tả công việc<span
                                                 style="color: red" class="pl-2">*</span></label>
                                         <div class="col-sm-9">
-                                            <textarea type="text" name="details" class="form-control @error('details') is-invalid @enderror"
+                                            <textarea type="text" id="summernote" name="details" class="form-control @error('details') is-invalid @enderror"
                                                       placeholder="Nhập mô tả công việc" rows="8">{{old('details') ? old('details') : $job->details}}</textarea>
                                             @error('details')
                                             <div class="alert alert-danger">{{ $message }}</div>
@@ -538,6 +539,7 @@
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
 <script src="{{asset('js/select2.min.js')}}"></script>
 <script src="{{asset('js/jobdata.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
 <script type="text/javascript" src="{{asset('js/main.js')}}"></script>
 <!-- Owl Stylesheets Javascript -->
@@ -561,6 +563,20 @@
     }
 
     $(document).ready(function() {
+        $('#summernote').summernote({
+            placeholder: 'Nhập mô tả công việc...',
+            tabsize: 1,
+            height: 150,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
         $('.js-category-multiple').select2({
             placeholder: "Chọn các danh mục"
         });

@@ -26,6 +26,7 @@
 
     <!-- main css -->
     <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 </head>
 <body>
 <!-- main nav -->
@@ -240,7 +241,7 @@
                                         <div class="col-sm-9">
                                             <textarea type="text" name="description" class="form-control"
                                                       placeholder="Sơ lược về công ty" rows="10"
-                                                      style="align-content:center; overflow:auto; border:6px outset #000000;"
+                                                      style="align-content:center; overflow:auto; border:6px outset #000000;" id="summernote"
                                             >{{$companyProfile->company->description}}</textarea>
                                         </div>
                                     </div>
@@ -268,13 +269,15 @@
             <div class="col-md-4 col-sm-12 col-12">
                 <div class="recuiter-info">
                     <div class="recuiter-info-avt">
-                        <img src="{{asset('img/icon_avatar.jpg')}}">
+                        <img
+                            src="{{ $companyProfile->company->avatar_url ? asset('storage/'.$companyProfile->company->avatar_url) : "img/icon_avatar.jpg" }}"
+                        >
                     </div>
                     <div class="clearfix list-rec">
-                        <h4>NESTLE Inc.</h4>
+                        <h4>{{$companyProfile->name}}</h4>
                         <ul>
-                            <li><a href="#">Việc làm đang đăng <strong>(0)</strong></a></li>
-                            <li><a href="#">Follower <strong>(450)</strong></a></li>
+                            <li><a href="#">Việc làm đã đăng <strong>({{count($companyProfile->jobs)}})</strong></a></li>
+{{--                            <li><a href="#">Follower <strong>(450)</strong></a></li>--}}
                         </ul>
                     </div>
                 </div>
@@ -435,12 +438,28 @@
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
 <script src="{{asset('js/select2.min.js')}}"></script>
 <script src="{{asset('js/jobdata.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
 <script type="text/javascript" src="{{asset('js/main.js')}}"></script>
 <!-- Owl Stylesheets Javascript -->
 <script src="{{asset('js/owlcarousel/owl.carousel.js00')}}"></script>
 <!-- Read More Plugin -->
 <script type="text/javascript">
+    //summernote
+    $('#summernote').summernote({
+        placeholder: 'Nhập mô tả về công ty...',
+        tabsize: 1,
+        height: 90,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
     // Avatar upload and preview
     function readURL(input) {
         if (input.files && input.files[0]) {

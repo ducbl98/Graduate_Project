@@ -40,7 +40,7 @@ class EditPostRequest extends FormRequest
             'salary_unit' => 'required|string|between:1,7',
             'address'=> 'required|string|between:2,30',
             'province_id' => 'required',
-            'expire'=> 'required|date|after:tomorrow',
+            'expire'=> 'required|date',
             'details'=> 'required|string'
         ];
     }
@@ -61,7 +61,6 @@ class EditPostRequest extends FormRequest
             'min' => "Yêu cầu độ dài tối thiểu :min ký tự",
             'salary_max.greater_than_field'=>"Yêu cầu lớn hơn trường lương thấp nhất",
             'not_in' => " Yêu cầu lớn hơn 0",
-            'after' => "Ngày hết hạn không hợp lệ"
         ];
     }
 }

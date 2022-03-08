@@ -22,6 +22,7 @@ class EducationController extends Controller
             'state' => $request->state,
             'seeker_id' => $seeker->id,
         ]);
+        toastr()->success("Thêm trình độ học vấn thành công");
         return back();
     }
 
@@ -34,13 +35,14 @@ class EducationController extends Controller
             'time_start' => $request->time_start,
             'state' => $request->state,
         ]);
-
+        toastr()->success("Sửa trình độ học vấn thành công");
         return back();
     }
 
     public function deleteEducation(Request $request)
     {
         Education::where('id',$request->id)->delete();
+        toastr()->success("Xóa trình độ học vấn thành công");
         return back();
     }
 }

@@ -897,8 +897,13 @@
                         </div>
                     </div>
                     <div class="jd-content">
-                        <textarea disabled style="width: 100%;border: none" name="" id="" cols="30" rows="50">{{$job->details}}
+                        @if(str_contains($job->details,'<p>'))
+                            {!! $job->details !!}
+                            <textarea disabled style="width: 100%;border: none" name="" id="" cols="30" rows="40">
                         </textarea>
+                        @else
+                            <textarea disabled style="width: 100%;border: none" name="" id="" cols="30" rows="50">{{$job->details}}</textarea>
+                        @endif
                     </div>
                     {{--                    <h2 class="widget-title">--}}
                     {{--                        <span>Mô tả công việc</span>--}}
@@ -1336,7 +1341,7 @@
                                                       style="height: 186px; width: 100%; border: 1px solid #ccc; border-radius: 8px;">
 Kính gửi Quý Công ty Công ty TNHH FFG,
 
-Tôi là: {{$seeker->user->name}},
+Tôi là: {{$seeker ? $seeker->user->name : ''}},
 
 Qua website techjob.vn, tôi được biết Quý công ty đang có nhu cầu tuyển dụng nhân sự cho vị trí {{$job->categories[0]->name}}.
 

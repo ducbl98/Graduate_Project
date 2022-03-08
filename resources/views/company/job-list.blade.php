@@ -253,6 +253,11 @@
                                                     </strong>
                                                 </span>
                                         </div>
+                                        <div class="job-deadline">
+                                                <span><i class="fa fa-eye" aria-hidden="true"></i></i>
+                                                    Lượt xem: <strong>{{$job->view}}</strong>
+                                                </span>
+                                        </div>
                                     </div>
                                     <div class="wrap-btn-appl">
                                         <a href="{{route('company.post.edit',['id'=>$job->id])}}">

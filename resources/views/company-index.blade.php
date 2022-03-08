@@ -168,12 +168,12 @@
                             </a>
                         </li>--}}
                         <li class="">
-                            <a href="#">
+                            <a href="{{route('company.post.list')}}">
                                 <img class="icon-flat" src="https://timviec.com.vn/icon-menu/forms.png"> Quản lý đăng tuyển
                             </a>
                         </li>
                         <li class="" id="tooltip_ung_vien">
-                            <a href="#" style="padding-left: 12px;">
+                            <a href="{{route('company.candidate.list')}}" style="padding-left: 12px;">
                                 <i class="fas fa-users" style="margin-right: 6px;font-size: 18px;color: #666;">
                                 </i>Quản lý ứng viên
                             </a>
@@ -275,7 +275,7 @@
                             <div class="bg-white box_shadow pd-20 mb-20">
                                 <i class="fas fa-file-signature mr-10">
                                 </i>
-                                <span class="fs-24 fw-500">12</span>
+                                <span class="fs-24 fw-500">{{$companyProfile->applyApplications->count()}}</span>
                                 <p class="mb-0">Hồ sơ ứng tuyển
                                 </p>
                             </div>
@@ -316,7 +316,7 @@
                         <div class="bg-white box_shadow pd-20 mb-20">
                             <i class="fas fa-file-signature mr-10">
                             </i>
-                            <span class="fs-24 fw-500">0</span>
+                            <span class="fs-24 fw-500">{{$jobViews}}</span>
                             <p class="mb-0">Lượt xem việc làm
                             </p>
                         </div>
@@ -360,8 +360,8 @@
                                 <tr>
                                     <td>
                                         <div class="text-center">
-                                            <a href="https://timviec.com.vn/nha-tuyen-dung/ho-so-da-xem"
-                                               class="name-job-number color-main mt-8 mb-0 d-inline-block"> 0
+                                            <a href="#"
+                                               class="name-job-number color-main mt-8 mb-0 d-inline-block"> {{$seekerApplicationSeen}}
                                             </a>
                                         </div>
                                     </td>
@@ -383,7 +383,7 @@
                             </table>
                         </div>
                         <div class="banner mt-20">
-                            <a href="https://salary.timviec.com.vn/" target="_blank">
+                            <a href="#" target="_blank">
                                 <img src="https://timviec.com.vn/images/banner-ntd.jpg" alt="banner">
                             </a>
                         </div>
@@ -395,7 +395,7 @@
             <div class="mb-20">
             </div>
             <div class="tv-box-latest-application">
-                <a href="#" class="color-main float-right pt-10">Xem tất cả &gt;&gt;
+                <a href="{{route('company.candidate.list')}}" class="color-main float-right pt-10">Xem tất cả &gt;&gt;
                 </a>
                 <h2 class="fs-18">Hồ sơ ứng tuyển mới nhất
                 </h2>
@@ -412,23 +412,24 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td class="no-data" colspan="3">
-                                <div class="text-center">
-                                    <p class="fs-14">
-                                        <i style="color: #000">Không có dữ liệu phù hợp ...
-                                        </i>
-                                    </p>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>2</td>
-                            <td>2</td>
-                            <td>2</td>
-                        </tr>
-
+                        @if(!$newestCandidate)
+                            <tr>
+                                <td class="no-data" colspan="3">
+                                    <div class="text-center">
+                                        <p class="fs-14">
+                                            <i style="color: #000">Chưa có dữ liệu
+                                            </i>
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                        @else
+                            <tr>
+                                <td>{{$newestCandidate->user->name}}</td>
+                                <td class="text-center">{{$newestCandidate->job->title}}</td>
+                                <td class="text-center">{{$newestCandidate->created_at}}</td>
+                            </tr>
+                        @endif
                         </tbody>
                     </table>
                 </div>

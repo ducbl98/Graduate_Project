@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Ablepro v8.0 bootstrap admin template by Phoenixcoded</title>
+    <title>Admin Page</title>
     <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 11]>
@@ -40,7 +40,7 @@
 
             <div class="">
                 <div class="main-menu-header">
-                    <img class="img-radius" src="{{asset('img/avatar-2.jpg')}}" alt="User-Profile-Image">
+                    <img class="img-radius" src="{{asset('img/admin.jpg')}}" alt="User-Profile-Image">
                     <div class="user-details">
                         <div id="more-details">Admin<i class="fa fa-caret-down"></i></div>
                     </div>

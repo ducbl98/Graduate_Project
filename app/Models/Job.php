@@ -52,7 +52,7 @@ class Job extends Model
         return $this->belongsTo(Province::class);
     }
 
-    public function application(): HasMany
+    public function applications(): HasMany
     {
         return $this->hasMany(SeekerApplication::class);
     }

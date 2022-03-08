@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\manage;
 
+use App\Events\PostView;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreatePostRequest;
 use App\Http\Requests\EditPostRequest;
@@ -28,6 +29,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\Pagination;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Session;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -173,6 +175,7 @@ class PostController extends Controller
                 $isSaveJob = true;
             }
         }
+        PostView::dispatch($job);
 //        dd(Carbon::createFromFormat('Y-m-d',$job->expire)> Carbon::now());
 //        dd($isApplied,$isSeeker);
 //        dd($job);
@@ -526,7 +529,7 @@ class PostController extends Controller
             ->whereRelation('user', 'users.is_active', '=', 1)
             ->whereRelation('user', 'name', 'LIKE', '%' . $request->company_name . '%')
             ->where('is_active', 1)
-            ->orderBy('updated_at','DESC')
+            ->orderBy('created_at','DESC')
             ->get();
 
         session()->forget('jobs');

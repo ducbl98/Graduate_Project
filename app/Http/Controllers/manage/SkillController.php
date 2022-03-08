@@ -20,6 +20,7 @@ class SkillController extends Controller
             'level' => $request->level,
             'seeker_id' => $seeker->id,
         ]);
+        toastr()->success("Thêm kỹ năng thành công");
         return back();
     }
 
@@ -29,13 +30,14 @@ class SkillController extends Controller
             'name' => $request->name,
             'level' => $request->level,
         ]);
-
+        toastr()->success("Sửa kỹ năng thành công");
         return back();
     }
 
     public function deleteSkill(Request $request): RedirectResponse
     {
         Skill::where('id',$request->id)->delete();
+        toastr()->success("Xóa kỹ năng thành công");
         return back();
     }
 }

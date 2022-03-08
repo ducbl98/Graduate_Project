@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\manage;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Job;
+use App\Models\Province;
+use App\Models\Technique;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -10,7 +14,14 @@ class AdminController extends Controller
 {
     public function homepage()
     {
-        return view('admin-index-2');
+        $totalUser = User::count();
+        $totalSeeker = User::where('role',1)->count();
+        $totalRecruiter = User::where('role',2)->count();
+        $totalJob = Job::where('is_active',1)->count();
+        $totalCategory = Category::count();
+        $totalTechnique = Technique::count();
+        $totalPlace = Province::count();
+        return view('admin-index-2',compact('totalUser','totalSeeker','totalRecruiter','totalJob','totalCategory','totalTechnique','totalPlace'));
     }
 
     public function index()

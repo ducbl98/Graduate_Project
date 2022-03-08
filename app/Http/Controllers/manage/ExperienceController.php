@@ -21,6 +21,7 @@ class ExperienceController extends Controller
             'time_finish' => $request->time_finish,
             'seeker_id' => $seeker->id,
         ]);
+        toastr()->success("Thêm kinh nghiệm làm việc thành công");
         return back();
     }
 
@@ -32,13 +33,14 @@ class ExperienceController extends Controller
             'time_start' => $request->time_start,
             'time_finish' => $request->time_finish,
         ]);
-
+        toastr()->success("Sửa kinh nghiệm làm việc thành công");
         return back();
     }
 
     public function deleteExperience(Request $request)
     {
         Experience::where('id',$request->id)->delete();
+        toastr()->success("Xóa kinh nghiệm làm việc thành công");
         return back();
     }
 }

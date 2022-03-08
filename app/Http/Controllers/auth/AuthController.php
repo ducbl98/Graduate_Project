@@ -11,6 +11,7 @@ use App\Models\Company;
 use App\Models\Job;
 use App\Models\Province;
 use App\Models\Seeker;
+use App\Models\SeekerApplication;
 use App\Models\TechniqueType;
 use App\Models\User;
 use App\Models\UserVerify;
@@ -61,10 +62,19 @@ class AuthController extends Controller
     public function indexCompany()
     {
         $user = Auth::user();
-        $companyProfile = User::with('company','jobs')->find(Auth::id());
+        $companyProfile = User::with('company','jobs','applyApplications')->find(Auth::id());
+        $seekerApplicationSeen = SeekerApplication::with('job.user')
+            ->whereRelation('job.user','id','=',Auth::id())
+            ->where('is_seen','=',1)->count();
 //        dd($companyProfile);
+        $jobViews = Job::where('created_by','=',Auth::id())->sum('view');
+        $newestCandidate = SeekerApplication::with('user.seeker', 'job')
+            ->whereRelation('job', 'created_by', '=', Auth::id())
+            ->where('is_active', 1)
+            ->orderBy('updated_at', 'desc')
+            ->first();
         $isCompany = $user && $user->role == 2;
-        return view('company-index', compact('isCompany','companyProfile'));
+        return view('company-index', compact('isCompany','companyProfile','seekerApplicationSeen','jobViews','newestCandidate'));
     }
 
     public function showSeekerRegister()

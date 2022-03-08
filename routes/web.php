@@ -60,7 +60,7 @@ Route::post('job/search',[PostController::class,'searchPost'])->name('job.search
 Route::post('job/search-by-company',[PostController::class,'searchPostByCompany'])->name('job.searchByCompany');
 Route::post('job/search-by-salary',[PostController::class,'searchPostBySalary'])->name('job.searchBySalary');
 Route::get('job/search-by-category/{categoryId}',[PostController::class,'searchPostByCategory'])->name('job.searchByCategory');
-Route::get('job/detail/{jobId}',[PostController::class,'showPost'])->name('job.showPost');
+Route::get('job/detail/{jobId}',[PostController::class,'showPost'])->name('job.showPost')->middleware('filter');
 
 Route::namespace('Seeker')
     ->name('seeker.')

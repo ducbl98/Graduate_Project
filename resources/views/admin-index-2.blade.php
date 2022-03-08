@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Ablepro v8.0 bootstrap admin template by Phoenixcoded</title>
+    <title>Admin Page</title>
     <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 11]>
@@ -22,6 +22,10 @@
     <!-- vendor css -->
     <link rel="stylesheet" href="{{asset('css/admin/style.css')}}">
 
+    <!-- Font Awesome -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
     <!-- Toastr -->
     @toastr_css
 
@@ -36,7 +40,7 @@
 
             <div class="">
                 <div class="main-menu-header">
-                    <img class="img-radius" src="{{asset('img/avatar-2.jpg')}}" alt="User-Profile-Image">
+                    <img class="img-radius" src="{{asset('img/admin.jpg')}}" alt="User-Profile-Image">
                     <div class="user-details">
                         <div id="more-details">Admin<i class="fa fa-caret-down"></i></div>
                     </div>
@@ -114,7 +118,7 @@
         <!-- [ breadcrumb ] end -->
         <!-- [ Main Content ] start -->
         <div class="row">
-            <div class="col-lg-7 col-md-12">
+            {{--<div class="col-lg-7 col-md-12">
                 <!-- support-section start -->
                 <div class="row">
                     <div class="col-sm-6">
@@ -169,8 +173,8 @@
                     </div>
                 </div>
                 <!-- support-section end -->
-            </div>
-            <div class="col-lg-5 col-md-12">
+            </div>--}}
+            <div class="col-lg-12 col-md-12">
                 <!-- page statustic card start -->
                 <div class="row">
                     <div class="col-sm-6">
@@ -178,18 +182,19 @@
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-8">
-                                        <h4 class="text-c-yellow">0</h4>
+                                        <h4 class="text-c-yellow">{{$totalUser}}</h4>
                                         <h6 class="text-muted m-b-0">Người dùng</h6>
                                     </div>
                                     <div class="col-4 text-right">
-                                        <i class="feather icon-bar-chart-2 f-28"></i>
+{{--                                        <i class="feather icon-bar-chart-2 f-28"></i>--}}
+                                        <i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-footer bg-c-yellow">
                                 <div class="row align-items-center">
                                     <div class="col-9">
-                                        <p class="text-white m-b-0">% change</p>
+                                        <p class="text-white m-b-0">%</p>
                                     </div>
                                     <div class="col-3 text-right">
                                         <i class="feather icon-trending-up text-white f-16"></i>
@@ -203,18 +208,18 @@
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-8">
-                                        <h4 class="text-c-green">0</h4>
-                                        <h6 class="text-muted m-b-0">Nhà Tuyển Dụng</h6>
+                                        <h4 class="text-c-green">{{$totalSeeker}}</h4>
+                                        <h6 class="text-muted m-b-0">Người tìm việc</h6>
                                     </div>
                                     <div class="col-4 text-right">
-                                        <i class="feather icon-file-text f-28"></i>
+                                        <i class="fa fa-search fa-2x" aria-hidden="true"></i>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-footer bg-c-green">
                                 <div class="row align-items-center">
                                     <div class="col-9">
-                                        <p class="text-white m-b-0">% change</p>
+                                        <p class="text-white m-b-0">%</p>
                                     </div>
                                     <div class="col-3 text-right">
                                         <i class="feather icon-trending-up text-white f-16"></i>
@@ -228,21 +233,22 @@
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-8">
-                                        <h4 class="text-c-red">145</h4>
-                                        <h6 class="text-muted m-b-0">Task</h6>
+                                        <h4 class="text-c-purple">{{$totalRecruiter}}</h4>
+                                        <h6 class="text-muted m-b-0">Nhà Tuyển Dụng</h6>
                                     </div>
                                     <div class="col-4 text-right">
-                                        <i class="feather icon-calendar f-28"></i>
+{{--                                        <i class="feather icon-file-text f-28"></i>--}}
+                                        <i class="fa fa-building fa-2x" aria-hidden="true"></i>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-footer bg-c-red">
+                            <div class="card-footer bg-c-purple">
                                 <div class="row align-items-center">
                                     <div class="col-9">
-                                        <p class="text-white m-b-0">% change</p>
+                                        <p class="text-white m-b-0">%</p>
                                     </div>
                                     <div class="col-3 text-right">
-                                        <i class="feather icon-trending-down text-white f-16"></i>
+                                        <i class="feather icon-trending-up text-white f-16"></i>
                                     </div>
                                 </div>
                             </div>
@@ -253,8 +259,34 @@
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-8">
-                                        <h4 class="text-c-blue">500</h4>
-                                        <h6 class="text-muted m-b-0">Downloads</h6>
+                                        <h4 class="text-c-red">{{$totalJob}}</h4>
+                                        <h6 class="text-muted m-b-0">Tin tuyển dụng</h6>
+                                    </div>
+                                    <div class="col-4 text-right">
+{{--                                        <i class="feather icon-calendar f-28"></i>--}}
+                                        <i class="feather icon-file-text f-28"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-c-red">
+                                <div class="row align-items-center">
+                                    <div class="col-9">
+                                        <p class="text-white m-b-0">%</p>
+                                    </div>
+                                    <div class="col-3 text-right">
+                                        <i class="feather icon-trending-up text-white f-16"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-8">
+                                        <h4 class="text-c-blue">{{$totalCategory}}</h4>
+                                        <h6 class="text-muted m-b-0">Danh mục</h6>
                                     </div>
                                     <div class="col-4 text-right">
                                         <i class="feather icon-thumbs-down f-28"></i>
@@ -264,10 +296,63 @@
                             <div class="card-footer bg-c-blue">
                                 <div class="row align-items-center">
                                     <div class="col-9">
-                                        <p class="text-white m-b-0">% change</p>
+                                        <p class="text-white m-b-0">%</p>
                                     </div>
                                     <div class="col-3 text-right">
-                                        <i class="feather icon-trending-down text-white f-16"></i>
+{{--                                        <i class="feather icon-trending-up text-white f-16"></i>--}}
+                                        <i class="fa fa-arrows-alt fa-2x" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-8">
+                                        <h4 class="text-c-yellow">{{$totalPlace}}</h4>
+                                        <h6 class="text-muted m-b-0">Địa điểm</h6>
+                                    </div>
+                                    <div class="col-4 text-right">
+                                        {{--                                        <i class="feather icon-bar-chart-2 f-28"></i>--}}
+                                        <i class="fa fa-map-marker fa-2x" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-c-yellow">
+                                <div class="row align-items-center">
+                                    <div class="col-9">
+                                        <p class="text-white m-b-0">%</p>
+                                    </div>
+                                    <div class="col-3 text-right">
+                                        <i class="feather icon-trending-up text-white f-16"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-8">
+                                        <h4 class="text-c-green">{{$totalTechnique}}</h4>
+                                        <h6 class="text-muted m-b-0">Công nghệ</h6>
+                                    </div>
+                                    <div class="col-4 text-right">
+{{--                                        <i class="feather icon-file-text f-28"></i>--}}
+                                        <i class="fa fa-bitbucket fa-2x" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-c-green">
+                                <div class="row align-items-center">
+                                    <div class="col-9">
+                                        <p class="text-white m-b-0">%</p>
+                                    </div>
+                                    <div class="col-3 text-right">
+                                        <i class="feather icon-trending-up text-white f-16"></i>
                                     </div>
                                 </div>
                             </div>

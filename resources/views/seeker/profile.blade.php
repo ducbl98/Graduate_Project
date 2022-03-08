@@ -27,6 +27,8 @@
 
     <!-- main css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+
+    @toastr_css
 </head>
 <body>
 <!-- main nav -->
@@ -1278,6 +1280,8 @@
     $('#editInformation').modal('show');
     @endif
 </script>
-
+@jquery
+@toastr_js
+@toastr_render
 </body>
 </html>

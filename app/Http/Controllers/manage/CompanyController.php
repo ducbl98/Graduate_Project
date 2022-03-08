@@ -128,6 +128,8 @@ class CompanyController extends Controller
                 ['id', '=', $id],
                 ['is_active', '=', 1]
             ])->first();
+        $candidateAppliedJob->is_seen = 1;
+        $candidateAppliedJob->save();
 //        dd($candidateAppliedJob);
         $cvCandidate = $candidateAppliedJob->getMedia();
         $isRespond = $candidateAppliedJob->is_respond;
