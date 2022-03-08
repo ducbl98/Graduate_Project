@@ -1184,13 +1184,13 @@
                     <li>
                         <a href="#">
                             <i class="fa fa-envelope fticn"></i>
-                            hello@123.com
+                            techjob@gmail.com
                         </a>
                     </li>
                     <li>
                         <a href="#">
                             <i class="fa fa-map-marker fticn"></i>
-                            33 Xô Viết Nghệ Tĩnh, Đà Nẵng
+                            Bách Khoa,Hà Nội
                         </a>
                     </li>
                 </ul>

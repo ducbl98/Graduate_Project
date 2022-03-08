@@ -1221,7 +1221,7 @@
     </div>
 </div>
 
-<!-- job support -->
+{{--<!-- job support -->
 <div class="container-fluid job-support-wrapper">
     <div class="container-fluid job-support-wrap">
         <div class="container job-support">
@@ -1250,7 +1250,7 @@
         </div>
     </div>
 </div>
-<!-- (end) job support -->
+<!-- (end) job support -->--}}
 
 
 <!-- footer -->
@@ -1274,13 +1274,13 @@
                     <li>
                         <a href="#">
                             <i class="fa fa-envelope fticn"></i>
-                            hello@123.com
+                            techjob@gmail.com
                         </a>
                     </li>
                     <li>
                         <a href="#">
                             <i class="fa fa-map-marker fticn"></i>
-                            33 Xô Viết Nghệ Tĩnh, Đà Nẵng
+                            Bách Khoa,Hà Nội
                         </a>
                     </li>
                 </ul>

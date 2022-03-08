@@ -113,8 +113,8 @@ class AuthController extends Controller
             $message->subject('Email Verification Mail');
         });
 
-        toastr()->success('Great! Register Successfully !')
-            ->info('We have send email confirmation to your email . Please check your email');
+        toastr()->success('Đăng ký thành công !')
+            ->info('Chúng tôi đã gửi email xác thực tới email của bạn. Hãy kiểm tra hòm thư');
         return redirect()->route('seekerLogin');
     }
 

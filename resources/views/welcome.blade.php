@@ -111,7 +111,7 @@
                 <li><a href="#">QA QC</a></li>
                 <li><a href="#">.NET</a></li>
                 <li><a href="#">Javascript</a></li>
-                <li><a href="#">Business Analyst</a></li>
+                <li><a href="#">BA</a></li>
                 <li><a href="#">Designer</a></li>
             </ul>
         </div>
@@ -1508,7 +1508,7 @@
     </div>
 </div>
 <!-- (end) news -->
-
+@if(!$isSeeker)
 <!-- job support -->
 <div class="container-fluid job-support-wrapper">
     <div class="container-fluid job-support-wrap">
@@ -1538,7 +1538,7 @@
     </div>
 </div>
 <!-- (end) job support -->
-
+@endif
 <!-- footer -->
 <div class="container-fluid footer-wrap  clear-left clear-right">
     <div class="container footer">
@@ -1559,13 +1559,13 @@
                     <li>
                         <a href="#">
                             <i class="fa fa-envelope fticn"></i>
-                            hello@123.com
+                            techjob@gmail.com
                         </a>
                     </li>
                     <li>
                         <a href="#">
                             <i class="fa fa-map-marker fticn"></i>
-                            33 Xô Viết Nghệ Tĩnh, Đà Nẵng
+                            Bách Khoa,Hà Nội
                         </a>
                     </li>
                 </ul>
